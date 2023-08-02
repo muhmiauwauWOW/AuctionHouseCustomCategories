@@ -1,7 +1,7 @@
 ﻿## Interface: 100105
 ## Title: Auction House - Custom Categories
 ## Notes: Adds custom catefories to auction house
-## Version: 10.1.5
+## Version: 1.0.0
 ## Author: Muhmiauwau
 
 frames.xml

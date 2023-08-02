@@ -1,0 +1,13 @@
+{
+    "Lua.diagnostics.globals": [
+        "TableBuilderCellMixin",
+        "PriceFontWhite",
+        "PriceFontGray",
+        "AUCTION_HOUSE_BROWSE_HEADER_NAME",
+        "AuctionHouseFrame",
+        "CreateAtlasMarkupWithAtlasSize",
+        "AuctionHouseFrameDisplayMode",
+        "AUCTION_HOUSE_SEARCH_BUTTON",
+        "AuctionFrame_CreateCategory"
+    ]
+}

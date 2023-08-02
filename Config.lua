@@ -347,9 +347,6 @@ end
 
 
 
-
-
-
 local getResults = function(c, s)
 
     local resultTable = nil 
@@ -414,13 +411,7 @@ function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
         local icon =  CreateAtlasMarkupWithAtlasSize(iconTable[rowData.quality], 0,0,nil,nil,nil,0.6)
         self.Text:SetText(icon);
     end
-  
-
 end
-
-
-
-
 
 
 
@@ -457,11 +448,7 @@ local performSearch = function(self, button)
 
     if searchResultTable then
 
-
-
         AuctionHouseFrame.BrowseResultsFrame:Reset()
-
-
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AuctionHouseFrame.BrowseResultsFrame, AuctionHouseFrame.BrowseResultsFrame.ItemList, nil));
         AuctionHouseFrame.BrowseResultsFrame.searchStarted = true;
         AuctionHouseFrame.BrowseResultsFrame.browseResults = searchResultTable;
@@ -472,9 +459,6 @@ local performSearch = function(self, button)
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
 end
-
-
-
 
 
 
@@ -554,7 +538,6 @@ addona2:SetScript("OnEvent", function(self, event, name)
     if name == "Blizzard_AuctionHouseUI" then 
 
         function AuctionHouseFrame:SetBrowseSortOrder(sortOrder)
-          
             if sortOrder > 90 then 
                 local browseSearchContext = self:GetBrowseSearchContext();
                 sortResult(self, browseSearchContext, sortOrder)            

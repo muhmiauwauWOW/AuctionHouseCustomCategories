@@ -138,8 +138,8 @@ local performSearch = function(self, button)
         AuctionHouseFrame.BrowseResultsFrame.searchStarted = true;
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetRefreshCallback(nil)
         AuctionHouseFrame.BrowseResultsFrame.tableBuilderLayoutDirty = true;
-        AHCC:sortResult(AuctionHouseFrame, 98, true)    
-
+        AHCC:sortResult(AuctionHouseFrame, 98)    
+       
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
 end

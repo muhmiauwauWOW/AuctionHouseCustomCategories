@@ -1,22 +1,23 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 
-local sortReverse = true
-
 local sortConfig = {
     name = true,
-    quality = true
+    quality = false
 }
 
-local getSortFunc = function(key, order)
-    if order then 
+local getSortFunc = function(key)
+    if sortConfig[key] then 
         return function(k1, k2) return k1[key] < k2[key] end
     else 
         return function(k1, k2) return k1[key] > k2[key] end
     end
 end
 
-function AHCC:sortResult(self, sortOrder, notReverse)
-    local key = "";
+function AHCC:sortResult(self, sortOrder)
+
+    local key = ""
+    local tempResultTable = {}
+    local sortedResultTable = {}
 
     if sortOrder == 98 then 
         key = "name"
@@ -24,14 +25,8 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         key = "quality"
     end
 
-    if notReverse then 
-        sortReverse = true
-    else 
-        sortReverse = not sortReverse
-    end
-
-    local tempResultTable = {}
-    local sortedResultTable = {}
+    -- toggle order
+    sortConfig[key] = not sortConfig[key]
 
     for idx, entry in ipairs(AHCC.searchResultTable) do 
         if not tempResultTable[entry.quality] then 
@@ -43,21 +38,19 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         tinsert(tempResultTable[entry.quality]["entries"], entry)
     end 
 
-    if sortOrder == 99 then 
-        table.sort(tempResultTable, getSortFunc("quality", sortReverse))
-    else
-        table.sort(tempResultTable, getSortFunc("quality", false))
-    end
+    -- sort by quality
+    table.sort(tempResultTable, getSortFunc("quality"))
 
+    -- sort by key
     for idx, entry in ipairs(tempResultTable) do
-        if sortOrder == 98 then 
-            table.sort(entry["entries"], getSortFunc(key, sortReverse))
+        if key ~= "quality" then
+            table.sort(entry["entries"], getSortFunc(key))
         end
         tAppendAll(sortedResultTable,entry["entries"])
-    end 
+    end
 
+     -- display results
     AHCC.searchResultTable = sortedResultTable
-
     self.BrowseResultsFrame.browseResults = AHCC.searchResultTable;
     self.BrowseResultsFrame.ItemList:DirtyScrollFrame();
 end

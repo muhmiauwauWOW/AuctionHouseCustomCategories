@@ -136,10 +136,9 @@ local performSearch = function(self, button)
         AuctionHouseFrame.BrowseResultsFrame:Reset()
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AuctionHouseFrame.BrowseResultsFrame, AuctionHouseFrame.BrowseResultsFrame.ItemList, nil));
         AuctionHouseFrame.BrowseResultsFrame.searchStarted = true;
-        AuctionHouseFrame.BrowseResultsFrame.browseResults = AHCC.searchResultTable;
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetRefreshCallback(nil)
         AuctionHouseFrame.BrowseResultsFrame.tableBuilderLayoutDirty = true;
-        AuctionHouseFrame.BrowseResultsFrame.ItemList:DirtyScrollFrame();
+        AHCC:sortResult(AuctionHouseFrame, 98, true)    
 
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
@@ -176,15 +175,14 @@ function AHCC:AddonLoadedEvent(event, name)
             table.remove(AuctionCategories, #AuctionCategories)
         end
 
-
-
-
+        -- move WOW token up
         for catId, cat in ipairs(AuctionCategories) do 
             if cat:HasFlag("WOW_TOKEN_FLAG") then 
                 tinsert(categoriesTable,cat)
             end        
         end
 
+         -- append blizzard auctiuon categories
         for catId, cat in ipairs(AuctionCategories) do 
             if not cat:HasFlag("WOW_TOKEN_FLAG") then 
                 tinsert(categoriesTable,cat)

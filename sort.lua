@@ -2,6 +2,11 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 
 local sortReverse = true
 
+local sortConfig = {
+    name = true,
+    quality = true
+}
+
 local getSortFunc = function(key, order)
     if order then 
         return function(k1, k2) return k1[key] < k2[key] end
@@ -38,8 +43,6 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         tinsert(tempResultTable[entry.quality]["entries"], entry)
     end 
 
-    table.sort(tempResultTable, getSortFunc("quality", false))
-
     if sortOrder == 99 then 
         table.sort(tempResultTable, getSortFunc("quality", sortReverse))
     else
@@ -47,11 +50,15 @@ function AHCC:sortResult(self, sortOrder, notReverse)
     end
 
     for idx, entry in ipairs(tempResultTable) do
-        table.sort(entry["entries"], getSortFunc(key, sortReverse))
+        if sortOrder == 98 then 
+            table.sort(entry["entries"], getSortFunc(key, sortReverse))
+        end
         tAppendAll(sortedResultTable,entry["entries"])
     end 
 
-    self.BrowseResultsFrame.browseResults = sortedResultTable;
+    AHCC.searchResultTable = sortedResultTable
+
+    self.BrowseResultsFrame.browseResults = AHCC.searchResultTable;
     self.BrowseResultsFrame.ItemList:DirtyScrollFrame();
 end
 

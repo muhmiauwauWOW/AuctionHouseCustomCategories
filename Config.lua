@@ -123,16 +123,15 @@ end
 local performSearch = function(self, button) 
 
     local cdata = AuctionHouseFrame.CategoriesList:GetCategoryData()
-    if cdata and cdata:HasFlag("OSAB_CATEGORY") then
-        AHCC.searchResultTable = getResults(cdata.OSAB_category, 0)
-    elseif cdata and cdata:HasFlag("OSAB_SUBCATEGORY") then
-        AHCC.searchResultTable = getResults(cdata.OSAB_category, cdata.OSAB_subCategory)
+    if cdata and cdata:HasFlag("AHCC_CATEGORY") then
+        AHCC.searchResultTable = getResults(cdata.AHCC_category, 0)
+    elseif cdata and cdata:HasFlag("AHCC_SUBCATEGORY") then
+        AHCC.searchResultTable = getResults(cdata.AHCC_category, cdata.AHCC_subCategory)
     else 
         AHCC.searchResultTable = nil
     end
 
     if AHCC.searchResultTable then
-
         AuctionHouseFrame.BrowseResultsFrame:Reset()
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AuctionHouseFrame.BrowseResultsFrame, AuctionHouseFrame.BrowseResultsFrame.ItemList, nil));
         AuctionHouseFrame.BrowseResultsFrame.searchStarted = true;
@@ -162,13 +161,13 @@ function AHCC:AddonLoadedEvent(event, name)
         local categoriesTable = {}
         for categoryId, category in ipairs(AHCC.data.dataCategories) do 
             categoriesTable[categoryId] = AuctionFrame_CreateCategory(category["name"])
-            categoriesTable[categoryId]:SetFlag("OSAB_CATEGORY");
-            categoriesTable[categoryId].OSAB_category = category["id"];
+            categoriesTable[categoryId]:SetFlag("AHCC_CATEGORY");
+            categoriesTable[categoryId].AHCC_category = category["id"];
             for subCategoryId, subCategory in ipairs(category["subCategories"]) do 
                 local subcat = categoriesTable[categoryId]:CreateNamedSubCategory(subCategory["name"]);
-                subcat:SetFlag("OSAB_SUBCATEGORY");
-                subcat.OSAB_category= category["id"];
-                subcat.OSAB_subCategory = subCategory["id"];
+                subcat:SetFlag("AHCC_SUBCATEGORY");
+                subcat.AHCC_category= category["id"];
+                subcat.AHCC_subCategory = subCategory["id"];
             end
 
             -- remove entry from AuctionCategories
@@ -194,7 +193,7 @@ function AHCC:AddonLoadedEvent(event, name)
 
         hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
             local cdata = categoriesList:GetCategoryData()
-            if cdata and (cdata:HasFlag("OSAB_CATEGORY") or cdata:HasFlag("OSAB_SUBCATEGORY")) then
+            if cdata and (cdata:HasFlag("AHCC_CATEGORY") or cdata:HasFlag("AHCC_SUBCATEGORY")) then
                 AuctionHouseFrame.SearchBar:Hide()
                 AHCC.searchButton:Show()
             else 

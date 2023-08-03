@@ -1,6 +1,5 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 
-
 local sortConfigDefault = {
     name = true,
     quality = false,
@@ -13,7 +12,7 @@ local sortConfig = sortConfigDefault
 local getSortFunc = function(key)
     if sortConfig[key] then 
         return function(k1, k2) return k1[key] < k2[key] end
-    else 
+    else
         return function(k1, k2) return k1[key] > k2[key] end
     end
 end
@@ -25,15 +24,16 @@ function AHCC:sortResult(self, sortOrder, notReverse)
     local tempResultTable = {}
     local sortedResultTable = {}
 
-    if sortOrder == 91 then 
+    if sortOrder == AHCC.Config.sortOrder.name then 
         key = "name"
-    elseif sortOrder == 92  then
+    elseif sortOrder == AHCC.Config.sortOrder.stat1  then
         key = "stat1"
-    elseif sortOrder == 93  then
+    elseif sortOrder == AHCC.Config.sortOrder.stat2  then
         key = "stat2"
-    elseif sortOrder == 99  then
+    elseif sortOrder == AHCC.Config.sortOrder.quality  then
         key = "quality"
     end
+
 
     if notReverse then
         sortConfig = {
@@ -69,15 +69,15 @@ function AHCC:sortResult(self, sortOrder, notReverse)
 
      -- display results
     AHCC.searchResultTable = sortedResultTable
-    self.BrowseResultsFrame.browseResults = AHCC.searchResultTable;
-    self.BrowseResultsFrame.ItemList:DirtyScrollFrame();
+    self.browseResults = AHCC.searchResultTable;
+    self.ItemList:DirtyScrollFrame();
 end
 
 
 function AHCC:initSort()
     function AuctionHouseFrame:SetBrowseSortOrder(sortOrder)
         if sortOrder > 90 then 
-            AHCC:sortResult(self, sortOrder)            
+            AHCC:sortResult(self.BrowseResultsFrame, sortOrder)            
         else -- blizzard org func
             local browseSearchContext = self:GetBrowseSearchContext();
             self:SetSortOrder(browseSearchContext, sortOrder);

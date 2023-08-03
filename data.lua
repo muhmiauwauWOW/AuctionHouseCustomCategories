@@ -1,7 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 
-print(L["Gems"])
 
 
 local dataCategories = {
@@ -11,47 +10,47 @@ local dataCategories = {
         ["subCategories"] = {
             {
                 ["id"] = 1,
-                ["name"] = "INVTYPE_NECK"
+                ["name"] = L["NECK"]
             },
             {
                 ["id"] = 2,
-                ["name"] = "INVTYPE_SHOULDER",
+                ["name"] = L["SHOULDER"],
             },
             {
                 ["id"] = 3,
-                ["name"] = "INVTYPE_CLOAK",
+                ["name"] = L["CLOAK"],
             },
             {
                 ["id"] = 4,
-                ["name"] = "INVTYPE_CHEST",
+                ["name"] = L["CHEST"],
             },
             {
                 ["id"] = 5,
-                ["name"] = "INVTYPE_WRIST",
+                ["name"] = L["WRIST"],
             },
             {
                 ["id"] = 6,
-                ["name"] = "INVTYPE_WAIST",
+                ["name"] = L["WAIST"],
             },
             {
                 ["id"] = 7,
-                ["name"] = "INVTYPE_LEGS",
+                ["name"] = L["LEGS"],
             },
             {
                 ["id"] = 8,
-                ["name"] = "INVTYPE_FEET",
+                ["name"] = L["FEET"],
             },
             {
                 ["id"] = 9,
-                ["name"] = "INVTYPE_FINGER",
+                ["name"] = L["FINGER"],
             },
             {
                 ["id"] = 10,
-                ["name"] = "INVTYPE_WEAPON",
+                ["name"] = L["WEAPON"],
             },
             {
                 ["id"] = 11,
-                ["name"] = "INVTYPE_RANGED",
+                ["name"] = L["RANGED"],
             }
         }
     },

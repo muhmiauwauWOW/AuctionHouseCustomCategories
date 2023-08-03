@@ -8,6 +8,23 @@
         "CreateAtlasMarkupWithAtlasSize",
         "AuctionHouseFrameDisplayMode",
         "AUCTION_HOUSE_SEARCH_BUTTON",
-        "AuctionFrame_CreateCategory"
+        "AuctionFrame_CreateCategory",
+        "INVTYPE_NECK",
+        "INVTYPE_RANGED",
+        "INVTYPE_WEAPON",
+        "INVTYPE_FINGER",
+        "INVTYPE_FEET",
+        "INVTYPE_LEGS",
+        "INVTYPE_WAIST",
+        "INVTYPE_WRIST",
+        "INVTYPE_CHEST",
+        "INVTYPE_CLOAK",
+        "INVTYPE_SHOULDER",
+        "AUCTION_SUBCATEGORY_RANGED",
+        "AUCTION_CATEGORY_WEAPONS",
+        "AUCTION_CATEGORY_GEMS",
+        "AUCTION_CATEGORY_ITEM_ENHANCEMENT",
+        "AUCTION_CATEGORY_CONSUMABLES",
+        "AuctionCategories"
     ]
 }

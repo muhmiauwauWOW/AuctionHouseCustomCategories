@@ -1,6 +1,5 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC", "AceEvent-3.0")
 
-
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 
 
@@ -153,6 +152,7 @@ end
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
 
+
         AHCC.searchButton = CreateFrame("Button", nil, AuctionHouseFrame, "UIPanelButtonTemplate")
         AHCC.searchButton:SetPoint("RIGHT", AuctionHouseFrame.SearchBar ,"RIGHT" ,0, 0)
         AHCC.searchButton:SetFrameStrata("HIGH")
@@ -166,13 +166,33 @@ function AHCC:AddonLoadedEvent(event, name)
             categoriesTable[categoryId]:SetFlag("OSAB_CATEGORY");
             categoriesTable[categoryId].OSAB_category = category["id"];
             for subCategoryId, subCategory in ipairs(category["subCategories"]) do 
-                local name = _G[subCategory["name"] ] or subCategory["name"]
-                local subcat = categoriesTable[categoryId]:CreateNamedSubCategory(name);
+                local subcat = categoriesTable[categoryId]:CreateNamedSubCategory(subCategory["name"]);
                 subcat:SetFlag("OSAB_SUBCATEGORY");
                 subcat.OSAB_category= category["id"];
                 subcat.OSAB_subCategory = subCategory["id"];
             end
+
+            -- remove entry from AuctionCategories
+            table.remove(AuctionCategories, #AuctionCategories)
         end
+
+
+
+
+        for catId, cat in ipairs(AuctionCategories) do 
+            if cat:HasFlag("WOW_TOKEN_FLAG") then 
+                tinsert(categoriesTable,cat)
+            end        
+        end
+
+        for catId, cat in ipairs(AuctionCategories) do 
+            if not cat:HasFlag("WOW_TOKEN_FLAG") then 
+                tinsert(categoriesTable,cat)
+            end        
+        end
+
+        AuctionCategories = categoriesTable
+
 
         hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
             local cdata = categoriesList:GetCategoryData()

@@ -208,39 +208,45 @@ local dataItems = {
 }
 
 
-local formatToResultLines = function(t, parent)
+local formatToResultLines = function(entry)
     local newTable = {}
-    for k, v in pairs(t) do 
-        local itemKey = C_AuctionHouse.MakeItemKey(v)
-
-        newTable[k] = {
-            itemKey = itemKey,
-            quality = k,
-            name = GetItemInfo(v),
+    for idx, item in pairs(entry.id) do 
+        newTable[idx] = {
+            itemKey = C_AuctionHouse.MakeItemKey(item),
+            quality = idx,
+            name = GetItemInfo(item),
             totalQuantity=1,
             minPrice=1,
             containsOwnerItem=false,
-            stat1 = parent["subCategory"],
-            stat2 = parent["stat2"] or 0
+            stat1 = entry.subCategory,
+            stat2 = entry.stat2 or 0
         }
-
     end
     return newTable
 end
 
 
-function AHCC:loadData()
-    
-    for k,v in ipairs(dataItems) do
-        dataItems[k]["id"] = formatToResultLines(dataItems[k]["id"], dataItems[k])
+function getDataStore()
+    local dataStore = {}
+
+    for _,entry in pairs(dataItems) do
+        dataStore[entry.category] = dataStore[entry.category] or {}
+        dataStore[entry.category][0] = dataStore[entry.category][0] or {}
+        dataStore[entry.category][entry.subCategory] = dataStore[entry.category][entry.subCategory] or {}
+
+        local entries = formatToResultLines(entry)
+        tAppendAll(dataStore[entry.category][0], entries)
+        tAppendAll(dataStore[entry.category][entry.subCategory], entries)
     end
 
+    return dataStore
+end
+
+
+function AHCC:loadData()
     self.data = {
         dataCategories = dataCategories,
-        dataItems = dataItems,
-        resultsItems = {}
+        dataStore = getDataStore()
     }
-
-
 end
 

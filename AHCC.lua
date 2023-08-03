@@ -13,119 +13,10 @@ function AHCC:OnInitialize()
 end 
 
 
-local findAllinTable =  function(t, search)
-    local newTable = {}
-    local c = 0
-    for sk,sv in pairs(search) do 
-        c = c + 1
-    end
-
-    for k,v in pairs(t) do
-        local hit = 0;
-        for sk,sv in pairs(search) do
-            if (v[sk] == sv) then 
-                hit = hit + 1
-            end
-        end
-        if hit == c then
-            tAppendAll(newTable, v["id"])
-        end
-    end
-    return newTable
-end
-
-
 
 local getResults = function(c, s)
-
-    local resultTable = nil 
-    if AHCC.data.resultsItems and AHCC.data.resultsItems[c] and AHCC.data.resultsItems[c][s] then 
-        resultTable = AHCC.data.resultsItems[c][s]
-    end
-
-    if resultTable == nil then
-        AHCC.data.resultsItems[c] = AHCC.data.resultsItems[c] or {}
-
-        local r = {}
-        if s > 0  then 
-            r = findAllinTable(AHCC.data.dataItems, {
-                ["category"] = c,
-                ["subCategory"] = s
-            })
-        else
-            r = findAllinTable(AHCC.data.dataItems, {
-                ["category"] = c,
-            })
-        end
-
-        AHCC.data.resultsItems[c][s] = r
-        resultTable =  AHCC.data.resultsItems[c][s]
-    end
-
-
-    return resultTable
+    return AHCC.data.dataStore[c][s] or {}
 end
-
-
---[[
-
-AuctionHouseTableCellQualityMixin = CreateFromMixins(TableBuilderCellMixin);
-
-function AuctionHouseTableCellQualityMixin:Init(owner)
-	self.owner = owner;
-end
-
-function AuctionHouseTableCellQualityMixin:GetOwner()
-	return self.owner;
-end
-
-function AuctionHouseTableCellQualityMixin:GetAuctionHouseFrame()
-	return self:GetOwner():GetAuctionHouseFrame();
-end
-
-function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
-    local noneAvailable = self.rowData.totalQuantity == 0;
-    self.Text:SetFontObject(noneAvailable and PriceFontGray or PriceFontWhite);
-    local iconTable = {
-        "Professions-Icon-Quality-Tier1-Small",
-        "Professions-Icon-Quality-Tier2-Small",
-        "Professions-Icon-Quality-Tier3-Small"
-    }
-
-    if iconTable[rowData.quality] then 
-        local icon =  CreateAtlasMarkupWithAtlasSize(iconTable[rowData.quality], 0,0,nil,nil,nil,0.6)
-        self.Text:SetText(icon);
-    end
-end
-
-
-
-
-AuctionHouseTableCellStat1Mixin = CreateFromMixins(AuctionHouseTableCellQualityMixin);
-
-function AuctionHouseTableCellStat1Mixin:updateText(text)
-    local stat = text or 0
-    local text = AHCC.Config.tableCellStats[stat+1]
-    if text then 
-        self.Text:SetText(text);
-    end 
-    
-    local color = AHCC.Config.tableCellStatColors[stat+1]
-    if color then
-        self.Text:SetTextColor(unpack(color))
-    end
-end
-
-function AuctionHouseTableCellStat1Mixin:Populate(rowData, dataIndex)
-    self:updateText(rowData.stat1)
-end
-
-AuctionHouseTableCellStat2Mixin = CreateFromMixins(AuctionHouseTableCellStat1Mixin);
-function AuctionHouseTableCellStat2Mixin:Populate(rowData, dataIndex)
-    self:updateText(rowData.stat2)
-end
-
-]]
 
 
 function GetBrowseListLayout(owner, itemList, showStats, isSubCategory)
@@ -253,9 +144,3 @@ function AHCC:AddonLoadedEvent(event, name)
         AHCC:initSort()
     end
 end
-
-
-
-
-
-

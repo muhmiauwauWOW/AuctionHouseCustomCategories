@@ -2,57 +2,24 @@ local L = LibStub("AceLocale-3.0"):NewLocale("AHCC", "deDE")
 if not L then return end
 
 
+-- Categories
+L["Enchants"] = "Verzauberungen"
+L["Consumables"] = "Verbrauchbares"
 
+-- Consumables Subcategories
 L["Runes"] = "Runen"
 L["Flasks"] = "Phiolen"
 L["Potions"] = "Tränke"
 
 
-
-
-L["CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE
-L["HASTE"] = STAT_HASTE
-L["MASTERY"] = STAT_MASTERY
-L["VERSATILITY"] = STAT_VERSATILITY
+-- Gem stats
 L["STAMINA"] = "Ausdauer"
 
-
+-- Columns
 L["CELL_EMPTY"] = ""
-L["CELL_CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE
-L["CELL_HASTE"] = STAT_HASTE
-L["CELL_MASTERY"] = STAT_MASTERY
-L["CELL_VERSATILITY"] = STAT_VERSATILITY
 L["CELL_STAMINA"] = "Ausdauer"
 
-
+-- Columns Header 
 L["TABLE_HEADER_QUALITY"] = "Qualität"
 L["TABLE_HEADER_STAT1"] = "Hauptwert"
 L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
-
-
---[[
-    
-L["CRITICAL_STRIKE"] = "Kritischer Trefferewert"
-L["HASTE"] = "Tempo"
-L["MASTERY"] = "Meisterschaft"
-L["VERSATILITY"] = "Vielseitigkeit"
-L["STAMINA"] = "Ausdauer"
-
-
-L["Enchants"] = AUCTION_CATEGORY_ITEM_ENHANCEMENT
-L["Gems"] = AUCTION_CATEGORY_GEMS
-L["Consumables"] =  AUCTION_CATEGORY_CONSUMABLES
-
-L["NECK"] = INVTYPE_NECK
-L["SHOULDER"] = INVTYPE_SHOULDER
-L["CLOAK"] = INVTYPE_CLOAK
-L["CHEST"] = INVTYPE_CHEST
-L["WRIST"] = INVTYPE_WRIST
-L["WAIST"] = INVTYPE_WAIST
-L["LEGS"] = INVTYPE_LEGS
-L["FEET"] = INVTYPE_FEET
-L["FINGER"] = INVTYPE_FINGER
-L["WEAPON"] = INVTYPE_WEAPON
-L["RANGED"] = AUCTION_SUBCATEGORY_RANGED
-
-]]

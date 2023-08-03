@@ -25,6 +25,15 @@
         "AUCTION_CATEGORY_GEMS",
         "AUCTION_CATEGORY_ITEM_ENHANCEMENT",
         "AUCTION_CATEGORY_CONSUMABLES",
-        "AuctionCategories"
+        "AuctionCategories",
+        "AuctionHouseUtil",
+        "STAT_HASTE",
+        "STAT_CRITICAL_STRIKE",
+        "STAT_MASTERY",
+        "STAT_VERSATILITY",
+        "LE_UNIT_STAT_STAMINA",
+        "STA_LCD",
+        "CRIT_ABBR",
+        "SPELL_HASTE_ABBR"
     ]
 }

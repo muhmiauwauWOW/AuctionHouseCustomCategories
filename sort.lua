@@ -1,9 +1,14 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 
-local sortConfig = {
+
+local sortConfigDefault = {
     name = true,
-    quality = false
+    quality = false,
+    stat1 = true,
+    stat2 = true,
 }
+
+local sortConfig = sortConfigDefault
 
 local getSortFunc = function(key)
     if sortConfig[key] then 
@@ -13,20 +18,33 @@ local getSortFunc = function(key)
     end
 end
 
-function AHCC:sortResult(self, sortOrder)
+function AHCC:sortResult(self, sortOrder, notReverse)
+
 
     local key = ""
     local tempResultTable = {}
     local sortedResultTable = {}
 
-    if sortOrder == 98 then 
+    if sortOrder == 91 then 
         key = "name"
+    elseif sortOrder == 92  then
+        key = "stat1"
+    elseif sortOrder == 93  then
+        key = "stat2"
     elseif sortOrder == 99  then
         key = "quality"
     end
 
-    -- toggle order
-    sortConfig[key] = not sortConfig[key]
+    if notReverse then
+        sortConfig = {
+            name = true,
+            quality = false,
+            stat1 = true,
+            stat2 = true,
+        }
+    else -- toggle order
+        sortConfig[key] = not sortConfig[key]
+    end
 
     for idx, entry in ipairs(AHCC.searchResultTable) do 
         if not tempResultTable[entry.quality] then 

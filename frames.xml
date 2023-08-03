@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
    <Frame name="AuctionHouseTableCellQualityTemplate" mixin="AuctionHouseTableCellQualityMixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
+   <Frame name="AuctionHouseTableCellStat1Template" mixin="AuctionHouseTableCellStat1Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
+   <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 </Ui>

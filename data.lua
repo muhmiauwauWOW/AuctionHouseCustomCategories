@@ -57,6 +57,7 @@ local dataCategories = {
     {
         ["id"] = 2,
         ["name"] = L["Gems"],
+        ["showStats"] = true,
         ["subCategories"] = {
             {
                 ["id"] = 1,
@@ -149,26 +150,27 @@ local dataItems = {
     { ["category"] = 1, ["subCategory"] = 11,  ["id"] = { 198316, 198317, 198318 } }, -- Hochleistungsthermoscanner 
     { ["category"] = 1, ["subCategory"] = 11,  ["id"] = { 198310, 198311, 198312 } }, -- Gyroskopisches Kaleidoskop 
 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192926, 192927, 192928 } }, -- Tödlicher Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192917, 192918, 192919 } }, -- Listiger Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192920, 192921, 192922 } }, -- Alexstraszit des Mentors 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192923, 192924, 192925 } }, -- Strahlender Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192953, 192954, 192955 } }, -- Spiegelnder Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192943, 192944, 192945 } }, -- Listiger Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192946, 192947, 192948 } }, -- Schneidender Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192950, 192951, 192952 } }, -- Geladener Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192965, 192966, 192967 } }, -- Rissiger Neltharit 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192956, 192957, 192958 } }, -- Neltharit des Mentors 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192959, 192960, 192961 } }, -- Schneidender Neltharit 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192962, 192963, 192964 } }, -- Meditativer Neltharit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192940, 192941, 192942 } }, -- Stürmischer Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192929, 192931, 192932 } }, -- Strahlender Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192933, 192934, 192935 } }, -- Geladener Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192936, 192937, 192938 } }, -- Meditativer Malygit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192968, 192969, 192970 } }, -- Gezackter Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192971, 192972, 192973 } }, -- Kraftvoller Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192974, 192975, 192976 } }, -- Imposanter Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192977, 192978, 192979 } }, -- Beständiger Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192926, 192927, 192928 }, ["stat2"] = 0 }, -- Tödlicher Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192917, 192918, 192919 }, ["stat2"] = 2 }, -- Listiger Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192920, 192921, 192922 }, ["stat2"] = 3 }, -- Alexstraszit des Mentors 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192923, 192924, 192925 }, ["stat2"] = 4 }, -- Strahlender Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192953, 192954, 192955 }, ["stat2"] = 0 }, -- Spiegelnder Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192943, 192944, 192945 }, ["stat2"] = 1 }, -- Listiger Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192946, 192947, 192948 }, ["stat2"] = 3 }, -- Schneidender Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192950, 192951, 192952 }, ["stat2"] = 4 }, -- Geladener Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192965, 192966, 192967 }, ["stat2"] = 0 }, -- Rissiger Neltharit 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192956, 192957, 192958 }, ["stat2"] = 1 }, -- Neltharit des Mentors 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192959, 192960, 192961 }, ["stat2"] = 2 }, -- Schneidender Neltharit 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192962, 192963, 192964 }, ["stat2"] = 4 }, -- Meditativer Neltharit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192940, 192941, 192942 }, ["stat2"] = 0 }, -- Stürmischer Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192929, 192931, 192932 }, ["stat2"] = 1 }, -- Strahlender Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192933, 192934, 192935 }, ["stat2"] = 2 }, -- Geladener Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192936, 192937, 192938 }, ["stat2"] = 3 }, -- Meditativer Malygit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192968, 192969, 192970 }, ["stat2"] = 1 }, -- Gezackter Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192971, 192972, 192973 }, ["stat2"] = 2 }, -- Kraftvoller Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192974, 192975, 192976 }, ["stat2"] = 3 }, -- Imposanter Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192977, 192978, 192979 }, ["stat2"] = 4 }, -- Beständiger Nozdorit 
+
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194817, 194819, 194820 } }, -- Heulrune 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194821, 194822, 194823 } }, -- Summrune 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 204971, 204972, 204973 } }, -- Zischende Rune 
@@ -206,7 +208,7 @@ local dataItems = {
 }
 
 
-local formatToResultLines = function(t)
+local formatToResultLines = function(t, parent)
     local newTable = {}
     for k, v in pairs(t) do 
         local itemKey = C_AuctionHouse.MakeItemKey(v)
@@ -217,7 +219,9 @@ local formatToResultLines = function(t)
             name = GetItemInfo(v),
             totalQuantity=1,
             minPrice=1,
-            containsOwnerItem=false
+            containsOwnerItem=false,
+            stat1 = parent["subCategory"],
+            stat2 = parent["stat2"] or 0
         }
 
     end
@@ -226,8 +230,9 @@ end
 
 
 function AHCC:loadData()
+    
     for k,v in ipairs(dataItems) do
-        dataItems[k]["id"] = formatToResultLines(dataItems[k]["id"])
+        dataItems[k]["id"] = formatToResultLines(dataItems[k]["id"], dataItems[k])
     end
 
     self.data = {

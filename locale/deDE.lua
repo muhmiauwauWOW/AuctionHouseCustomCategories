@@ -7,13 +7,38 @@ L["Runes"] = "Runen"
 L["Flasks"] = "Phiolen"
 L["Potions"] = "Tränke"
 
+
+
+
+L["CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE
+L["HASTE"] = STAT_HASTE
+L["MASTERY"] = STAT_MASTERY
+L["VERSATILITY"] = STAT_VERSATILITY
+L["STAMINA"] = "Ausdauer"
+
+
+L["CELL_EMPTY"] = ""
+L["CELL_CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE
+L["CELL_HASTE"] = STAT_HASTE
+L["CELL_MASTERY"] = STAT_MASTERY
+L["CELL_VERSATILITY"] = STAT_VERSATILITY
+L["CELL_STAMINA"] = "Ausdauer"
+
+
+L["TABLE_HEADER_QUALITY"] = "Qualität"
+L["TABLE_HEADER_STAT1"] = "Hauptwert"
+L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
+
+
+--[[
+    
 L["CRITICAL_STRIKE"] = "Kritischer Trefferewert"
 L["HASTE"] = "Tempo"
 L["MASTERY"] = "Meisterschaft"
 L["VERSATILITY"] = "Vielseitigkeit"
 L["STAMINA"] = "Ausdauer"
 
---[[
+
 L["Enchants"] = AUCTION_CATEGORY_ITEM_ENHANCEMENT
 L["Gems"] = AUCTION_CATEGORY_GEMS
 L["Consumables"] =  AUCTION_CATEGORY_CONSUMABLES

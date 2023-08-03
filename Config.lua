@@ -7,6 +7,26 @@ AHCC.searchResultTable = nil
 AHCC.searchButton = nil
 
 
+local tableCellStatsColors = {
+    { 1, 1, 1, 1},
+    { 0.96, 0.29, 0.25, 1},
+    { 0.64, 0.89, 0.52, 1},
+    { 0.68, 0.62, 0.72, 1},
+    { 0.57, 0.8, 0.99, 1},
+    { 0.97, 0.74, 0.02, 1}
+}
+
+local tableCellStatsEnum = {
+    L["CELL_EMPTY"],
+    L["CELL_CRITICAL_STRIKE"],
+    L["CELL_HASTE"],
+    L["CELL_MASTERY"],
+    L["CELL_VERSATILITY"],
+    L["CELL_STAMINA"]
+}
+
+
+
 function AHCC:OnInitialize()
 	AHCC:loadData()
     AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
@@ -101,18 +121,43 @@ end
 
 
 
-function GetBrowseListLayout(owner, itemList, extraInfoColumnText)
+AuctionHouseTableCellStat1Mixin = CreateFromMixins(AuctionHouseTableCellQualityMixin);
+function AuctionHouseTableCellStat1Mixin:Populate(rowData, dataIndex)
+    local stat = rowData.stat1 or 0
+    self.Text:SetText(tableCellStatsEnum[stat+1]);
+    self.Text:SetTextColor(unpack(tableCellStatsColors[stat+1]))
+end
+
+AuctionHouseTableCellStat2Mixin = CreateFromMixins(AuctionHouseTableCellQualityMixin);
+function AuctionHouseTableCellStat2Mixin:Populate(rowData, dataIndex)
+    local stat = rowData.stat2 or 0
+    self.Text:SetText(tableCellStatsEnum[stat+1]);
+    self.Text:SetTextColor(unpack(tableCellStatsColors[stat+1]))
+end
+
+
+
+
+function GetBrowseListLayout(owner, itemList, showStats, isSubCategory)
 	local function LayoutBrowseListTableBuilder(tableBuilder)
-		tableBuilder:SetColumnHeaderOverlap(1);
+		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-		local restrictQualityToFilter = true;
-		local hideItemLevel = extraInfoColumnText ~= nil;
-		local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, 98, "AuctionHouseTableCellItemDisplayTemplate", restrictQualityToFilter, hideItemLevel);
+		local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, 91, "AuctionHouseTableCellItemDisplayTemplate", restrictQualityToFilter, hideItemLevel);
 		nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
 
+        if showStats then 
+            if not isSubCategory then 
+                local stat1 = tableBuilder:AddFixedWidthColumn(owner, 0, 120, 14, 14, 92, "AuctionHouseTableCellStat1Template");
+                stat1:GetHeaderFrame():SetText(L["TABLE_HEADER_STAT1"]);
+            end
+
+            local stat2 = tableBuilder:AddFixedWidthColumn(owner, 0, 120, 14, 14, 93, "AuctionHouseTableCellStat2Template");
+            stat2:GetHeaderFrame():SetText(L["TABLE_HEADER_STAT2"]);
+        end
+
 		local qualityColumn = tableBuilder:AddFixedWidthColumn(owner, 0, 84, 14, 14, 99, "AuctionHouseTableCellQualityTemplate");
-        qualityColumn:GetHeaderFrame():SetText("Quality");
+        qualityColumn:GetHeaderFrame():SetText(L["TABLE_HEADER_QUALITY"]);
 	end
 
 	return LayoutBrowseListTableBuilder;
@@ -131,13 +176,16 @@ local performSearch = function(self, button)
         AHCC.searchResultTable = nil
     end
 
+
     if AHCC.searchResultTable then
         AuctionHouseFrame.BrowseResultsFrame:Reset()
-        AuctionHouseFrame.BrowseResultsFrame.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AuctionHouseFrame.BrowseResultsFrame, AuctionHouseFrame.BrowseResultsFrame.ItemList, nil));
         AuctionHouseFrame.BrowseResultsFrame.searchStarted = true;
         AuctionHouseFrame.BrowseResultsFrame.ItemList:SetRefreshCallback(nil)
         AuctionHouseFrame.BrowseResultsFrame.tableBuilderLayoutDirty = true;
-        AHCC:sortResult(AuctionHouseFrame, 98)    
+
+        local sortby = cdata:HasFlag("AHCC_SHOWSTATS") and 93 or 91
+        AHCC:sortResult(AuctionHouseFrame, sortby, true)   
+        AuctionHouseFrame.BrowseResultsFrame.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AuctionHouseFrame.BrowseResultsFrame, AuctionHouseFrame.BrowseResultsFrame.ItemList, cdata:HasFlag("AHCC_SHOWSTATS"),  cdata.AHCC_subCategory));
        
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
@@ -162,12 +210,18 @@ function AHCC:AddonLoadedEvent(event, name)
         for categoryId, category in ipairs(AHCC.data.dataCategories) do 
             categoriesTable[categoryId] = AuctionFrame_CreateCategory(category["name"])
             categoriesTable[categoryId]:SetFlag("AHCC_CATEGORY");
+            if category.showStats then 
+                categoriesTable[categoryId]:SetFlag("AHCC_SHOWSTATS");
+            end
             categoriesTable[categoryId].AHCC_category = category["id"];
             for subCategoryId, subCategory in ipairs(category["subCategories"]) do 
                 local subcat = categoriesTable[categoryId]:CreateNamedSubCategory(subCategory["name"]);
                 subcat:SetFlag("AHCC_SUBCATEGORY");
                 subcat.AHCC_category= category["id"];
                 subcat.AHCC_subCategory = subCategory["id"];
+                if category.showStats then 
+                    subcat:SetFlag("AHCC_SHOWSTATS");
+                end
             end
 
             -- remove entry from AuctionCategories

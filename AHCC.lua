@@ -21,20 +21,25 @@ function AHCC:OnInitialize()
     AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
 end 
 
-
-
 local getResults = function()
     local filteredResults =  {}
     local results =  AHCC.data.dataStore[AHCC.nav.category][AHCC.nav.subCategory] or {}
 
+    -- set missing itemname 
+    for idx, entry in pairs(results) do
+        if not entry.name then
+            entry.name = GetItemInfo(entry.itemKey.itemID)
+        end
+    end
+   
     local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
     searchString = string.lower(searchString:gsub("%s+", ""))
 
     if searchString == "" then 
         filteredResults = results
     else
-        for _,entry in pairs(results) do
-            if string.find(string.lower(entry.name), searchString,1, true) then
+        for idx, entry in pairs(results) do
+            if entry.name and string.find(string.lower(entry.name), searchString,1, true) then
                 tinsert(filteredResults, entry)
             end
         end

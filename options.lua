@@ -8,7 +8,6 @@ AHCCOPT.title = "Auction House - Custom Categories"
 
 
 local defaultConfig = {
-   enable = true,
    fastBrowse = false
 }
 
@@ -24,12 +23,6 @@ end
 
 
  local Options = {
-    {
-       type = "checkbox",
-       variable = "enable",
-       name = "Enable Addon", 
-       tooltip = "Enable Addon"
-    },
     {
       type = "checkbox",
       variable = "fastBrowse",
@@ -99,10 +92,6 @@ end
 
  
  function AHCCOPT:setOptions()
-
-   --C_Timer.NewTicker(1, function()
-     -- DevTools_Dump(AHCCDB)
-   --end)
 
    AHCCOPT:generateView() 
 

@@ -17,11 +17,18 @@ AHCC.searchButton = nil
 
 
 function AHCC:OnInitialize()
-	AHCC:loadData()
-    AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
-
     AHCC:initOptions()
 end 
+
+function AHCC:OnEnable()
+    AHCC:loadData()
+    AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
+end
+
+
+
+
+
 
 local getResults = function()
     local filteredResults =  {}
@@ -131,7 +138,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 end
             end
         end
-        
+
         -- move last Categorie up (WOW Token)
         tinsert(categoriesTable, AuctionCategories[#AuctionCategories])
         -- remove it from the copy table

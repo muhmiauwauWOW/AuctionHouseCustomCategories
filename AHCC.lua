@@ -1,6 +1,10 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC", "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 
+function firstToUpper(str)
+    return (str:gsub("^%l", string.upper))
+end
+
 
 AHCC.isInCustomCategory = false
 AHCC.hasStatsColumn = false
@@ -39,27 +43,29 @@ local getResults = function()
     return filteredResults
 end
 
+function AHCC:AddFixedWidthColumn(owner, tableBuilder, name, width, key)
+    local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, AHCC.Config.sortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
+    column:GetHeaderFrame():SetText(name);
+end
 
-function GetBrowseListLayout(owner, itemList, showStats, isSubCategory)
+
+function GetBrowseListLayout(owner, itemList)
 	local function LayoutBrowseListTableBuilder(tableBuilder)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-		local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate", restrictQualityToFilter, hideItemLevel);
+		local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate");
 		nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
 
         if AHCC.hasStatsColumn then 
             if AHCC.nav.subCategory == 0 then 
-                local stat1 = tableBuilder:AddFixedWidthColumn(owner, 0, 120, 14, 14, AHCC.Config.sortOrder.stat1, "AuctionHouseTableCellStat1Template");
-                stat1:GetHeaderFrame():SetText(L["TABLE_HEADER_STAT1"]);
+                AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT1"], 120, "stat1")
             end
 
-            local stat2 = tableBuilder:AddFixedWidthColumn(owner, 0, 120, 14, 14, AHCC.Config.sortOrder.stat2, "AuctionHouseTableCellStat2Template");
-            stat2:GetHeaderFrame():SetText(L["TABLE_HEADER_STAT2"]);
+            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT2"], 120, "stat2")
         end
 
-		local qualityColumn = tableBuilder:AddFixedWidthColumn(owner, 0, 84, 14, 14, AHCC.Config.sortOrder.quality, "AuctionHouseTableCellQualityTemplate");
-        qualityColumn:GetHeaderFrame():SetText(L["TABLE_HEADER_QUALITY"]);
+        AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_QUALITY"], 84, "quality")
 	end
 
 	return LayoutBrowseListTableBuilder;

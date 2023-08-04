@@ -37,6 +37,11 @@
         "SPELL_HASTE_ABBR",
         "AuctionHouseSearchBarMixin",
         "AuctionHouseSearchButtonMixin",
-        "AuctionCategoryMixin"
+        "AuctionCategoryMixin",
+        "Settings",
+        "MinimalSliderWithSteppersMixin",
+        "SettingsPanelMixin",
+        "ShowAppropriateDialog",
+        "SettingsPanel"
     ]
 }

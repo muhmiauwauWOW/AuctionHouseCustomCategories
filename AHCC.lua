@@ -19,6 +19,8 @@ AHCC.searchButton = nil
 function AHCC:OnInitialize()
 	AHCC:loadData()
     AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
+
+    AHCC:initOptions()
 end 
 
 local getResults = function()

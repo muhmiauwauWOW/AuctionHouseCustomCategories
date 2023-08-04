@@ -3,7 +3,7 @@
 ## Notes: Adds custom categories to auction house
 ## Version: 1.2.6
 ## Author: Muhmiauwau
-
+## SavedVariables: AHCCDB
 
 
 #@no-lib-strip@
@@ -25,4 +25,6 @@ config.lua
 mixins.lua
 data.lua
 sort.lua
+
+options.lua
 

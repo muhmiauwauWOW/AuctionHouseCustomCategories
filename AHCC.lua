@@ -78,8 +78,7 @@ function GetBrowseListLayout(owner, itemList)
 	return LayoutBrowseListTableBuilder;
 end
 
-
-local performSearch = function() 
+local performSearch = function()
     local AHF = AuctionHouseFrame
     local CL = AuctionHouseFrame.CategoriesList
     local BRF = AuctionHouseFrame.BrowseResultsFrame
@@ -98,6 +97,8 @@ local performSearch = function()
         AHF:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
 end
+
+
 
 
 function AHCC:AddonLoadedEvent(event, name)
@@ -130,7 +131,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 end
             end
         end
-
+        
         -- move last Categorie up (WOW Token)
         tinsert(categoriesTable, AuctionCategories[#AuctionCategories])
         -- remove it from the copy table
@@ -138,7 +139,11 @@ function AHCC:AddonLoadedEvent(event, name)
         -- append all categories
         tAppendAll(categoriesTable, AuctionCategories)
 
+     
         AuctionCategories = categoriesTable
+
+
+   
 
 
 
@@ -150,6 +155,10 @@ function AHCC:AddonLoadedEvent(event, name)
                 AHCC.isInCustomCategory = true
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
                 AHCC.hasStatsColumn = cdata:HasFlag("AHCC_SHOWSTATS") and true or false
+
+                if AHCCDB.fastBrowse then
+                    performSearch()
+                end
             else 
                 AHCC.isInCustomCategory = false
                 AuctionHouseFrame.SearchBar.FilterButton:Show()

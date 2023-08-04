@@ -15,7 +15,6 @@ local defaultConfig = {
 function AHCC:initOptions()
   
    if AHCCDB == nil then
-      print("DB == nil")
       AHCCDB = defaultConfig
    end
 
@@ -40,6 +39,17 @@ end
  };
 
 
+function AHCCOPT:GetDropDownOptions(obj)
+   return function()
+      local container = Settings.CreateControlTextContainer();
+      for v , k in ipairs(obj) do
+         container:Add(v - 1, k);
+      end
+      return container:GetData();
+   end
+end
+
+
  function AHCCOPT:setCheckbox(category, opt)
     local variable, name, tooltip = opt.variable, opt.name, opt.tooltip;
     local setting = Settings.RegisterProxySetting(category, variable, AHCCDB, Settings.VarType.Boolean, name, defaultConfig[opt.variable])
@@ -49,13 +59,23 @@ end
 
 
 
-
- function AHCCOPT:setCheckbox(category, opt)
+ --[[
+   {
+      type = "dropdown",
+      variable = "droptest",
+      name = "dropdown", 
+      tooltip = "dropdown",
+      options = {
+         "Option A",
+         "Option B",
+         "Option C"
+      } 
+ ]]
+ function AHCCOPT:setDropDown(category, opt)
    local variable, name, tooltip = opt.variable, opt.name, opt.tooltip;
-   local setting = Settings.RegisterProxySetting(category, variable, AHCCDB, Settings.VarType.Boolean, name, defaultConfig[opt.variable])
-   Settings.CreateCheckBox(category, setting, tooltip);
+   local setting = Settings.RegisterProxySetting(category, variable, AHCCDB, Settings.VarType.Number, name, defaultConfig[opt.variable]);
+   Settings.CreateDropDown(category, setting, AHCCOPT:GetDropDownOptions(opt.options), tooltip);
 end 
-
 
 
 
@@ -63,11 +83,13 @@ end
 function AHCCOPT:generateView() 
    local category, layout = Settings.RegisterVerticalLayoutCategory(AHCCOPT.title);
     
-   for k, v in pairs(Options) do
-      if v.type == "checkbox" then
-         AHCCOPT:setCheckbox(category, v)
-      elseif v.type == "slider" then
-         --AHCC:setSlider(category, v)
+   for k, opt in pairs(Options) do
+      if opt.type == "checkbox" then
+         AHCCOPT:setCheckbox(category, opt)
+      elseif opt.type == "dropdown" then
+         AHCCOPT:setDropDown(category, opt)
+      elseif opt.type == "slider" then
+         --AHCC:setSlider(category, opt)
       end
    end
 

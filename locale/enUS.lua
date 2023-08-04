@@ -44,5 +44,7 @@ L["TABLE_HEADER_STAT2"] = "Secondary stat"
 
 
 -- Settings 
+L["Settings/title"] = "Auction House - Custom Categories"
+
 L["Settings/fastBrowse.name"] = "Fast Browse"
 L["Settings/fastBrowse.tooltip"] = "Show browse results category selection"

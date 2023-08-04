@@ -42,6 +42,7 @@
         "MinimalSliderWithSteppersMixin",
         "SettingsPanelMixin",
         "ShowAppropriateDialog",
-        "SettingsPanel"
+        "SettingsPanel",
+        "TOKEN_FILTER_LABEL"
     ]
 }

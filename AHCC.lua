@@ -117,7 +117,7 @@ function AHCC:AddonLoadedEvent(event, name)
         for categoryId, categoryEntry in ipairs(AHCC.data.dataCategories) do 
             local category = CreateFromMixins(AuctionCategoryMixin);
             categoriesTable[categoryId] = category
-            category.name = categoryEntry.name;
+            category.name = categoryEntry.name
             category:SetFlag("AHCC");
             if categoryEntry.showStats then 
                 category:SetFlag("AHCC_SHOWSTATS");

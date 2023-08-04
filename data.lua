@@ -211,16 +211,22 @@ local dataItems = {
 local formatToResultLines = function(entry)
     local newTable = {}
     for idx, item in pairs(entry.id) do 
-        newTable[idx] = {
-            itemKey = C_AuctionHouse.MakeItemKey(item),
-            quality = idx,
-            name = GetItemInfo(item),
-            totalQuantity=1,
-            minPrice=1,
-            containsOwnerItem=false,
-            stat1 = entry.subCategory,
-            stat2 = entry.stat2 or 0
-        }
+        local itemKey = C_AuctionHouse.MakeItemKey(item)
+        local name = GetItemInfo(item)
+        if itemKey and name then
+            local obj = {
+                itemKey = itemKey,
+                quality = idx,
+                name = name,
+                containsOwnerItem=false,
+                totalQuantity=1,
+                minPrice=1,
+                stat1 = entry.subCategory,
+                stat2 = entry.stat2 or 0
+            }
+
+            tinsert(newTable, obj)
+        end
     end
     return newTable
 end

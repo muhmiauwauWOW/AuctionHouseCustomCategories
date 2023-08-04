@@ -11,9 +11,9 @@ local sortConfig = sortConfigDefault
 
 local getSortFunc = function(key)
     if sortConfig[key] then 
-        return function(k1, k2) if k1[key] and k2[key] then return k1[key] < k2[key] end end
+        return function(k1, k2) if k1[key] ~= nil and k2[key] ~= nil then return k1[key] < k2[key] end end
     else
-        return function(k1, k2) if k1[key] and k2[key] then return k1[key] > k2[key] end end
+        return function(k1, k2) if k1[key] ~= nil and k2[key] ~= nil then return k1[key] > k2[key] end end
     end
 end
 

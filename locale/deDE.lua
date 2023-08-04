@@ -11,7 +11,6 @@ L["Runes"] = "Runen"
 L["Flasks"] = "Phiolen"
 L["Potions"] = "Tränke"
 
-
 -- Gem stats
 L["STAMINA"] = "Ausdauer"
 

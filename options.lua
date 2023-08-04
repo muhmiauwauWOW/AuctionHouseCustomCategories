@@ -26,8 +26,8 @@ end
     {
       type = "checkbox",
       variable = "fastBrowse",
-      name = "Fast Browse", 
-      tooltip = "Show Browse Results on Select a Category"
+      name = L["Settings/fastBrowse.name"],
+      tooltip = L["Settings/fastBrowse.tooltip"]
    },
  };
 

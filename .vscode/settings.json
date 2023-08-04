@@ -43,6 +43,8 @@
         "SettingsPanelMixin",
         "ShowAppropriateDialog",
         "SettingsPanel",
-        "TOKEN_FILTER_LABEL"
+        "TOKEN_FILTER_LABEL",
+        "CreateSettingsListSectionHeaderInitializer",
+        "NAMES_LABEL"
     ]
 }

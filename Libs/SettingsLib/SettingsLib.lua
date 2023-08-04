@@ -56,7 +56,10 @@ function SettingsLib:GetSettings(category, opt)
 end
 
 
-function SettingsLib:setCheckbox(category, opt)
+
+ --[[ Checkbox 
+ ]]
+function SettingsLib:addCheckbox(category, opt)
    opt.VarType = Settings.VarType.Boolean
    Settings.CreateCheckBox(category, SettingsLib:GetSettings(category, opt), opt.tooltip);
 end 
@@ -64,7 +67,7 @@ end
 
 
 
- --[[
+ --[[ Dropdown
    {
       type = "dropdown",
       variable = "droptest",
@@ -76,24 +79,36 @@ end
          "Option C"
       } 
  ]]
- function SettingsLib:setDropDown(category, opt)
+ function SettingsLib:addDropDown(category, opt)
    opt.VarType = Settings.VarType.Number
    Settings.CreateDropDown(category, SettingsLib:GetSettings(category, opt), SettingsLib:GetDropDownOptions(opt.options), opt.tooltip);
 end 
 
+ --[[ Headline
+   {
+      type = "headline",
+      name = L["Settings/fastBrowse.name"],
+   },
+]]
+function SettingsLib:addHeadline(layout, opt)
+   layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(opt.name));
+end
 
 
 
 function SettingsLib:generateView() 
    local category, layout = Settings.RegisterVerticalLayoutCategory(SettingsLib.title);
+
     
    for k, opt in pairs(SettingsLib.Options) do
       if opt.type == "checkbox" then
-        SettingsLib:setCheckbox(category, opt)
+        SettingsLib:addCheckbox(category, opt)
       elseif opt.type == "dropdown" then
-        SettingsLib:setDropDown(category, opt)
+        SettingsLib:addDropDown(category, opt)
       elseif opt.type == "slider" then
          --AHCC:setSlider(category, opt)
+      elseif opt.type == "headline" then
+         SettingsLib:addHeadline(layout, opt)
       end
    end
 

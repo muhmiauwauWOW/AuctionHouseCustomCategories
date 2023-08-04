@@ -34,6 +34,9 @@
         "LE_UNIT_STAT_STAMINA",
         "STA_LCD",
         "CRIT_ABBR",
-        "SPELL_HASTE_ABBR"
+        "SPELL_HASTE_ABBR",
+        "AuctionHouseSearchBarMixin",
+        "AuctionHouseSearchButtonMixin",
+        "AuctionCategoryMixin"
     ]
 }

@@ -34,7 +34,7 @@ L["CELL_VERSATILITY"] = STAT_VERSATILITY
 -- 
 
 L["Runes"] = "Runes"
-L["Flasks"] = "Phiols"
+L["Flasks"] = "Phials"
 L["Potions"] = "Potions"
 L["STAMINA"] = "Stamina"
 L["CELL_STAMINA"] = "Stamina"

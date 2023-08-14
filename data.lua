@@ -178,7 +178,7 @@ local dataItems = {
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 198160, 198161, 198162 } }, -- Vollkommen sichere Raketen 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 198163, 198164, 198165 } }, -- Endloser Nadelhaufen 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 191939, 191933, 191940 } }, -- Urzeitlicher Schleifstein 
-    { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 191943, 191945, 191944 } }, -- Urzeitlicher Gewichtsstein 
+    { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 191943, 191944, 191945 } }, -- Urzeitlicher Gewichtsstein 
     { ["category"] = 3, ["subCategory"] = 2,  ["id"] = { 191327, 191328, 191329 } }, -- Eisige Phiole der verderbenden Wut 
     { ["category"] = 3, ["subCategory"] = 2,  ["id"] = { 191330, 191331, 191332 } }, -- Phiole der aufgeladenen Isolation 
     { ["category"] = 3, ["subCategory"] = 2,  ["id"] = { 191333, 191334, 191335 } }, -- Phiole des eisigen Zorns 

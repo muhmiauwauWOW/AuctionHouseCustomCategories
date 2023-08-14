@@ -35,16 +35,10 @@ L["CELL_VERSATILITY"] = STAT_VERSATILITY
 
 L["Runes"] = "Runes"
 L["Flasks"] = "Phials"
+L["Food"] = "Food"
 L["Potions"] = "Potions"
 L["STAMINA"] = "Stamina"
 L["CELL_STAMINA"] = "Stamina"
 L["TABLE_HEADER_QUALITY"] = "Quality"
 L["TABLE_HEADER_STAT1"] = "Main stat"
 L["TABLE_HEADER_STAT2"] = "Secondary stat"
-
-
--- Settings 
-L["Settings/title"] = "Auction House - Custom Categories"
-
-L["Settings/fastBrowse.name"] = "Fast Browse"
-L["Settings/fastBrowse.tooltip"] = "Show browse results category selection"

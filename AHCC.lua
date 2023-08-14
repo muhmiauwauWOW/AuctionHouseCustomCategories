@@ -8,6 +8,7 @@ end
 
 AHCC.isInCustomCategory = false
 AHCC.hasStatsColumn = false
+AHCC.hasQualityColumn = false
 AHCC.nav = {}
 AHCC.nav.category = nil
 AHCC.nav.subCategory = nil
@@ -79,7 +80,9 @@ function GetBrowseListLayout(owner, itemList)
             AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT2"], 120, "stat2")
         end
 
-        AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_QUALITY"], 84, "quality")
+        if AHCC.hasQualityColumn then 
+            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_QUALITY"], 84, "quality")
+        end
 	end
 
 	return LayoutBrowseListTableBuilder;
@@ -122,6 +125,9 @@ function AHCC:AddonLoadedEvent(event, name)
             if categoryEntry.showStats then 
                 category:SetFlag("AHCC_SHOWSTATS");
             end
+            if categoryEntry.hideQuality then 
+                category:SetFlag("AHCC_HIDEQUALITY");
+            end
             category.AHCC_category = categoryEntry.id;
             category.AHCC_subCategory = 0;
             category.subCategories = {}
@@ -135,6 +141,9 @@ function AHCC:AddonLoadedEvent(event, name)
                 subCategory.AHCC_subCategory = subCategoryEntry.id;
                 if categoryEntry.showStats then 
                     subCategory:SetFlag("AHCC_SHOWSTATS");
+                end
+                if subCategoryEntry.hideQuality then 
+                    subCategory:SetFlag("AHCC_HIDEQUALITY");
                 end
             end
         end
@@ -162,7 +171,12 @@ function AHCC:AddonLoadedEvent(event, name)
                 AHCC.isInCustomCategory = true
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
                 AHCC.hasStatsColumn = cdata:HasFlag("AHCC_SHOWSTATS") and true or false
-
+                if cdata:HasFlag("AHCC_HIDEQUALITY") then 
+                    AHCC.hasQualityColumn = false
+                else
+                    AHCC.hasQualityColumn = true
+                end
+              
                 performSearch()
             else 
                 AHCC.isInCustomCategory = false

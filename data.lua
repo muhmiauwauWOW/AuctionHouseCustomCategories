@@ -95,7 +95,12 @@ local dataCategories = {
             },
             {
                 ["id"] = 3,
-                ["name"] = L["Potions"] 
+                ["name"] = L["Potions"]
+            },
+            {
+                ["id"] = 4,
+                ["name"] = L["Food"],
+                ["hideQuality"] = true,
             }
         }
     }
@@ -205,26 +210,44 @@ local dataItems = {
     { ["category"] = 3, ["subCategory"] = 3,  ["id"] = { 191378, 191379, 191380 } }, -- Erfrischender Heiltrank 
     { ["category"] = 3, ["subCategory"] = 3,  ["id"] = { 191372, 191373, 191374 } }, -- Residualer Wirkstoff der Neuralkanalisierung 
 
+    { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 204072 }, -- Teuflisch gefüllte Eier
+    { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197792 }, -- Schicksalhafter Glückskeks
+
+    { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197793 }, -- Yusas herzhafter Eintopf
+    { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197795 }, -- Vorrat an drakonischen Delikatessen
+    { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197794 }, -- Großbankett der Kalu'ak
+
+
 }
+
+
+local getResultLine = function(idx, item, entry)
+    return {
+        itemKey = {
+            itemLevel = 0,
+            itemSuffix = 0,
+            itemID = item,
+            balltePetSpeciesID = 0
+        },
+        quality = idx,
+        containsOwnerItem=false,
+        totalQuantity=1,
+        minPrice=1,
+        stat1 = entry.subCategory,
+        stat2 = entry.stat2 or 0
+    }
+
+end
 
 
 local formatToResultLines = function(entry)
     local newTable = {}
-    for idx, item in pairs(entry.id) do 
-        tinsert(newTable,{
-            itemKey = {
-                itemLevel = 0,
-                itemSuffix = 0,
-                itemID = item,
-                balltePetSpeciesID = 0
-            },
-            quality = idx,
-            containsOwnerItem=false,
-            totalQuantity=1,
-            minPrice=1,
-            stat1 = entry.subCategory,
-            stat2 = entry.stat2 or 0
-        })
+    if type(entry.id) == "table" then 
+        for idx, item in pairs(entry.id) do 
+            tinsert(newTable, getResultLine(idx,item,entry))
+        end
+    else
+        tinsert(newTable, getResultLine(1, entry.id, entry))
     end
     return newTable
 end

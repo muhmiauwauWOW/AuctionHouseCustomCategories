@@ -17,7 +17,7 @@ AHCC.searchButton = nil
 
 
 function AHCC:OnInitialize()
-    AHCC:initOptions()
+   -- AHCC:initOptions()
 end 
 
 function AHCC:OnEnable()
@@ -90,7 +90,7 @@ local performSearch = function()
     local CL = AuctionHouseFrame.CategoriesList
     local BRF = AuctionHouseFrame.BrowseResultsFrame
 
-    -- fill results table
+    -- fill results AHCCDB
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
 
     if AHCC.searchResultTable then
@@ -163,9 +163,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
                 AHCC.hasStatsColumn = cdata:HasFlag("AHCC_SHOWSTATS") and true or false
 
-                if AHCCDB.fastBrowse then
-                    performSearch()
-                end
+                performSearch()
             else 
                 AHCC.isInCustomCategory = false
                 AuctionHouseFrame.SearchBar.FilterButton:Show()

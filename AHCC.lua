@@ -31,9 +31,6 @@ end
 
 
 
-
-
-
 local getResults = function()
     local filteredResults =  {}
     local results =  AHCC.data.dataStore[AHCC.nav.category][AHCC.nav.subCategory] or {}
@@ -64,8 +61,6 @@ local getResults = function()
     end)
 
 
-    DevTools_Dump(filteredQualityResults)
-  
 
     return filteredQualityResults
 end

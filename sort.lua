@@ -1,4 +1,5 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
+local _ = LibStub("Lodash"):Get()
 
 local sortConfigDefault = {
     name = true,
@@ -18,10 +19,13 @@ local getSortFunc = function(key)
 end
 
 function AHCC:sortResult(self, sortOrder, notReverse)
-
-
     local key = ""
-    local tempResultTable = {}
+    local  tempResultTable = {
+        { quality = 1, entries = {} },
+        { quality = 2, entries = {} },
+        { quality = 3, entries = {} },
+    }
+
     local sortedResultTable = {}
 
     if sortOrder == AHCC.Config.sortOrder.name then 
@@ -34,7 +38,6 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         key = "quality"
     end
 
-
     if notReverse then
         sortConfig = {
             name = true,
@@ -46,36 +49,18 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         sortConfig[key] = not sortConfig[key]
     end
 
-
-    tempResultTable[1] = {
-        quality = 1,
-        entries = {}
-    }
-
-    tempResultTable[2] = {
-        quality = 2,
-        entries = {}
-    }
-
-    tempResultTable[3] = {
-        quality = 3,
-        entries = {}
-    }
-
-    for idx, entry in ipairs(AHCC.searchResultTable) do 
+    _.forEach(AHCC.searchResultTable, function(entry) 
         tinsert(tempResultTable[entry.quality]["entries"], entry)
-    end 
+    end)
 
-    -- sort by quality
     table.sort(tempResultTable, getSortFunc("quality"))
 
-    -- sort by key
-    for idx, entry in ipairs(tempResultTable) do
+    _.forEach(tempResultTable, function(entry) 
         if key ~= "quality" then
             table.sort(entry["entries"], getSortFunc(key))
         end
-        tAppendAll(sortedResultTable,entry["entries"])
-    end
+        tAppendAll(sortedResultTable, entry["entries"])
+    end)
 
      -- display results
     AHCC.searchResultTable = sortedResultTable

@@ -1,7 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 
-
 AHCC.Config = {}
 AHCC.Config.sortOrder = {
     name = 91,

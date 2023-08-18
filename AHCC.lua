@@ -1,8 +1,6 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC", "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-
-local Lodash = LibStub:GetLibrary("Lodash")
-local _ = Lodash:init()
+local _ = LibStub("Lodash"):Get()
 
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
@@ -30,39 +28,27 @@ function AHCC:OnEnable()
 end
 
 
-
 local getResults = function()
-    local filteredResults =  {}
-    local results =  AHCC.data.dataStore[AHCC.nav.category][AHCC.nav.subCategory] or {}
-
-    -- set missing itemname 
-    for idx, entry in pairs(results) do
-        if not entry.name then
-            entry.name = GetItemInfo(entry.itemKey.itemID)
-        end
-    end
-   
     local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
     searchString = string.lower(searchString:gsub("%s+", ""))
+    local results =  AHCC.data.dataStore[AHCC.nav.category][AHCC.nav.subCategory] or {}
 
-    if searchString == "" then 
-        filteredResults = results
-    else
-        for idx, entry in pairs(results) do
-            if entry.name and string.find(string.lower(entry.name), searchString,1, true) then
-                tinsert(filteredResults, entry)
+    if (searchString ~= "") then 
+         -- set missing itemname    
+        results = _.map(results, function(entry)
+            if not entry.name then
+                entry.name = GetItemInfo(entry.itemKey.itemID)
             end
-        end
+            return entry
+        end)
+        results = _.filter(results, function(filterEntry)
+            return filterEntry.name and string.find(string.lower(filterEntry.name), searchString,1, true)
+        end)
     end
 
-
-    local filteredQualityResults = _.filter(filteredResults, function(filterEntry)
-        return AHCC.Config.ProfessionsQualityActive[filterEntry.quality]
+    return _.filter(results, function(entry)
+        return AHCC.Config.ProfessionsQualityActive[entry.quality]
     end)
-
-
-
-    return filteredQualityResults
 end
 
 function AHCC:AddFixedWidthColumn(owner, tableBuilder, name, width, key)
@@ -116,9 +102,17 @@ end
 
 
 function AHCC:performSearch()
+    local AHF = AuctionHouseFrame
+    local CL = AuctionHouseFrame.CategoriesList
+    local BRF = AuctionHouseFrame.BrowseResultsFrame
     performSearch()
+    BRF.tableBuilderLayoutDirty = true;
 end
 
+function AHCC:Reset()
+    local BRF = AuctionHouseFrame.BrowseResultsFrame
+    BRF:Reset()
+end
 
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
@@ -129,7 +123,8 @@ function AHCC:AddonLoadedEvent(event, name)
         local categoriesTable = {}
 
         -- add Custon categories 
-        for categoryId, categoryEntry in ipairs(AHCC.data.dataCategories) do 
+        _.forEach(AHCC.data.dataCategories, function(categoryEntry, categoryId) 
+        
             local category = CreateFromMixins(AuctionCategoryMixin);
             categoriesTable[categoryId] = category
             category.name = categoryEntry.name
@@ -144,7 +139,7 @@ function AHCC:AddonLoadedEvent(event, name)
             category.AHCC_subCategory = 0;
             category.subCategories = {}
 
-            for subCategoryId, subCategoryEntry in ipairs(categoryEntry["subCategories"]) do 
+            _.forEach(categoryEntry["subCategories"], function(subCategoryEntry, subCategoryId) 
                 local subCategory = CreateFromMixins(AuctionCategoryMixin);
                 category.subCategories[subCategoryId] = subCategory;
                 subCategory.name = subCategoryEntry.name;
@@ -157,22 +152,10 @@ function AHCC:AddonLoadedEvent(event, name)
                 if subCategoryEntry.hideQuality then 
                     subCategory:SetFlag("AHCC_HIDEQUALITY");
                 end
-            end
-        end
-
-        -- move last Categorie up (WOW Token)
-        tinsert(categoriesTable, AuctionCategories[#AuctionCategories])
-        -- remove it from the copy table
-        tremove(AuctionCategories,#AuctionCategories)
-        -- append all categories
-        tAppendAll(categoriesTable, AuctionCategories)
-
-     
-        AuctionCategories = categoriesTable
-
-
-   
-
+            end)
+        end)
+       
+        AuctionCategories = _.union(categoriesTable, {_.last(AuctionCategories)}, _.initial(AuctionCategories))
 
 
         hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
@@ -191,7 +174,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 end
               
                 performSearch()
-            else 
+            else
                 AHCC.isInCustomCategory = false
                 AuctionHouseFrame.SearchBar.QualityFrame:Hide()
                 AuctionHouseFrame.SearchBar.FilterButton:Show()
@@ -209,7 +192,6 @@ function AHCC:AddonLoadedEvent(event, name)
                 local filtersArray = AuctionHouseFrame.SearchBar.FilterButton:CalculateFiltersArray();
                 AuctionHouseFrame:SendBrowseQuery(searchString, minLevel, maxLevel, filtersArray);
             end
-            
         end
 
         AHCC:initSort()

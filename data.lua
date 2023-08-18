@@ -1,7 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-
-
+local _ = LibStub("Lodash"):Get()
 
 local dataCategories = {
     {
@@ -296,44 +295,34 @@ end
 local formatToResultLines = function(entry)
     local newTable = {}
     if type(entry.id) == "table" then 
-        for idx, item in pairs(entry.id) do 
+        _.forEach(entry.id, function(item, idx)
             tinsert(newTable, getResultLine(idx, item, entry))
-        end
+        end)
     else
         tinsert(newTable, getResultLine(1, entry.id, entry))
     end
     return newTable
 end
 
-
-function isTnTable(table, entry)
-   for _, l in ipairs(table) do 
-        if l.itemKey.itemID == entry.itemKey.itemID then
-            return true
-         end
-    end
-    return false
-end
-
-function getDataStore()
+local getDataStore = function()
     local dataStore = {}
-
-    for _,entry in pairs(dataItems) do
+    _.forEach(dataItems, function(entry)
         dataStore[entry.category] = dataStore[entry.category] or {}
         dataStore[entry.category][0] = dataStore[entry.category][0] or {}
         dataStore[entry.category][entry.subCategory] = dataStore[entry.category][entry.subCategory] or {}
 
         local entries = formatToResultLines(entry)
-
-        for _, entryI in ipairs(entries) do
-            local isin = isTnTable(dataStore[entry.category][0], entryI)
-            if isin == false and entry.subCategory ~= 0 then 
+        _.forEach(entries, function(entryI)
+            local isin = _.find(dataStore[entry.category][0], function(v)
+                return v.itemKey.itemID == entryI.itemKey.itemID
+            end)
+            if not isin and entry.subCategory ~= 0 then 
                 tinsert(dataStore[entry.category][0], entryI)
             end
-        end
-        tAppendAll(dataStore[entry.category][entry.subCategory], entries)
-    end
 
+            tinsert(dataStore[entry.category][entry.subCategory], entryI)
+        end)
+    end)
     return dataStore
 end
 

@@ -11,3 +11,7 @@ L["Flasks"] = "Flacons"
 L["Potions"] = "Potions"
 L["Runes"] = "Runes"
 L["STAMINA"] = "Endurance"
+
+
+
+L["Draconic Missive"] = "Missive draconique"

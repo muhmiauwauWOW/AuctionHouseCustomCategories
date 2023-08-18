@@ -103,6 +103,29 @@ local dataCategories = {
                 ["hideQuality"] = true,
             }
         }
+    },
+    {
+        ["id"] = 4,
+        ["name"] =  L["Draconic Missive"],
+        ["showStats"] = true,
+        ["subCategories"] = {
+            {
+                ["id"] = 1,
+                ["name"] = L["CRITICAL_STRIKE"],
+            },
+            {
+                ["id"] = 2,
+                ["name"] = L["HASTE"],
+            },
+            {
+                ["id"] = 3,
+                ["name"] = L["MASTERY"],
+            },
+            {
+                ["id"] = 4,
+                ["name"] = L["VERSATILITY"],
+            },
+        }
     }
 }
 
@@ -155,26 +178,26 @@ local dataItems = {
     { ["category"] = 1, ["subCategory"] = 11,  ["id"] = { 198316, 198317, 198318 } }, -- Hochleistungsthermoscanner 
     { ["category"] = 1, ["subCategory"] = 11,  ["id"] = { 198310, 198311, 198312 } }, -- Gyroskopisches Kaleidoskop 
 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192926, 192927, 192928 }, ["stat2"] = 0 }, -- Tödlicher Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192917, 192918, 192919 }, ["stat2"] = 2 }, -- Listiger Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192920, 192921, 192922 }, ["stat2"] = 3 }, -- Alexstraszit des Mentors 
-    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192923, 192924, 192925 }, ["stat2"] = 4 }, -- Strahlender Alexstraszit 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192953, 192954, 192955 }, ["stat2"] = 0 }, -- Spiegelnder Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192943, 192944, 192945 }, ["stat2"] = 1 }, -- Listiger Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192946, 192947, 192948 }, ["stat2"] = 3 }, -- Schneidender Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192950, 192951, 192952 }, ["stat2"] = 4 }, -- Geladener Ysmaragd 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192965, 192966, 192967 }, ["stat2"] = 0 }, -- Rissiger Neltharit 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192956, 192957, 192958 }, ["stat2"] = 1 }, -- Neltharit des Mentors 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192959, 192960, 192961 }, ["stat2"] = 2 }, -- Schneidender Neltharit 
-    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192962, 192963, 192964 }, ["stat2"] = 4 }, -- Meditativer Neltharit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192940, 192941, 192942 }, ["stat2"] = 0 }, -- Stürmischer Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192929, 192931, 192932 }, ["stat2"] = 1 }, -- Strahlender Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192933, 192934, 192935 }, ["stat2"] = 2 }, -- Geladener Malygit 
-    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192936, 192937, 192938 }, ["stat2"] = 3 }, -- Meditativer Malygit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192968, 192969, 192970 }, ["stat2"] = 1 }, -- Gezackter Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192971, 192972, 192973 }, ["stat2"] = 2 }, -- Kraftvoller Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192974, 192975, 192976 }, ["stat2"] = 3 }, -- Imposanter Nozdorit 
-    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192977, 192978, 192979 }, ["stat2"] = 4 }, -- Beständiger Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192926, 192927, 192928 }, ["stat1"] = 1, ["stat2"] = 0 }, -- Tödlicher Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192917, 192918, 192919 }, ["stat1"] = 1, ["stat2"] = 2 }, -- Listiger Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192920, 192921, 192922 }, ["stat1"] = 1, ["stat2"] = 3 }, -- Alexstraszit des Mentors 
+    { ["category"] = 2, ["subCategory"] = 1,  ["id"] = { 192923, 192924, 192925 }, ["stat1"] = 1, ["stat2"] = 4 }, -- Strahlender Alexstraszit 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192953, 192954, 192955 }, ["stat1"] = 2, ["stat2"] = 0 }, -- Spiegelnder Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192943, 192944, 192945 }, ["stat1"] = 2, ["stat2"] = 1 }, -- Listiger Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192946, 192947, 192948 }, ["stat1"] = 2, ["stat2"] = 3 }, -- Schneidender Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 2,  ["id"] = { 192950, 192951, 192952 }, ["stat1"] = 2, ["stat2"] = 4 }, -- Geladener Ysmaragd 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192965, 192966, 192967 }, ["stat1"] = 3, ["stat2"] = 0 }, -- Rissiger Neltharit 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192956, 192957, 192958 }, ["stat1"] = 3, ["stat2"] = 1 }, -- Neltharit des Mentors 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192959, 192960, 192961 }, ["stat1"] = 3, ["stat2"] = 2 }, -- Schneidender Neltharit 
+    { ["category"] = 2, ["subCategory"] = 3,  ["id"] = { 192962, 192963, 192964 }, ["stat1"] = 3, ["stat2"] = 4 }, -- Meditativer Neltharit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192940, 192941, 192942 }, ["stat1"] = 4, ["stat2"] = 0 }, -- Stürmischer Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192929, 192931, 192932 }, ["stat1"] = 4, ["stat2"] = 1 }, -- Strahlender Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192933, 192934, 192935 }, ["stat1"] = 4, ["stat2"] = 2 }, -- Geladener Malygit 
+    { ["category"] = 2, ["subCategory"] = 4,  ["id"] = { 192936, 192937, 192938 }, ["stat1"] = 4, ["stat2"] = 3 }, -- Meditativer Malygit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192968, 192969, 192970 }, ["stat1"] = 5, ["stat2"] = 1 }, -- Gezackter Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192971, 192972, 192973 }, ["stat1"] = 5, ["stat2"] = 2 }, -- Kraftvoller Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192974, 192975, 192976 }, ["stat1"] = 5, ["stat2"] = 3 }, -- Imposanter Nozdorit 
+    { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192977, 192978, 192979 }, ["stat1"] = 5, ["stat2"] = 4 }, -- Beständiger Nozdorit 
 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194817, 194819, 194820 } }, -- Heulrune 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194821, 194822, 194823 } }, -- Summrune 
@@ -218,6 +241,36 @@ local dataItems = {
     { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197794 }, -- Großbankett der Kalu'ak
 
 
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 192553, 192554, 192552 },  ["stat1"] = 1, ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194579, 194580, 194578 },  ["stat1"] = 1, ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194567, 194568, 194566 },  ["stat1"] = 3, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194573, 194574, 194572 },  ["stat1"] = 4, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194570, 194571, 194569 },  ["stat1"] = 4, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
+    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194576, 194577, 194575 },  ["stat1"] = 4, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
+
+    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 192553, 192554, 192552 },  ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
+    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 194579, 194580, 194578 },  ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 194573, 194574, 194572 },  ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
+  
+
+    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 192553, 192554, 192552 }, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
+    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
+    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
+
+
+
+    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194579, 194580, 194578 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
+    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
+
+
+    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194573, 194574, 194572 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
+    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
+    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
+
+
+
+
 }
 
 
@@ -233,7 +286,7 @@ local getResultLine = function(idx, item, entry)
         containsOwnerItem=false,
         totalQuantity=1,
         minPrice=1,
-        stat1 = entry.subCategory,
+        stat1 = (entry.subCategory == 0 and entry.stat1) and  entry.stat1 or entry.subCategory,
         stat2 = entry.stat2 or 0
     }
 
@@ -244,7 +297,7 @@ local formatToResultLines = function(entry)
     local newTable = {}
     if type(entry.id) == "table" then 
         for idx, item in pairs(entry.id) do 
-            tinsert(newTable, getResultLine(idx,item,entry))
+            tinsert(newTable, getResultLine(idx, item, entry))
         end
     else
         tinsert(newTable, getResultLine(1, entry.id, entry))
@@ -252,6 +305,15 @@ local formatToResultLines = function(entry)
     return newTable
 end
 
+
+function isTnTable(table, entry)
+   for _, l in ipairs(table) do 
+        if l.itemKey.itemID == entry.itemKey.itemID then
+            return true
+         end
+    end
+    return false
+end
 
 function getDataStore()
     local dataStore = {}
@@ -262,7 +324,14 @@ function getDataStore()
         dataStore[entry.category][entry.subCategory] = dataStore[entry.category][entry.subCategory] or {}
 
         local entries = formatToResultLines(entry)
-        tAppendAll(dataStore[entry.category][0], entries)
+
+        for _, entryI in ipairs(entries) do
+            local isin = isTnTable(dataStore[entry.category][0], entryI)
+            print(isin, entryI.itemKey.itemID)
+            if isin == false and entry.subCategory ~= 0 then 
+                tinsert(dataStore[entry.category][0], entryI)
+            end
+        end
         tAppendAll(dataStore[entry.category][entry.subCategory], entries)
     end
 

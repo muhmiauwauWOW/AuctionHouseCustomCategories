@@ -45,6 +45,7 @@
         "SettingsPanel",
         "TOKEN_FILTER_LABEL",
         "CreateSettingsListSectionHeaderInitializer",
-        "NAMES_LABEL"
+        "NAMES_LABEL",
+        "AUCTION_CATEGORY_TRADE_GOODS"
     ]
 }

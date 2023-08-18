@@ -19,3 +19,6 @@ L["CELL_STAMINA"] = "Ausdauer"
 L["TABLE_HEADER_QUALITY"] = "Qualität"
 L["TABLE_HEADER_STAT1"] = "Hauptwert"
 L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
+
+
+L["Draconic Missive"] = "Drakonische Schreiben"

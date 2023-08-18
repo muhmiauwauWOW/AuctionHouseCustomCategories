@@ -327,7 +327,6 @@ function getDataStore()
 
         for _, entryI in ipairs(entries) do
             local isin = isTnTable(dataStore[entry.category][0], entryI)
-            print(isin, entryI.itemKey.itemID)
             if isin == false and entry.subCategory ~= 0 then 
                 tinsert(dataStore[entry.category][0], entryI)
             end

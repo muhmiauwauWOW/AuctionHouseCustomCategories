@@ -5,9 +5,6 @@
    <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 
 
-
-
-
     <Frame name="AHCCQualitySelectFrameTemplate" virtual="true">
       <Size x="80" y="23"/>
 		<Frames>
@@ -51,12 +48,8 @@
             </Anchors>
          </Button>
 		</Frames>
-		
 		<Anchors>
 			<Anchor point="LEFT" relativeKey="$parent.SearchBox" relativePoint="RIGHT" x="8" y="0"/>
 		</Anchors>
-		<Scripts>
-			<OnLoad method="OnLoad"/>
-		</Scripts>
 	</Frame>
 </Ui>

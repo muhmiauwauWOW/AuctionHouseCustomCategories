@@ -35,3 +35,6 @@ AHCC.Config.ProfessionsQualityIconTable = {
 }
 
 AHCC.Config.ProfessionsQualityIconSize = 0.6
+
+
+AHCC.Config.ProfessionsQualityActive = {false, false, true}

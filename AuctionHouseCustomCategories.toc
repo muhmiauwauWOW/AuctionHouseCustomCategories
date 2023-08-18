@@ -7,14 +7,15 @@
 
 
 #@no-lib-strip@
-libs\LibStub\LibStub.lua
-libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 
 Libs\AceAddon-3.0\AceAddon-3.0.xml
-libs\AceEvent-3.0\AceEvent-3.0.xml
-libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceLocale-3.0\AceLocale-3.0.xml
 #@end-no-lib-strip@
 
+Libs\Lodash\Lodash.lua
 
 locale\locale.xml
 

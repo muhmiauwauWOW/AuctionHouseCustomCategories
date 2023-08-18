@@ -39,3 +39,25 @@ AuctionHouseTableCellStat2Mixin = CreateFromMixins(AuctionHouseTableCellStatMixi
 function AuctionHouseTableCellStat2Mixin:Populate(rowData, dataIndex)
     self:updateText(rowData.stat2)
 end
+
+
+
+AHCCQualitySelectButtonMixin = {}
+
+function AHCCQualitySelectButtonMixin:OnLoad()
+    self:SetState(AHCC.Config.ProfessionsQualityActive[self.tier])
+    self:SetAtlas(self.iconAtlas, AHCC.Config.ProfessionsQualityIconSize);
+    SquareIconButtonMixin.OnLoad(self);
+end
+
+function AHCCQualitySelectButtonMixin:OnClick()
+    local state = not AHCC.Config.ProfessionsQualityActive[self.tier]
+    self:SetState(state)
+    AHCC:performSearch()
+end
+
+function AHCCQualitySelectButtonMixin:SetState(state)
+    AHCC.Config.ProfessionsQualityActive[self.tier] = state
+    self.Icon:SetDesaturated(not state);
+end
+

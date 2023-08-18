@@ -1,6 +1,9 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC", "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 
+local Lodash = LibStub:GetLibrary("Lodash")
+local _ = Lodash:init()
+
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
@@ -55,7 +58,16 @@ local getResults = function()
         end
     end
 
-    return filteredResults
+
+    local filteredQualityResults = _.filter(filteredResults, function(filterEntry)
+        return AHCC.Config.ProfessionsQualityActive[filterEntry.quality]
+    end)
+
+
+    DevTools_Dump(filteredQualityResults)
+  
+
+    return filteredQualityResults
 end
 
 function AHCC:AddFixedWidthColumn(owner, tableBuilder, name, width, key)
@@ -93,7 +105,6 @@ local performSearch = function()
     local CL = AuctionHouseFrame.CategoriesList
     local BRF = AuctionHouseFrame.BrowseResultsFrame
 
-    -- fill results AHCCDB
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
 
     if AHCC.searchResultTable then
@@ -109,10 +120,16 @@ local performSearch = function()
 end
 
 
+function AHCC:performSearch()
+    performSearch()
+end
 
 
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
+
+        AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
+
 
         local categoriesTable = {}
 
@@ -169,6 +186,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 AHCC.nav.category = cdata.AHCC_category
                 AHCC.nav.subCategory = cdata.AHCC_subCategory
                 AHCC.isInCustomCategory = true
+                AuctionHouseFrame.SearchBar.QualityFrame:Show()
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
                 AHCC.hasStatsColumn = cdata:HasFlag("AHCC_SHOWSTATS") and true or false
                 if cdata:HasFlag("AHCC_HIDEQUALITY") then 
@@ -180,6 +198,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 performSearch()
             else 
                 AHCC.isInCustomCategory = false
+                AuctionHouseFrame.SearchBar.QualityFrame:Hide()
                 AuctionHouseFrame.SearchBar.FilterButton:Show()
             end
         end)

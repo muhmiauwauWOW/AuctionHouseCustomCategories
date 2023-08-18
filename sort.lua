@@ -46,13 +46,23 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         sortConfig[key] = not sortConfig[key]
     end
 
+
+    tempResultTable[1] = {
+        quality = 1,
+        entries = {}
+    }
+
+    tempResultTable[2] = {
+        quality = 2,
+        entries = {}
+    }
+
+    tempResultTable[3] = {
+        quality = 3,
+        entries = {}
+    }
+
     for idx, entry in ipairs(AHCC.searchResultTable) do 
-        if not tempResultTable[entry.quality] then 
-            tempResultTable[entry.quality] = {
-                quality = entry.quality,
-                entries = {}
-            }
-        end
         tinsert(tempResultTable[entry.quality]["entries"], entry)
     end 
 

@@ -56,27 +56,44 @@ local dataCategories = {
     {
         ["id"] = 2,
         ["name"] = L["Gems"],
-        ["showStats"] = true,
+        ["config"] = {
+            ["columns"] = {"stat1", "stat2", "quality"}
+        },
         ["subCategories"] = {
             {
                 ["id"] = 1,
                 ["name"] = L["CRITICAL_STRIKE"],
+                ["config"] = {
+                    ["columns"] = {"stat2", "quality"}
+                }
             },
             {
                 ["id"] = 2,
                 ["name"] = L["HASTE"],
+                ["config"] = {
+                    ["columns"] = {"stat2", "quality"}
+                }
             },
             {
                 ["id"] = 3,
                 ["name"] = L["MASTERY"],
+                ["config"] = {
+                    ["columns"] = {"stat2", "quality"}
+                }
             },
             {
                 ["id"] = 4,
                 ["name"] = L["VERSATILITY"],
+                ["config"] = {
+                    ["columns"] = {"stat2", "quality"}
+                }
             },
             {
                 ["id"] = 5,
-                ["name"] = L["STAMINA"]
+                ["name"] = L["STAMINA"],
+                ["config"] = {
+                    ["columns"] = {"stat2", "quality"}
+                }
             }
         },
     },
@@ -99,31 +116,53 @@ local dataCategories = {
             {
                 ["id"] = 4,
                 ["name"] = L["Food"],
-                ["hideQuality"] = true,
+                ["config"] = {
+                    ["columns"] = {}
+                },
             }
         }
     },
     {
         ["id"] = 4,
-        ["name"] =  L["Draconic Missive"],
-        ["showStats"] = true,
+        ["name"] =  L["Optional Reagents"],
         ["subCategories"] = {
             {
                 ["id"] = 1,
-                ["name"] = L["CRITICAL_STRIKE"],
-            },
-            {
-                ["id"] = 2,
-                ["name"] = L["HASTE"],
-            },
-            {
-                ["id"] = 3,
-                ["name"] = L["MASTERY"],
-            },
-            {
-                ["id"] = 4,
-                ["name"] = L["VERSATILITY"],
-            },
+                ["name"] =  L["Draconic Missive"],
+                ["config"] = {
+                    ["columns"] = {"stat1", "stat2", "quality"}
+                },
+                ["subCategories"] = {
+                    {
+                        ["id"] = 1,
+                        ["name"] = L["CRITICAL_STRIKE"],
+                        ["config"] = {
+                            ["columns"] = {"stat2", "quality"}
+                        }
+                    },
+                    {
+                        ["id"] = 2,
+                        ["name"] = L["HASTE"],
+                        ["config"] = {
+                            ["columns"] = {"stat2", "quality"}
+                        }
+                    },
+                    {
+                        ["id"] = 3,
+                        ["name"] = L["MASTERY"],
+                        ["config"] = {
+                            ["columns"] = {"stat2", "quality"}
+                        }
+                    },
+                    {
+                        ["id"] = 4,
+                        ["name"] = L["VERSATILITY"],
+                        ["config"] = {
+                            ["columns"] = {"stat2", "quality"}
+                        }
+                    },
+                }
+            }
         }
     }
 }
@@ -240,97 +279,78 @@ local dataItems = {
     { ["category"] = 3, ["subCategory"] = 4,  ["id"] = 197794 }, -- Großbankett der Kalu'ak
 
 
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 192553, 192554, 192552 },  ["stat1"] = 1, ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194579, 194580, 194578 },  ["stat1"] = 1, ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194567, 194568, 194566 },  ["stat1"] = 3, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194573, 194574, 194572 },  ["stat1"] = 4, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194570, 194571, 194569 },  ["stat1"] = 4, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
-    { ["category"] = 4, ["subCategory"] = 0,  ["id"] = { 194576, 194577, 194575 },  ["stat1"] = 4, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
 
-    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 192553, 192554, 192552 },  ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
-    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 194579, 194580, 194578 },  ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-    { ["category"] = 4, ["subCategory"] = 1,  ["id"] = { 194573, 194574, 194572 },  ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
+
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 1,   ["id"] = { 192553, 192554, 192552 },  ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 1,   ["id"] = { 194579, 194580, 194578 },  ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 1,   ["id"] = { 194573, 194574, 194572 },  ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
   
 
-    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 192553, 192554, 192552 }, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
-    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
-    { ["category"] = 4, ["subCategory"] = 2,  ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 2,   ["id"] = { 192553, 192554, 192552 }, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 2,   ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 2,   ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
+
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 3,   ["id"] = { 194579, 194580, 194578 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 3,   ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 3,   ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
 
 
-
-    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194579, 194580, 194578 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
-    { ["category"] = 4, ["subCategory"] = 3,  ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
-
-
-    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194573, 194574, 194572 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
-    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
-    { ["category"] = 4, ["subCategory"] = 4,  ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
-
-
-
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 4,   ["id"] = { 194573, 194574, 194572 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 4,   ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
+    { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 4,   ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
 
 }
 
 
-local getResultLine = function(idx, item, entry)
+local getResultLine = function(idx, id, entry)
+
     return {
         itemKey = {
             itemLevel = 0,
             itemSuffix = 0,
-            itemID = item,
+            itemID = id,
             balltePetSpeciesID = 0
         },
+        name = GetItemInfo(id),
         quality = idx,
         containsOwnerItem=false,
         totalQuantity=1,
         minPrice=1,
         stat1 = (entry.subCategory == 0 and entry.stat1) and  entry.stat1 or entry.subCategory,
-        stat2 = entry.stat2 or 0
+        stat2 = entry.stat2 or 0,
+        category = entry.category,
+        subCategory = entry.subCategory,
+        subSubCategory = entry.subSubCategory,
     }
 
 end
 
-
 local formatToResultLines = function(entry)
-    local newTable = {}
+    local table = {}
     if type(entry.id) == "table" then 
-        _.forEach(entry.id, function(item, idx)
-            tinsert(newTable, getResultLine(idx, item, entry))
+        table = _.map(entry.id, function(item, idx)
+            return getResultLine(idx, item, entry)
         end)
     else
-        tinsert(newTable, getResultLine(1, entry.id, entry))
+        table = {getResultLine(0, entry.id, entry)}
     end
-    return newTable
+
+    return table
 end
 
-local getDataStore = function()
-    local dataStore = {}
-    _.forEach(dataItems, function(entry)
-        dataStore[entry.category] = dataStore[entry.category] or {}
-        dataStore[entry.category][0] = dataStore[entry.category][0] or {}
-        dataStore[entry.category][entry.subCategory] = dataStore[entry.category][entry.subCategory] or {}
-
-        local entries = formatToResultLines(entry)
-        _.forEach(entries, function(entryI)
-            local isin = _.find(dataStore[entry.category][0], function(v)
-                return v.itemKey.itemID == entryI.itemKey.itemID
-            end)
-            if not isin and entry.subCategory ~= 0 then 
-                tinsert(dataStore[entry.category][0], entryI)
-            end
-
-            tinsert(dataStore[entry.category][entry.subCategory], entryI)
-        end)
+local expandDataItems = function(entries)
+    local table = {}
+    _.forEach(entries, function(entry)
+        tAppendAll(table, formatToResultLines(entry))
     end)
-    return dataStore
+    return table
 end
 
 
 function AHCC:loadData(cd)
     AHCC.data = {
         dataCategories = dataCategories,
-        dataStore = getDataStore()
+        dataStore = expandDataItems(dataItems)
     }
 end
 

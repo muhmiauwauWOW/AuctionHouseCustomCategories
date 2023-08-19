@@ -7,12 +7,9 @@ function firstToUpper(str)
 end
 
 
-AHCC.isInCustomCategory = false
-AHCC.hasStatsColumn = false
-AHCC.hasQualityColumn = false
-AHCC.nav = {}
-AHCC.nav.category = nil
-AHCC.nav.subCategory = nil
+
+AHCC.viewConfig = {}
+AHCC.Nav = {}
 
 AHCC.searchResultTable = nil
 AHCC.searchButton = nil
@@ -23,7 +20,7 @@ function AHCC:OnInitialize()
 end 
 
 function AHCC:OnEnable()
-    AHCC:loadData()
+   
     AHCC:RegisterEvent("ADDON_LOADED", "AddonLoadedEvent")
 end
 
@@ -31,23 +28,33 @@ end
 local getResults = function()
     local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
     searchString = string.lower(searchString:gsub("%s+", ""))
-    local results =  AHCC.data.dataStore[AHCC.nav.category][AHCC.nav.subCategory] or {}
+  
+
+    if not AHCC.Nav[1] then 
+        return 
+    end
+
+    local results = _.filter(AHCC.data.dataStore, function(entry)
+        if #AHCC.Nav == 1 then 
+            return entry.category == AHCC.Nav[1]
+        elseif #AHCC.Nav == 2 then 
+            return entry.category == AHCC.Nav[1] and  entry.subCategory == AHCC.Nav[2]
+        elseif #AHCC.Nav == 3 and entry.subSubCategory then 
+            return entry.category == AHCC.Nav[1] and  entry.subCategory == AHCC.Nav[2] and entry.subSubCategory == AHCC.Nav[3]
+        else 
+            return false
+        end
+    end)
+
 
     if (searchString ~= "") then 
-         -- set missing itemname    
-        results = _.map(results, function(entry)
-            if not entry.name then
-                entry.name = GetItemInfo(entry.itemKey.itemID)
-            end
-            return entry
-        end)
         results = _.filter(results, function(filterEntry)
-            return filterEntry.name and string.find(string.lower(filterEntry.name), searchString,1, true)
+            return string.find(string.lower(filterEntry.name), searchString,1, true)
         end)
     end
 
     return _.filter(results, function(entry)
-        return AHCC.Config.ProfessionsQualityActive[entry.quality]
+        return (entry.quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.quality] 
     end)
 end
 
@@ -62,18 +69,21 @@ function GetBrowseListLayout(owner, itemList)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-		local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate");
-		nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
 
-        if AHCC.hasStatsColumn then 
-            if AHCC.nav.subCategory == 0 then 
-                AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT1"], 120, "stat1")
-            end
-
+        if _.find(AHCC.viewConfig.columns, function(column) return column == "name" end) then
+            local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate");
+            nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
+        end
+             
+        if _.find(AHCC.viewConfig.columns, function(column) return column == "stat1" end) then
+            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT1"], 120, "stat1")
+        end
+        
+        if _.find(AHCC.viewConfig.columns, function(column) return column == "stat2" end) then
             AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT2"], 120, "stat2")
         end
-
-        if AHCC.hasQualityColumn then 
+    
+        if _.find(AHCC.viewConfig.columns, function(column) return column == "quality" end) then
             AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_QUALITY"], 84, "quality")
         end
 	end
@@ -93,7 +103,17 @@ local performSearch = function()
         BRF.searchStarted = true;
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.tableBuilderLayoutDirty = true;
-        local sortby = AHCC.hasStatsColumn and AHCC.Config.sortOrder.stat2 or AHCC.Config.sortOrder.name
+
+        local sortby =  AHCC.Config.sortOrder.name
+
+        if _.find(AHCC.viewConfig.columns, function(column) return  column == "stat2" end) then
+            sortby = AHCC.Config.sortOrder.stat2
+        end
+
+        if _.find(AHCC.viewConfig.columns, function(column) return  column == "stat1" end) then
+            sortby = AHCC.Config.sortOrder.stat1
+        end
+
         AHCC:sortResult(BRF, sortby, true)
         BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(BRF, BRF.ItemList));
         AHF:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
@@ -116,62 +136,97 @@ end
 
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
+        AHCC:loadData()
 
         AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
 
 
-        local categoriesTable = {}
 
-        -- add Custon categories 
-        _.forEach(AHCC.data.dataCategories, function(categoryEntry, categoryId) 
+
+        local AHCCAuctionCategoryMixin = CreateFromMixins(AuctionCategoryMixin);
+
+
+        function AHCCAuctionCategoryMixin:addIds(nav, parent)
+            tinsert(nav, parent.AHCC_Id)
+            return (parent.AHCC_parent) and  self:addIds(nav,parent.AHCC_parent) or nav
+        end
+
+        function AHCCAuctionCategoryMixin:AddNav(first)
+            local nav = { self.AHCC_Id }
+
+            if not first then 
+                nav = self:addIds(nav, self.AHCC_parent)
+            end
+
+            nav =  _.reverse(nav)
+
+            self.AHCC_Nav = nav
+        end
+
         
-            local category = CreateFromMixins(AuctionCategoryMixin);
-            categoriesTable[categoryId] = category
-            category.name = categoryEntry.name
-            category:SetFlag("AHCC");
-            if categoryEntry.showStats then 
-                category:SetFlag("AHCC_SHOWSTATS");
-            end
-            if categoryEntry.hideQuality then 
-                category:SetFlag("AHCC_HIDEQUALITY");
-            end
-            category.AHCC_category = categoryEntry.id;
-            category.AHCC_subCategory = 0;
-            category.subCategories = {}
+        function AHCCAuctionCategoryMixin:SetConfig(config, first)
+            self:SetFlag("AHCC");
+            local cfg = config or {}
 
-            _.forEach(categoryEntry["subCategories"], function(subCategoryEntry, subCategoryId) 
-                local subCategory = CreateFromMixins(AuctionCategoryMixin);
-                category.subCategories[subCategoryId] = subCategory;
-                subCategory.name = subCategoryEntry.name;
-                subCategory:SetFlag("AHCC");
-                subCategory.AHCC_category = categoryEntry.id;
-                subCategory.AHCC_subCategory = subCategoryEntry.id;
-                if categoryEntry.showStats then 
-                    subCategory:SetFlag("AHCC_SHOWSTATS");
+            if not first and #cfg == 0 then
+                if self.AHCC_parent then 
+                    cfg = self.AHCC_parent.AHCC_config or {}
                 end
-                if subCategoryEntry.hideQuality then 
-                    subCategory:SetFlag("AHCC_HIDEQUALITY");
-                end
-            end)
+            end
+
+            if not cfg.columns then 
+                cfg.columns = {"name", "quality"}
+            else
+                local cols = {"name"}
+                tAppendAll(cols, cfg.columns)
+                cfg.columns = cols
+            end
+
+            self.AHCC_config = cfg
+        end
+
+
+
+        local function createCategory(parent, categoryEntry, categoryId, first)
+            local category = CreateFromMixins(AHCCAuctionCategoryMixin);
+            category.name = categoryEntry.name
+            category:SetConfig(categoryEntry.config, first);
+
+            if first then 
+                parent[categoryId] = category
+            else 
+                parent.subCategories[categoryId] = category
+            end
+
+            category.AHCC_Id = categoryId
+            category.AHCC_parent = parent
+            category:AddNav(first)
+
+            if categoryEntry.subCategories then
+                category.subCategories = {}
+                _.forEach(categoryEntry["subCategories"], function(subCategoryEntry, subCategoryId) 
+                    createCategory(category, subCategoryEntry, subCategoryId)
+                end)
+            end
+        end
+
+
+        local categoriesTable = {}
+        _.forEach(AHCC.data.dataCategories, function(categoryEntry, categoryId) 
+            createCategory(categoriesTable, categoryEntry, categoryId, true)
         end)
-       
+
         AuctionCategories = _.union(categoriesTable, {_.last(AuctionCategories)}, _.initial(AuctionCategories))
 
 
         hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
             local cdata = categoriesList:GetCategoryData()
             if cdata and cdata:HasFlag("AHCC") then
-                AHCC.nav.category = cdata.AHCC_category
-                AHCC.nav.subCategory = cdata.AHCC_subCategory
+                AHCC.Nav = cdata.AHCC_Nav
                 AHCC.isInCustomCategory = true
                 AuctionHouseFrame.SearchBar.QualityFrame:Show()
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
-                AHCC.hasStatsColumn = cdata:HasFlag("AHCC_SHOWSTATS") and true or false
-                if cdata:HasFlag("AHCC_HIDEQUALITY") then 
-                    AHCC.hasQualityColumn = false
-                else
-                    AHCC.hasQualityColumn = true
-                end
+                AHCC.viewConfig = cdata.AHCC_config
               
                 performSearch()
             else

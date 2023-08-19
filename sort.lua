@@ -21,6 +21,7 @@ end
 function AHCC:sortResult(self, sortOrder, notReverse)
     local key = ""
     local  tempResultTable = {
+        { quality = 0, entries = {} },
         { quality = 1, entries = {} },
         { quality = 2, entries = {} },
         { quality = 3, entries = {} },
@@ -50,7 +51,7 @@ function AHCC:sortResult(self, sortOrder, notReverse)
     end
 
     _.forEach(AHCC.searchResultTable, function(entry) 
-        tinsert(tempResultTable[entry.quality]["entries"], entry)
+        tinsert(tempResultTable[entry.quality + 1]["entries"], entry)
     end)
 
     table.sort(tempResultTable, getSortFunc("quality"))

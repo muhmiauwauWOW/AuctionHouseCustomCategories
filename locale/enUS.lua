@@ -8,6 +8,8 @@ L["Consumables"] = AUCTION_CATEGORY_CONSUMABLES
 
 L["TRADE_GOODS"] = AUCTION_CATEGORY_TRADE_GOODS
 
+
+L["Optional Reagents"] = "Optional Reagents"
 L["Draconic Missive"] = "Draconic Missive"
 
 L["CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE

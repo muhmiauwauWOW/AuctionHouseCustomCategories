@@ -2,6 +2,17 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("Lodash"):Get()
 
+
+
+
+
+
+
+
+
+
+
+
 -- Quality column
 AuctionHouseTableCellQualityMixin = CreateFromMixins(TableBuilderCellMixin);
 function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)

@@ -2,11 +2,11 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local _ = LibStub("Lodash"):Get()
 
 local sortConfigDefault = {
-    Name = true,
+    Name = false,
     quality = false,
-    stat1 = true,
-    stat2 = true,
-    Price = true,
+    stat1 = false,
+    stat2 = false,
+    Price = false,
 }
 
 local sortConfig = sortConfigDefault
@@ -25,19 +25,9 @@ function AHCC:sortResult(self, sortOrder, notReverse)
         return col == key
     end)
 
-    if notReverse then
-        sortConfig = {
-            Name = true,
-            quality = false,
-            stat1 = true,
-            stat2 = true,
-            Price = false,
-        }
-    else -- toggle order
+    if not notReverse then
         sortConfig[key] = not sortConfig[key]
     end
-
-
 
     local sortedResults = AHCC.searchResultTable
 
@@ -46,10 +36,6 @@ function AHCC:sortResult(self, sortOrder, notReverse)
             entry[key] = ""
         end
         return entry
-    end)
-
-    sortedResults = _.sortBy(sortedResults, function (a)
-        return a[key]
     end)
 
     table.sort(sortedResults, function(a,b) 

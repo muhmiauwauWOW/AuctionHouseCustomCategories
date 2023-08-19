@@ -101,7 +101,7 @@ local performSearch = function()
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.tableBuilderLayoutDirty = true;
 
-        local sortby =  AHCC.Config.sortOrder.name
+        local sortby =  Enum.AuctionHouseSortOrder.Name
 
         if _.find(AHCC.viewConfig.columns, function(column) return  column == "stat2" end) then
             sortby = AHCC.Config.sortOrder.stat2

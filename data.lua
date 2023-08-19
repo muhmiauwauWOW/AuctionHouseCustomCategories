@@ -162,6 +162,13 @@ local dataCategories = {
                         }
                     },
                 }
+            },
+            {
+                ["id"] = 2,
+                ["name"] =  L["Embellishments"],
+                ["config"] = {
+                    ["columns"] = {"quality"}
+                },
             }
         }
     }
@@ -299,6 +306,20 @@ local dataItems = {
     { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 4,   ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
     { ["category"] = 4, ["subCategory"] = 1, ["subSubCategory"] = 4,   ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
 
+
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 191532, 191533, 191534 }}, -- Potion Absorption Inhibitor
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 191250, 191872, 191873 }}, --Armor Spikes
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 193469, 193552, 193555 }}, -- Toxified Armor Patch
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 193468, 193551, 193554 }}, -- Fang Adornments
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 193944, 193945, 193946 }}, -- Blue Silken Lining
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 193941, 193942, 193943 }}, -- Bronzed Grip Wrappings
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = 200652 }, -- Alchemical Flavor Pocket
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = 205012 }, -- Reserve Parachute
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = 205411 }, -- Medical Wrap Kit
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 204708, 204709, 204710 }}, -- Shadowflame-Tempered Armor Patch
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 204909, 205115, 205170 }}, -- Statuette of Foreseen Power
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = { 205171, 205172, 205173 }}, -- Figurine of the Gathering Storm
+    { ["category"] = 4, ["subCategory"] = 2, ["id"] = 203652 }, -- Gaunahs Allzweck-Verzierungspulver
 }
 
 

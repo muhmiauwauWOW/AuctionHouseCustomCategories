@@ -3,12 +3,12 @@ if not L then return end
 
 
 
-
 L["Enchants"] = "Verzauberungen"
 L["Gems"] = "Edelsteine"
 L["Consumables"] = "Verbrauchbares"
 
--- 
+L["Optional Reagents"] = "Optionale Reagenzien"
+L["Embellishments"] = "Verziert"
 
 L["Runes"] = "Runen"
 L["Flasks"] = "Phiolen"

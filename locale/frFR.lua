@@ -13,5 +13,6 @@ L["Runes"] = "Runes"
 L["STAMINA"] = "Endurance"
 
 
-
+L["Optional Reagents"] = "Composants optionnels"
 L["Draconic Missive"] = "Missive draconique"
+

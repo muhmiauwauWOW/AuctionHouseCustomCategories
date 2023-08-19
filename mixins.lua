@@ -7,12 +7,6 @@ local _ = LibStub("Lodash"):Get()
 
 
 
-
-
-
-
-
-
 -- Quality column
 AuctionHouseTableCellQualityMixin = CreateFromMixins(TableBuilderCellMixin);
 function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
@@ -22,6 +16,8 @@ function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
     if AHCC.Config.ProfessionsQualityIconTable[rowData.quality] then
         local icon = CreateAtlasMarkupWithAtlasSize(AHCC.Config.ProfessionsQualityIconTable[rowData.quality], 0, 0, nil,nil, nil, AHCC.Config.ProfessionsQualityIconSize)
         self.Text:SetText(icon);
+    else
+        self.Text:SetText("");
     end
 end
 

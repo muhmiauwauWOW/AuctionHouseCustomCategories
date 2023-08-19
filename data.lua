@@ -325,6 +325,11 @@ local dataItems = {
 
 local getResultLine = function(idx, id, entry)
 
+    local minPrice = 1
+    if Auctionator then 
+        minPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id)
+    end
+
     return {
         itemKey = {
             itemLevel = 0,
@@ -336,7 +341,7 @@ local getResultLine = function(idx, id, entry)
         quality = idx,
         containsOwnerItem=false,
         totalQuantity=1,
-        minPrice=1,
+        minPrice = minPrice,
         stat1 = (entry.subCategory == 0 and entry.stat1) and  entry.stat1 or entry.subCategory,
         stat2 = entry.stat2 or 0,
         category = entry.category,

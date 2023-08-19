@@ -69,6 +69,9 @@ function GetBrowseListLayout(owner, itemList)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
+        if Auctionator then 
+            tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price, "AuctionHouseTableCellMinPriceTemplate");
+        end
 
         if _.find(AHCC.viewConfig.columns, function(column) return column == "name" end) then
             local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate");
@@ -133,6 +136,7 @@ function AHCC:Reset()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
     BRF:Reset()
 end
+
 
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 

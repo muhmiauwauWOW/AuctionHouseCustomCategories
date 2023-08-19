@@ -49,7 +49,7 @@ local getResults = function()
 
     if (searchString ~= "") then 
         results = _.filter(results, function(filterEntry)
-            return string.find(string.lower(filterEntry.name), searchString,1, true)
+            return string.find(string.lower(filterEntry.Name), searchString,1, true)
         end)
     end
 
@@ -58,37 +58,30 @@ local getResults = function()
     end)
 end
 
-function AHCC:AddFixedWidthColumn(owner, tableBuilder, name, width, key)
-    local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, AHCC.Config.sortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
-    column:GetHeaderFrame():SetText(name);
+function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, name, width, key)
+        local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, Enum.AuctionHouseSortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
+        column:GetHeaderFrame():SetText(name);
 end
 
 
-function GetBrowseListLayout(owner, itemList)
+
+
+function GetBrowseListLayout(AHCC, owner, itemList)
 	local function LayoutBrowseListTableBuilder(tableBuilder)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-        if Auctionator then 
-            tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price, "AuctionHouseTableCellMinPriceTemplate");
-        end
-
-        if _.find(AHCC.viewConfig.columns, function(column) return column == "name" end) then
-            local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, AHCC.Config.sortOrder.name, "AuctionHouseTableCellItemDisplayTemplate");
-            nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
-        end
-             
-        if _.find(AHCC.viewConfig.columns, function(column) return column == "stat1" end) then
-            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT1"], 120, "stat1")
-        end
-        
-        if _.find(AHCC.viewConfig.columns, function(column) return column == "stat2" end) then
-            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_STAT2"], 120, "stat2")
-        end
-    
-        if _.find(AHCC.viewConfig.columns, function(column) return column == "quality" end) then
-            AHCC:AddFixedWidthColumn(owner, tableBuilder, L["TABLE_HEADER_QUALITY"], 84, "quality")
-        end
+        _.forEach(AHCC.viewConfig.columns, function(colName)
+            if colName == "Price" then 
+                local priceColumn = tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
+                priceColumn:GetHeaderFrame().Arrow:Hide()
+            elseif colName == "Name" then 
+                local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
+                nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
+            else
+                AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, AHCC.Config.TableColums[colName].name, AHCC.Config.TableColums[colName].size, colName)
+            end
+        end)
 	end
 
 	return LayoutBrowseListTableBuilder;
@@ -103,6 +96,7 @@ local performSearch = function()
 
     if AHCC.searchResultTable then
         BRF:Reset()
+        BRF.headers = {}
         BRF.searchStarted = true;
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.tableBuilderLayoutDirty = true;
@@ -118,7 +112,7 @@ local performSearch = function()
         end
 
         AHCC:sortResult(BRF, sortby, true)
-        BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(BRF, BRF.ItemList));
+        BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));
         AHF:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
     end
 end
@@ -141,6 +135,16 @@ end
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
         AHCC:loadData()
+
+        function AuctionHouseTableHeaderStringMixin:OnClick()
+            if AHCC.isInCustomCategory then
+                AuctionHouseFrame:SetBrowseSortOrder(self.sortOrder)
+            else
+                self.owner:SetSortOrder(self.sortOrder);
+                self:UpdateArrow();
+            end
+        end
+        
 
         AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
 
@@ -178,13 +182,20 @@ function AHCC:AddonLoadedEvent(event, name)
                 end
             end
 
-            if not cfg.columns then 
-                cfg.columns = {"name", "quality"}
-            else
-                local cols = {"name"}
-                tAppendAll(cols, cfg.columns)
-                cfg.columns = cols
+
+            local cols = {"Name"}
+
+            if Auctionator then 
+                cols = {"Price", "Name"}
             end
+
+            if cfg.columns then 
+                tAppendAll(cols, cfg.columns)
+            else
+                tinsert(cols, "quality")
+            end
+
+            cfg.columns = cols
 
             self.AHCC_config = cfg
         end
@@ -256,3 +267,7 @@ function AHCC:AddonLoadedEvent(event, name)
         AHCC:initSort()
     end
 end
+
+
+
+

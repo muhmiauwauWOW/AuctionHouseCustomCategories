@@ -2,69 +2,84 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local _ = LibStub("Lodash"):Get()
 
 local sortConfigDefault = {
-    name = true,
+    Name = true,
     quality = false,
     stat1 = true,
     stat2 = true,
+    Price = true,
 }
 
 local sortConfig = sortConfigDefault
 
-local getSortFunc = function(key)
-    if sortConfig[key] then 
-        return function(k1, k2) if k1[key] ~= nil and k2[key] ~= nil then return k1[key] < k2[key] end end
-    else
-        return function(k1, k2) if k1[key] ~= nil and k2[key] ~= nil then return k1[key] > k2[key] end end
-    end
-end
 
 function AHCC:sortResult(self, sortOrder, notReverse)
-    local key = ""
-    local  tempResultTable = {
-        { quality = 0, entries = {} },
-        { quality = 1, entries = {} },
-        { quality = 2, entries = {} },
-        { quality = 3, entries = {} },
-    }
 
-    local sortedResultTable = {}
 
-    if sortOrder == AHCC.Config.sortOrder.name then 
-        key = "name"
-    elseif sortOrder == AHCC.Config.sortOrder.stat1  then
-        key = "stat1"
-    elseif sortOrder == AHCC.Config.sortOrder.stat2  then
-        key = "stat2"
-    elseif sortOrder == AHCC.Config.sortOrder.quality  then
-        key = "quality"
-    end
+    local keyObj = _.find(_.pairs(Enum.AuctionHouseSortOrder), function(enum)
+        return enum[2] == sortOrder
+    end)
+
+    local key = keyObj and  keyObj[1] or ""
+
+    local ViewIndex = _.findIndex(AHCC.viewConfig.columns, function(col)
+        return col == key
+    end)
 
     if notReverse then
         sortConfig = {
-            name = true,
+            Name = true,
             quality = false,
             stat1 = true,
             stat2 = true,
+            Price = false,
         }
     else -- toggle order
         sortConfig[key] = not sortConfig[key]
     end
 
-    _.forEach(AHCC.searchResultTable, function(entry) 
-        tinsert(tempResultTable[entry.quality + 1]["entries"], entry)
-    end)
 
-    table.sort(tempResultTable, getSortFunc("quality"))
 
-    _.forEach(tempResultTable, function(entry) 
-        if key ~= "quality" then
-            table.sort(entry["entries"], getSortFunc(key))
+    local sortedResults = AHCC.searchResultTable
+
+    _.map(sortedResults, function (entry)
+        if entry[key] == nil then
+            entry[key] = ""
         end
-        tAppendAll(sortedResultTable, entry["entries"])
+        return entry
     end)
+
+    sortedResults = _.sortBy(sortedResults, function (a)
+        return a[key]
+    end)
+
+    table.sort(sortedResults, function(a,b) 
+        return a[key] < b[key]
+    end)
+
+    if sortConfig[key] then
+        sortedResults = _.reverse(sortedResults)
+    end
+
+
+
+    _.forEach(self.headers, function(header) 
+        header.Arrow:Hide()
+    end)
+
+    if ViewIndex ~= -1 then
+        if self.headers[ViewIndex] then
+            self.headers[ViewIndex].Arrow:Show()
+
+            if sortConfig[key] then
+                self.headers[ViewIndex].Arrow:SetTexCoord(0, 1, 1, 0);
+            else
+                self.headers[ViewIndex].Arrow:SetTexCoord(0, 1, 0, 1);
+            end
+        end
+    end
 
      -- display results
-    AHCC.searchResultTable = sortedResultTable
+    AHCC.searchResultTable = sortedResults
     self.browseResults = AHCC.searchResultTable;
     self.ItemList:DirtyScrollFrame();
 end
@@ -72,8 +87,8 @@ end
 
 function AHCC:initSort()
     function AuctionHouseFrame:SetBrowseSortOrder(sortOrder)
-        if sortOrder > 90 then 
-            AHCC:sortResult(self.BrowseResultsFrame, sortOrder)            
+        if AHCC.isInCustomCategory then 
+            AHCC:sortResult(self.BrowseResultsFrame, sortOrder) 
         else -- blizzard org func
             local browseSearchContext = self:GetBrowseSearchContext();
             self:SetSortOrder(browseSearchContext, sortOrder);

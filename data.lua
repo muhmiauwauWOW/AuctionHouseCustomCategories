@@ -330,6 +330,15 @@ local getResultLine = function(idx, id, entry)
         minPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id)
     end
 
+    local stat1 = entry.stat1
+     if not entry.stat1 then 
+        if entry.subSubCategory then 
+            stat1 = entry.subSubCategory
+        else
+            stat1 = entry.subCategory
+        end
+    end
+
     return {
         itemKey = {
             itemLevel = 0,
@@ -337,12 +346,13 @@ local getResultLine = function(idx, id, entry)
             itemID = id,
             balltePetSpeciesID = 0
         },
-        name = GetItemInfo(id),
+        Name = GetItemInfo(id),
         quality = idx,
         containsOwnerItem=false,
         totalQuantity=1,
         minPrice = minPrice,
-        stat1 = (entry.subCategory == 0 and entry.stat1) and  entry.stat1 or entry.subCategory,
+        Price = minPrice,
+        stat1 = stat1,
         stat2 = entry.stat2 or 0,
         category = entry.category,
         subCategory = entry.subCategory,

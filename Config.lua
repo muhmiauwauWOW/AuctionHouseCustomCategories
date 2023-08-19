@@ -6,8 +6,33 @@ AHCC.Config.sortOrder = {
     name = 91,
     stat1 = 92,
     stat2 = 93,
+    minPrice = 98,
     quality = 99
 }
+
+
+AHCC.Config.TableColums = {
+    ["stat1"] = {
+        name = L["TABLE_HEADER_STAT1"],
+        size = 120
+    },
+    ["stat2"] = {
+        name = L["TABLE_HEADER_STAT2"],
+        size = 120
+    },
+    ["quality"] = {
+        name = L["TABLE_HEADER_QUALITY"],
+        size = 84
+    }
+}
+
+
+
+-- add Enum
+Enum.AuctionHouseSortOrder.stat1 = 92
+Enum.AuctionHouseSortOrder.stat2 = 93
+Enum.AuctionHouseSortOrder.quality = 99
+
 
 AHCC.Config.tableCellStatColors = {
     { 1, 1, 1, 1},

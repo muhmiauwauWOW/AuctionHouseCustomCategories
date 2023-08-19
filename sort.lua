@@ -31,7 +31,7 @@ function AHCC:sortResult(self, sortOrder, notReverse)
 
     local sortedResults = AHCC.searchResultTable
 
-    _.map(sortedResults, function (entry)
+    sortedResults = _.map(sortedResults, function (entry)
         if entry[key] == nil then
             entry[key] = ""
         end

@@ -25,5 +25,4 @@ AHCC.lua
 config.lua
 mixins.lua
 data.lua
-sort.lua
 

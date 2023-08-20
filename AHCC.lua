@@ -8,6 +8,35 @@ end
 
 
 
+local MaxNumAuctionHouseSortTypes = 2
+
+local function AddSortType(searchContext, newSortType)
+    if not g_auctionHouseSortsBySearchContext[searchContext] then
+        g_auctionHouseSortsBySearchContext[searchContext] = {};
+    end
+
+    local sorts = g_auctionHouseSortsBySearchContext[searchContext];
+    for i, sortType in ipairs(sorts) do
+        if sortType.sortOrder == newSortType.sortOrder then
+            if (i == 1) and sortType.reverseSort == newSortType.reverseSort then
+                newSortType.reverseSort = not newSortType.reverseSort;
+            end
+
+            table.remove(sorts, i);
+            break;
+        end
+    end
+
+    table.insert(sorts, 1, newSortType);
+
+    if #sorts > MaxNumAuctionHouseSortTypes then
+        sorts[#sorts] = nil;
+    end
+end
+
+
+
+
 AHCC.viewConfig = {}
 AHCC.Nav = {}
 
@@ -73,8 +102,7 @@ function GetBrowseListLayout(AHCC, owner, itemList)
 
         _.forEach(AHCC.viewConfig.columns, function(colName)
             if colName == "Price" then 
-                local priceColumn = tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
-                priceColumn:GetHeaderFrame().Arrow:Hide()
+                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
             elseif colName == "Name" then 
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
@@ -87,68 +115,81 @@ function GetBrowseListLayout(AHCC, owner, itemList)
 	return LayoutBrowseListTableBuilder;
 end
 
-local performSearch = function()
-    local AHF = AuctionHouseFrame
-    local CL = AuctionHouseFrame.CategoriesList
+
+function AHCC:performSearch()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
 
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
 
     if AHCC.searchResultTable then
-        BRF:Reset()
-        BRF.headers = {}
+        AHCC:Reset()
         BRF.searchStarted = true;
         BRF.ItemList:SetRefreshCallback(nil)
-        BRF.tableBuilderLayoutDirty = true;
-
-        local sortby =  Enum.AuctionHouseSortOrder.Name
-
-        if _.find(AHCC.viewConfig.columns, function(column) return  column == "stat2" end) then
-            sortby = AHCC.Config.sortOrder.stat2
-        end
-
-        if _.find(AHCC.viewConfig.columns, function(column) return  column == "stat1" end) then
-            sortby = AHCC.Config.sortOrder.stat1
-        end
-
-        AHCC:sortResult(BRF, sortby, true)
         BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));
-        AHF:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
+        BRF.tableBuilderLayoutDirty = true;
+        BRF.browseResults = AHCC.searchResultTable;
+        AHCC:Sort()
     end
-end
-
-
-function AHCC:performSearch()
-    local AHF = AuctionHouseFrame
-    local CL = AuctionHouseFrame.CategoriesList
-    local BRF = AuctionHouseFrame.BrowseResultsFrame
-    performSearch()
-    BRF.tableBuilderLayoutDirty = true;
 end
 
 function AHCC:Reset()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
     BRF:Reset()
+    BRF.headers = {}
+    BRF.browseResults = {}
+    BRF.ItemList:DirtyScrollFrame();
 end
+
+function AHCC:Sort(sortOrder)
+    local BRF = AuctionHouseFrame.BrowseResultsFrame
+    
+    local searchContext = AuctionHouseFrame:GetCategorySearchContext();
+    local sorts = AuctionHouseFrame:GetSortsForContext(searchContext)
+
+    if #sorts == 1 then 
+        sorts[2] = sorts[1]
+    end
+
+    local function getKey(idx)
+        local enum = sorts[idx].sortOrder
+        local findK = _.findKey(Enum.AuctionHouseSortOrder,  function(v)
+            return v == enum
+        end)
+
+        return findK
+    end
+
+    local priComp = sorts[1].reverseSort and _.lt or _.gt
+    local comp = sorts[2].reverseSort and _.lt or _.gt
+
+    local k1 = getKey(1)
+    local k2 = getKey(2)
+
+    table.sort(BRF.browseResults, function (a, b)
+        if not a[k1] then return false end
+        if not b[k1] then return false end
+
+        if #sorts == 1 then 
+            return  priComp(a[k1], b[k1])
+        else
+            if not a[k2] then return false end
+            if not b[k2] then return false end
+            return  priComp(a[k1], b[k1]) or 
+                ( a[k1] == b[k1] and comp(a[k2], b[k2]))
+        end
+    end)
+
+    BRF.ItemList:DirtyScrollFrame();
+end
+
 
 
 function AHCC:AddonLoadedEvent(event, name)
     if name == "Blizzard_AuctionHouseUI" then 
         AHCC:loadData()
 
-        function AuctionHouseTableHeaderStringMixin:OnClick()
-            if AHCC.isInCustomCategory then
-                AuctionHouseFrame:SetBrowseSortOrder(self.sortOrder)
-            else
-                self.owner:SetSortOrder(self.sortOrder);
-                self:UpdateArrow();
-            end
-        end
-        
 
         AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
-
-
 
 
         local AHCCAuctionCategoryMixin = CreateFromMixins(AuctionCategoryMixin);
@@ -209,6 +250,7 @@ function AHCC:AddonLoadedEvent(event, name)
 
             if first then 
                 parent[categoryId] = category
+                g_auctionHouseSortsBySearchContext[categoryId + 300] = g_auctionHouseSortsBySearchContext[categoryId + 300] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
             else 
                 parent.subCategories[categoryId] = category
             end
@@ -234,8 +276,17 @@ function AHCC:AddonLoadedEvent(event, name)
         AuctionCategories = _.union(categoriesTable, {_.last(AuctionCategories)}, _.initial(AuctionCategories))
 
 
+
+
+
+        -- overwrites
         hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
             local cdata = categoriesList:GetCategoryData()
+
+            if AHCC.isInCustomCategory and cdata == nil then
+                AHCC:Reset()
+            end
+
             if cdata and cdata:HasFlag("AHCC") then
                 AHCC.Nav = cdata.AHCC_Nav
                 AHCC.isInCustomCategory = true
@@ -243,7 +294,7 @@ function AHCC:AddonLoadedEvent(event, name)
                 AuctionHouseFrame.SearchBar.FilterButton:Hide()
                 AHCC.viewConfig = cdata.AHCC_config
               
-                performSearch()
+                AHCC:performSearch()
             else
                 AHCC.isInCustomCategory = false
                 AuctionHouseFrame.SearchBar.QualityFrame:Hide()
@@ -252,10 +303,10 @@ function AHCC:AddonLoadedEvent(event, name)
         end)
 
 
-        -- overwrite the start search function 
+        -- overwrites
         function AuctionHouseFrame.SearchBar:StartSearch()
             if AHCC.isInCustomCategory then
-                performSearch()
+                AHCC:performSearch()
             else
                 local searchString = self.SearchBox:GetSearchString();
                 local minLevel, maxLevel = self:GetLevelFilterRange();
@@ -264,7 +315,31 @@ function AHCC:AddonLoadedEvent(event, name)
             end
         end
 
-        AHCC:initSort()
+
+
+        local AuctionHouseUtil_ConvertCategoryToSearchContext = AuctionHouseUtil.ConvertCategoryToSearchContext
+        function AuctionHouseUtil.ConvertCategoryToSearchContext(selectedCategoryIndex)
+            if selectedCategoryIndex then 
+                if AuctionCategories[selectedCategoryIndex].AHCC_Id then 
+                    return AuctionCategories[selectedCategoryIndex].AHCC_Id + 300
+                end
+            end
+            return AuctionHouseUtil_ConvertCategoryToSearchContext(selectedCategoryIndex)
+        end
+
+
+
+        local AuctionHouseFrame_SetSortOrder = AuctionHouseFrame.SetSortOrder
+        function AuctionHouseFrame:SetSortOrder(searchContext, sortOrder)
+            if AHCC.isInCustomCategory then 
+                searchContext = AuctionHouseFrame:GetCategorySearchContext();
+                local sortType = { sortOrder = sortOrder, reverseSort = false };
+	            AddSortType(searchContext, sortType);
+                AHCC:Sort(sortOrder)
+            else -- blizzard org func
+                AuctionHouseFrame_SetSortOrder(self, searchContext, sortOrder)
+            end
+        end
     end
 end
 

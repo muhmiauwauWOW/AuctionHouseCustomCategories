@@ -1,17 +1,17 @@
 ﻿## Interface: 100105
 ## Title: Auction House - Custom Categories
 ## Notes: Adds custom categories to auction house
-## Version: 1.5.4
+## Version: 1.6.0
 ## Author: Muhmiauwau
 ## SavedVariables: AHCCDB
+## LoadOnDemand: 1
+## LoadWith: Blizzard_AuctionHouseUI
 
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
-Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 
 Libs\AceAddon-3.0\AceAddon-3.0.xml
-Libs\AceEvent-3.0\AceEvent-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
 #@end-no-lib-strip@
 
@@ -19,8 +19,13 @@ Libs\Lodash\Lodash.lua
 
 locale\locale.xml
 
+
+
+
 frames.xml
 AHCC.lua
+
+overwrites.lua
 
 config.lua
 mixins.lua

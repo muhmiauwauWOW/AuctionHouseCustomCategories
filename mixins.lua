@@ -6,7 +6,6 @@ local _ = LibStub("Lodash"):Get()
 
 
 
-
 -- Quality column
 AuctionHouseTableCellQualityMixin = CreateFromMixins(TableBuilderCellMixin);
 function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
@@ -67,4 +66,7 @@ function AHCCQualitySelectButtonMixin:SetState(state)
     AHCC.Config.ProfessionsQualityActive[self.tier] = state
     self.Icon:SetDesaturated(not state);
 end
+
+
+
 

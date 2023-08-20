@@ -9,11 +9,6 @@ L["Consumables"] = AUCTION_CATEGORY_CONSUMABLES
 L["TRADE_GOODS"] = AUCTION_CATEGORY_TRADE_GOODS
 
 
-L["Optional Reagents"] = "Optional Reagents"
-L["Draconic Missive"] = "Draconic Missive"
-
-L["Embellishments"] = "Embellishments"
-
 L["CRITICAL_STRIKE"] = STAT_CRITICAL_STRIKE
 L["HASTE"] = STAT_HASTE
 L["MASTERY"] = STAT_MASTERY
@@ -40,6 +35,11 @@ L["CELL_VERSATILITY"] = STAT_VERSATILITY
 
 
 -- 
+
+
+L["Optional Reagents"] = "Optional Reagents"
+L["Draconic Missive"] = "Draconic Missive"
+L["Embellishments"] = "Embellishments"
 
 L["Runes"] = "Runes"
 L["Flasks"] = "Phials"

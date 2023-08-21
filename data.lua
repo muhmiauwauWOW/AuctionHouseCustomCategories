@@ -33,9 +33,6 @@ local getResultLine = function(idx, id, entry)
         Price = minPrice,
         stat1 = stat1,
         stat2 = entry.stat2 or 0,
-        category = entry.category,
-        subCategory = entry.subCategory,
-        subSubCategory = entry.subSubCategory,
         nav = { entry.category, entry.subCategory,  entry.subSubCategory }
     }
 
@@ -56,35 +53,13 @@ local formatToResultLines = function(entry)
     return table
 end
 
-local function arrayEqual(a1, a2)
-    -- Check length, or else the loop isn't valid.
-    if #a1 ~= #a2 then
-        return false
-    end
-
-    -- Check each element.
-    for i, v in ipairs(a1) do
-        if a1[i] ~= a2[i] then
-        return false
-        end
-    end
-
-    -- We've checked everything.
-    return true
-end
-
-local function enrichDataCategories(categories, config, nav, depth)
+local function enrichDataCategories(categories, config, depth)
     config = config or {}
-    nav = nav or {}
     depth = depth or 0
     depth = depth + 1
 
 
     return _.map(categories, function(categoryEntry, categoryId)
-
-        -- nav
-        categoryEntry.nav = {unpack(nav)}
-        categoryEntry.nav[depth] = categoryEntry.id
 
 
         -- add sortsID
@@ -102,15 +77,12 @@ local function enrichDataCategories(categories, config, nav, depth)
     
         if categoryEntry.subCategories then
             local conf = categoryEntry.config or config
-            categoryEntry.subCategories = enrichDataCategories(categoryEntry.subCategories, conf, categoryEntry.nav, depth)
+            categoryEntry.subCategories = enrichDataCategories(categoryEntry.subCategories, conf, depth)
         end
 
         -- insert Data
         if  categoryEntry.Items then
             categoryEntry.Items = _.map(categoryEntry.Items, function(entry)
-                entry.category = categoryEntry.nav[1]
-                entry.subCategory = categoryEntry.nav[2]
-                entry.subSubCategory = categoryEntry.nav[2]
                 return formatToResultLines(entry)
             end)
             categoryEntry.Items = _.flatten(categoryEntry.Items)
@@ -138,16 +110,122 @@ function AHCC:prepareCategoryData(categoryData)
     return enrichDataCategories(categoryData)
 end
 
-function AHCC:addItemstoDataStore(Items)
-    tAppendAll(AHCC.data.dataStore, Items)
+function AHCC:addItemstoDataStore(Items, nav)
+    _.forEach(Items, function(entry)
+        entry.nav = nav
+        tinsert(AHCC.data.dataStore, entry)
+    end)
 end
 
+
+AHCC.dataStore = {}
+
+
+AHCCData = {}
+
+function AHCCData:Init()
+    self.data = {}
+end
+
+function AHCCData:set(data)
+    self.data = data
+end
+
+function AHCCData:get()
+    return self.data or {}
+end
+
+
+
+function AHCCData:add(dataArg, config)
+    if not config then return end
+
+    local data = self:get()
+    if config.mode == "insert" and config.nav then 
+        if #config.nav == 0 then 
+            data = data
+        end
+        tAppendAll(data, AHCCData:createCategory(dataArg))
+    end
+
+    AHCCData:set(data)
+end
+
+
+function AHCCData:createCategory(Data)
+    local categoryEntries = AHCC:prepareCategoryData(Data)
+    return _.map(categoryEntries, function(categoryEntry) 
+        return AHCC:createCategory(categoryEntry)
+    end)
+end
+
+AHCCCategoryList = {}
+
+function AHCCCategoryList:Init()
+    self.AuctionCategories =  _.union({},{_.last(AuctionCategories)}, _.initial(AuctionCategories))
+   
+end
+
+function AHCCCategoryList:update()
+    AHCC.dataStore = {}
+    local cData =  self:updateNav(AHCCData:get(), {}, 0)
+    AuctionCategories = _.union(cData, self.AuctionCategories)
+    AuctionFrameFilters_Update(AuctionHouseFrame.CategoriesList)
+end
+
+function AHCCCategoryList:updateNav(categories, nav, depth)
+    depth = depth + 1
+
+    return  _.map(categories, function(category, categoryId)
+        category.AHCC_Nav = {unpack(nav)}
+        category.AHCC_Nav[depth] = categoryId
+        
+        AHCC:addItemstoDataStore(category.Items, category.AHCC_Nav)
+
+        if category.subCategories then
+            self:updateNav(category.subCategories, category.AHCC_Nav, depth)
+        end
+        return category
+    end)
+end
+
+
+
+AHCCData:Init()
+AHCCCategoryList:Init()
 
 
 
 AHCC_DATA = {
     OnEnable = function(self)
-        AHCC:addCategories(self.Categories)
-        AHCC:updateCategoryData()
+        AHCCData:add(self.Categories, self.Config)
+        self.loaded = true
+        AHCC_DATA__checkModules()
+    end,
+    OnDisable = function(self)
+        AHCCData:add(self.Categories, self.Config)
+        self.loaded = false
+        AHCC_DATA__checkModules()
     end 
 }
+
+
+AHCC_DATA__ticker = nil
+
+function AHCC_DATA__checkModules()
+    local modules = AHCC:IterateModules()
+    local check = _.every(modules, function(module)
+        return module.loaded
+    end)
+
+    if AHCC_DATA__ticker then
+        AHCC_DATA__ticker:Cancel()
+	end
+
+    if check then
+        AHCC_DATA__ticker = C_Timer.NewTimer(0.1, function()
+            AHCC_DATA__ticker:Cancel()
+            AHCCCategoryList:update()
+        end)
+    end
+end

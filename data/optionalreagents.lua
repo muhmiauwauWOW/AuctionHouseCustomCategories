@@ -1,6 +1,13 @@
 local Data = AHCC:NewModule("AHCC_DATA_optionalreagents", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
+
+Data.Config = {
+    mode = "insert",
+    nav = {}
+} 
+
+
 Data.Categories = {
     {
         ["id"] = 4,

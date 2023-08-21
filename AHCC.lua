@@ -9,7 +9,6 @@ function AHCC:GetLibs()
 end 
 
 
-
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
@@ -31,30 +30,12 @@ function AHCC:OnInitialize()
 
 end 
 
-function AHCC:OnEnable()    
-    self:initCategoryList()
+function AHCC:OnEnable()
     self:initQualityFrame()
 end
 
-
 function AHCC:initQualityFrame()
     AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
-end
-
-function AHCC:initCategoryList()
-    AHCC.AuctionCategories =  _.union({},{_.last(AuctionCategories)}, _.initial(AuctionCategories))
-end
-
-function AHCC:addCategories(Data)
-    local categoryData = AHCC:prepareCategoryData(Data)
-    _.forEach(categoryData, function(categoryEntry) 
-        AHCC.categoryData[categoryEntry.id] = self:createCategory(categoryEntry, categoryEntry.id)
-    end)
-end
-
-function AHCC:updateCategoryData()
-    AuctionCategories = _.union(AHCC.categoryData, AHCC.AuctionCategories)
-    self:updateCategoryNav(AuctionCategories)
 end
 
 
@@ -64,13 +45,10 @@ function AHCC:createCategory(categoryEntry, categoryId)
     category.name = categoryEntry.name
     category.AHCC_Id = categoryId
     category.AHCC_config = categoryEntry.config
+    category.Items = categoryEntry.Items or {}
 
     if categoryEntry.sortsID then 
         g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] = g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
-    end
-
-    if categoryEntry.Items then 
-        self:addItemstoDataStore(categoryEntry.Items)
     end
 
     if categoryEntry.subCategories then
@@ -80,24 +58,6 @@ function AHCC:createCategory(categoryEntry, categoryId)
         end)
     end
     return category
-end
-
-
--- call this after adding more categories
--- self:updateCategoryNav(AuctionCategories)
-function AHCC:updateCategoryNav(categories, nav, depth)
-    nav = nav or {}
-    depth = depth or 0
-    depth = depth + 1
-    _.forEach(categories, function(category)
-        if category:HasFlag("AHCC") then
-            category.AHCC_Nav = {unpack(nav)}
-            category.AHCC_Nav[depth] = category.AHCC_Id
-            if category.subCategories then
-                self:updateCategoryNav(category.subCategories, category.AHCC_Nav, depth)
-            end
-        end
-    end)
 end
 
 local function arrayEqual(a1, a2)

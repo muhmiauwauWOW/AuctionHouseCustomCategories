@@ -1,6 +1,12 @@
 local Data = AHCC:NewModule("AHCC_DATA_consumables", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
+
+Data.Config = {
+    mode = "insert",
+    nav = {}
+} 
+
 Data.Categories = {
     {
         ["id"] = 3,

@@ -31,3 +31,8 @@ config.lua
 mixins.lua
 data.lua
 
+
+data\enchants.lua
+data\gems.lua
+data\consumables.lua
+data\optionalreagents.lua

@@ -2,6 +2,8 @@ AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("Lodash"):Get()
 
+AHCC:SetDefaultModuleState(true)
+
 function AHCC:GetLibs()
     return L, _
 end 
@@ -19,11 +21,14 @@ AHCC.Nav = {}
 AHCC.searchResultTable = nil
 AHCC.searchButton = nil
 
-
+AHCC.data = {}
+AHCC.data.dataStore = {}
+AHCC.AuctionCategories = {}
+AHCC.categoryData = {}
 
 
 function AHCC:OnInitialize()
-    AHCC:loadData()
+
 end 
 
 function AHCC:OnEnable()    
@@ -37,15 +42,18 @@ function AHCC:initQualityFrame()
 end
 
 function AHCC:initCategoryList()
-    local categoriesTable = {}
+    AHCC.AuctionCategories =  _.union({},{_.last(AuctionCategories)}, _.initial(AuctionCategories))
+end
 
-    local categoryData = AHCC:prepareCategoryData(AHCC.data.dataCategories)
-
+function AHCC:addCategories(Data)
+    local categoryData = AHCC:prepareCategoryData(Data)
     _.forEach(categoryData, function(categoryEntry) 
-        categoriesTable[categoryEntry.id] = self:createCategory(categoryEntry, categoryEntry.id)
+        AHCC.categoryData[categoryEntry.id] = self:createCategory(categoryEntry, categoryEntry.id)
     end)
+end
 
-    AuctionCategories = _.union(categoriesTable, {_.last(AuctionCategories)}, _.initial(AuctionCategories))
+function AHCC:updateCategoryData()
+    AuctionCategories = _.union(AHCC.categoryData, AHCC.AuctionCategories)
     self:updateCategoryNav(AuctionCategories)
 end
 

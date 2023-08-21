@@ -1,5 +1,8 @@
-local MaxNumAuctionHouseSortTypes = 2
+local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
+local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
+local _ = LibStub("Lodash"):Get()
 
+local MaxNumAuctionHouseSortTypes = 2
 
 local function AddSortType(searchContext, newSortType)
     if not g_auctionHouseSortsBySearchContext[searchContext] then
@@ -29,7 +32,7 @@ end
 hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
     local cdata = categoriesList:GetCategoryData()
 
-    if AHCC.isInCustomCategory and cdata == nil then
+    if AHCC.isInCustomCategory and ( cdata == nil or not cdata:HasFlag("AHCC")) then
         AHCC:Reset()
     end
 
@@ -39,8 +42,11 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AuctionHouseFrame.SearchBar.QualityFrame:Show()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         AHCC.viewConfig = cdata.AHCC_config
-      
-        AHCC:performSearch()
+
+        -- prevent double execution
+        if forceSelectionIntoView then 
+            AHCC:performSearch()
+        end
     else
         AHCC.isInCustomCategory = false
         AuctionHouseFrame.SearchBar.QualityFrame:Hide()

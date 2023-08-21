@@ -14,6 +14,11 @@ AHCC.searchResultTable = nil
 AHCC.searchButton = nil
 
 
+function AHCC:GetLibs()
+    return L, _
+end 
+
+
 function AHCC:OnInitialize()
     AHCC:loadData()
 end 

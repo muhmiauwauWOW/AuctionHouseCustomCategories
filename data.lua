@@ -1,6 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
-local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-local _ = LibStub("Lodash"):Get()
+local L, _ = AHCC:GetLibs()
+
 
 local dataCategories = {
     {
@@ -244,6 +244,8 @@ local dataItems = {
     { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192974, 192975, 192976 }, ["stat1"] = 5, ["stat2"] = 3 }, -- Imposanter Nozdorit 
     { ["category"] = 2, ["subCategory"] = 5,  ["id"] = { 192977, 192978, 192979 }, ["stat1"] = 5, ["stat2"] = 4 }, -- Beständiger Nozdorit 
 
+
+    { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 204858, 204859, 204860 } }, -- Vantusrune: Aberrus, Schmelztiegel der Schatten
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194817, 194819, 194820 } }, -- Heulrune 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 194821, 194822, 194823 } }, -- Summrune 
     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 204971, 204972, 204973 } }, -- Zischende Rune 
@@ -349,7 +351,7 @@ local getResultLine = function(idx, id, entry)
         Name = GetItemInfo(id),
         quality = idx,
         containsOwnerItem=false,
-        totalQuantity=1,
+        totalQuantity = 1,
         minPrice = minPrice,
         Price = minPrice,
         stat1 = stat1,

@@ -1,6 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
-local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-local _ = LibStub("Lodash"):Get()
+local L, _ = AHCC:GetLibs()
+
 
 local MaxNumAuctionHouseSortTypes = 2
 
@@ -44,7 +44,7 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AHCC.viewConfig = cdata.AHCC_config
 
         -- prevent double execution
-        if forceSelectionIntoView then 
+        if not forceSelectionIntoView then 
             AHCC:performSearch()
         end
     else

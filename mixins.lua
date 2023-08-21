@@ -69,3 +69,47 @@ end
 
 
 
+AHCCAuctionCategoryMixin = CreateFromMixins(AuctionCategoryMixin);
+
+function AHCCAuctionCategoryMixin:AddNav(first)
+    local nav = { self.AHCC_Id }
+
+    local function addIds(navTable, parent)
+        tinsert(navTable, parent.AHCC_Id)
+        return (parent.AHCC_parent) and  addIds(navTable,parent.AHCC_parent) or nav
+    end
+
+    if not first then 
+        nav = addIds(nav, self.AHCC_parent)
+    end
+
+    nav = _.reverse(nav)
+    self.AHCC_Nav = nav
+end
+
+
+function AHCCAuctionCategoryMixin:SetConfig(config, first)
+    self:SetFlag("AHCC");
+    local cfg = config or {}
+
+    if not first and #cfg == 0 then
+        if self.AHCC_parent then 
+            cfg = self.AHCC_parent.AHCC_config or {}
+        end
+    end
+
+    local cols = {"Name"}
+
+    if Auctionator then 
+        cols = {"Price", "Name"}
+    end
+
+    if cfg.columns then 
+        tAppendAll(cols, cfg.columns)
+    else
+        tinsert(cols, "quality")
+    end
+
+    cfg.columns = cols
+    self.AHCC_config = cfg
+end

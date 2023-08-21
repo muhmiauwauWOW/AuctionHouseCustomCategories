@@ -125,6 +125,9 @@ local dataCategories = {
     {
         ["id"] = 4,
         ["name"] =  L["Optional Reagents"],
+        ["config"] = {
+            ["type"] = "test"
+        },
         ["subCategories"] = {
             {
                 ["id"] = 1,
@@ -359,9 +362,12 @@ local getResultLine = function(idx, id, entry)
         category = entry.category,
         subCategory = entry.subCategory,
         subSubCategory = entry.subSubCategory,
+        nav = { entry.category, entry.subCategory,  entry.subSubCategory }
     }
 
 end
+
+
 
 local formatToResultLines = function(entry)
     local table = {}
@@ -384,11 +390,95 @@ local expandDataItems = function(entries)
     return table
 end
 
+local expandDataItemsTable = expandDataItems(dataItems)
 
-function AHCC:loadData(cd)
+
+local function arrayEqual(a1, a2)
+    -- Check length, or else the loop isn't valid.
+    if #a1 ~= #a2 then
+        return false
+    end
+
+    -- Check each element.
+    for i, v in ipairs(a1) do
+        if a1[i] ~= a2[i] then
+        return false
+        end
+    end
+
+    -- We've checked everything.
+    return true
+end
+
+local function enrichDataCategories(categories, config, nav, depth)
+    config = config or {}
+    nav = nav or {}
+    depth = depth or 0
+    depth = depth + 1
+
+
+    return _.map(categories, function(categoryEntry, categoryId)
+
+        -- nav
+        categoryEntry.nav = {unpack(nav)}
+        categoryEntry.nav[depth] = categoryEntry.id
+
+
+        -- add sortsID
+        if depth == 1 then 
+            categoryEntry.sortsID = categoryId + 300
+        end
+
+        --config
+        categoryEntry.config = categoryEntry.config or {}
+        _.forEach(config, function(value, key)
+            if not categoryEntry.config[key] then 
+                categoryEntry.config[key] = value
+            end
+        end)
+    
+        if categoryEntry.subCategories then
+            local conf = categoryEntry.config or config
+            categoryEntry.subCategories = enrichDataCategories(categoryEntry.subCategories, conf, categoryEntry.nav, depth)
+        end
+
+        -- insert Data
+        if not categoryEntry.Items then
+            categoryEntry.Items = _.filter(expandDataItemsTable, function(entry)
+                return arrayEqual(entry.nav, categoryEntry.nav)
+            end)
+        end
+
+        local cols = {"Name"}
+
+        if Auctionator then 
+            cols = {"Price", "Name"}
+        end
+
+        if categoryEntry.config.columns then 
+            tAppendAll(cols, categoryEntry.config.columns)
+        else
+            tinsert(cols, "quality")
+        end
+
+        categoryEntry.config.columns = cols
+
+        return categoryEntry
+    end)
+end
+
+function AHCC:prepareCategoryData(categoryData)
+    return enrichDataCategories(categoryData)
+end
+
+function AHCC:addItemstoDataStore(Items)
+    tAppendAll(AHCC.data.dataStore, Items)
+end
+
+function AHCC:loadData()
     AHCC.data = {
         dataCategories = dataCategories,
-        dataStore = expandDataItems(dataItems)
+        dataStore = {}
     }
 end
 

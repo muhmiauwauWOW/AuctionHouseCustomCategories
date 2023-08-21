@@ -2,6 +2,12 @@ AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("Lodash"):Get()
 
+function AHCC:GetLibs()
+    return L, _
+end 
+
+
+
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
@@ -14,9 +20,6 @@ AHCC.searchResultTable = nil
 AHCC.searchButton = nil
 
 
-function AHCC:GetLibs()
-    return L, _
-end 
 
 
 function AHCC:OnInitialize()
@@ -24,61 +27,89 @@ function AHCC:OnInitialize()
 end 
 
 function AHCC:OnEnable()    
-    AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
+    self:initCategoryList()
+    self:initQualityFrame()
+end
 
+
+function AHCC:initQualityFrame()
+    AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
+end
+
+function AHCC:initCategoryList()
     local categoriesTable = {}
-    _.forEach(AHCC.data.dataCategories, function(categoryEntry, categoryId) 
-        self:createCategory(categoriesTable, categoryEntry, categoryId, true)
+
+    local categoryData = AHCC:prepareCategoryData(AHCC.data.dataCategories)
+
+    _.forEach(categoryData, function(categoryEntry) 
+        categoriesTable[categoryEntry.id] = self:createCategory(categoryEntry, categoryEntry.id)
     end)
 
     AuctionCategories = _.union(categoriesTable, {_.last(AuctionCategories)}, _.initial(AuctionCategories))
+    self:updateCategoryNav(AuctionCategories)
 end
 
-function AHCC:createCategory(parent, categoryEntry, categoryId, first)
-    local category = CreateFromMixins(AHCCAuctionCategoryMixin);
-    category:SetConfig(categoryEntry.config, first);
-    
-    if first then 
-        parent[categoryId] = category
-        g_auctionHouseSortsBySearchContext[categoryId + 300] = g_auctionHouseSortsBySearchContext[categoryId + 300] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
-    else 
-        parent.subCategories[categoryId] = category
-    end
 
+function AHCC:createCategory(categoryEntry, categoryId)
+    local category = CreateFromMixins(AHCCAuctionCategoryMixin);
+    category:SetFlag("AHCC");
     category.name = categoryEntry.name
     category.AHCC_Id = categoryId
-    category.AHCC_parent = parent
-    category:AddNav(first)
+    category.AHCC_config = categoryEntry.config
+
+    if categoryEntry.sortsID then 
+        g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] = g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
+    end
+
+    if categoryEntry.Items then 
+        self:addItemstoDataStore(categoryEntry.Items)
+    end
 
     if categoryEntry.subCategories then
         category.subCategories = {}
-        _.forEach(categoryEntry["subCategories"], function(subCategoryEntry, subCategoryId) 
-            self:createCategory(category, subCategoryEntry, subCategoryId)
+        _.forEach(categoryEntry["subCategories"],  function(subCategoryEntry)
+            category.subCategories[subCategoryEntry.id] = self:createCategory(subCategoryEntry, subCategoryEntry.id, category.subCategories)
         end)
     end
+    return category
+end
+
+
+-- call this after adding more categories
+-- self:updateCategoryNav(AuctionCategories)
+function AHCC:updateCategoryNav(categories, nav, depth)
+    nav = nav or {}
+    depth = depth or 0
+    depth = depth + 1
+    _.forEach(categories, function(category)
+        if category:HasFlag("AHCC") then
+            category.AHCC_Nav = {unpack(nav)}
+            category.AHCC_Nav[depth] = category.AHCC_Id
+            if category.subCategories then
+                self:updateCategoryNav(category.subCategories, category.AHCC_Nav, depth)
+            end
+        end
+    end)
+end
+
+local function arrayEqual(a1, a2)
+    for i, v in ipairs(a1) do
+        if a1[i] ~= a2[i] then
+            return false
+        end
+    end
+
+    return true
 end
 
 local getResults = function()
+    if not AHCC.Nav[1] then return  end
     local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
     searchString = string.lower(searchString:gsub("%s+", ""))
-  
-
-    if not AHCC.Nav[1] then 
-        return 
-    end
 
     local results = _.filter(AHCC.data.dataStore, function(entry)
-        if #AHCC.Nav == 1 then 
-            return entry.category == AHCC.Nav[1]
-        elseif #AHCC.Nav == 2 then 
-            return entry.category == AHCC.Nav[1] and  entry.subCategory == AHCC.Nav[2]
-        elseif #AHCC.Nav == 3 and entry.subSubCategory then 
-            return entry.category == AHCC.Nav[1] and  entry.subCategory == AHCC.Nav[2] and entry.subSubCategory == AHCC.Nav[3]
-        else 
-            return false
-        end
+        return arrayEqual(AHCC.Nav, entry.nav)
     end)
-
 
     if (searchString ~= "") then 
         results = _.filter(results, function(filterEntry)
@@ -86,14 +117,17 @@ local getResults = function()
         end)
     end
 
-    return _.filter(results, function(entry)
+    results = _.filter(results, function(entry)
         return (entry.quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.quality] 
     end)
+
+    if #results == 0 then return nil end
+    return results
 end
 
 function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, name, width, key)
-        local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, Enum.AuctionHouseSortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
-        column:GetHeaderFrame():SetText(name);
+    local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, Enum.AuctionHouseSortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
+    column:GetHeaderFrame():SetText(name);
 end
 
 
@@ -122,11 +156,10 @@ end
 
 function AHCC:performSearch()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
-
+    AHCC:Reset()
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
 
     if AHCC.searchResultTable then
-        AHCC:Reset()
         BRF.searchStarted = true;
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));

@@ -28,6 +28,38 @@ local function AddSortType(searchContext, newSortType)
     end
 end
 
+
+
+
+
+-- return to BrowseResultsFrame on category select 
+local AuctionHouseCategoriesListMixin_OnFilterClicked =  AuctionHouseFrame.CategoriesList.OnFilterClicked
+function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
+    local displaymode =  _.last(AuctionHouseFrame:GetDisplayMode())
+
+    if displaymode ~= "BrowseResultsFrame" then 
+        AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
+        local selectedCategoryIndex, selectedSubCategoryIndex, selectedSubSubCategoryIndex = self:GetSelectedCategory();
+        if ( button.type == "category" ) then
+            if ( selectedCategoryIndex ~= button.categoryIndex ) then
+                AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+            end
+        elseif ( button.type == "subCategory" ) then
+            if ( selectedSubCategoryIndex ~= button.subCategoryIndex ) then
+                AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+            end
+        elseif ( button.type ~= "subSubCategory" ) then
+            if ( selectedSubSubCategoryIndex == button.subSubCategoryIndex ) then
+                AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+            end
+        end
+    else
+        AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+    end
+end
+
+
+
 -- overwrites
 hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, forceSelectionIntoView)
     local cdata = categoriesList:GetCategoryData()
@@ -55,19 +87,18 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
 end)
 
 
+
+
 -- overwrites
+local AuctionHouseSearchBarMixin_StartSearch = AuctionHouseFrame.SearchBar.StartSearch
 function AuctionHouseFrame.SearchBar:StartSearch()
     if AHCC.isInCustomCategory then
+        AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
         AHCC:performSearch()
     else
-        local searchString = self.SearchBox:GetSearchString();
-        local minLevel, maxLevel = self:GetLevelFilterRange();
-        local filtersArray = AuctionHouseFrame.SearchBar.FilterButton:CalculateFiltersArray();
-        AuctionHouseFrame:SendBrowseQuery(searchString, minLevel, maxLevel, filtersArray);
+        AuctionHouseSearchBarMixin_StartSearch(self)
     end
 end
-
-
 
 local AuctionHouseUtil_ConvertCategoryToSearchContext = AuctionHouseUtil.ConvertCategoryToSearchContext
 function AuctionHouseUtil.ConvertCategoryToSearchContext(selectedCategoryIndex)

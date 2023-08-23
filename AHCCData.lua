@@ -2,7 +2,36 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
 
-local getResultLine = function(idx, id, entry)
+AHCCData = {}
+
+function AHCCData:Init()
+    self.data = {}
+end
+
+function AHCCData:set(data)
+    self.data = data
+end
+
+function AHCCData:get()
+    return self.data or {}
+end
+
+
+function AHCCData:add(dataArg, config)
+    if not config then return end
+
+    local data = self:get()
+    if config.mode == "insert" and config.nav then 
+        if #config.nav == 0 then 
+            data = data
+        end
+        tAppendAll(data, AHCCData:createCategory(dataArg))
+    end
+
+    AHCCData:set(data)
+end
+
+function AHCCData:getResultLine(idx, id, entry)
 
     local minPrice = 1
     if Auctionator then 
@@ -39,29 +68,25 @@ local getResultLine = function(idx, id, entry)
 end
 
 
-
-local formatToResultLines = function(entry)
+function AHCCData:formatToResultLines(entry)
     local table = {}
     if type(entry.id) == "table" then 
         table = _.map(entry.id, function(item, idx)
-            return getResultLine(idx, item, entry)
+            return self:getResultLine(idx, item, entry)
         end)
     else
-        table = {getResultLine(0, entry.id, entry)}
+        table = {self:getResultLine(0, entry.id, entry)}
     end
 
     return table
 end
 
-local function enrichDataCategories(categories, config, depth)
+function AHCCData:prepareCategoryData(categories, config, depth)
     config = config or {}
     depth = depth or 0
     depth = depth + 1
 
-
     return _.map(categories, function(categoryEntry, categoryId)
-
-
         -- add sortsID
         if depth == 1 then 
             categoryEntry.sortsID = categoryId + 300
@@ -77,13 +102,13 @@ local function enrichDataCategories(categories, config, depth)
     
         if categoryEntry.subCategories then
             local conf = categoryEntry.config or config
-            categoryEntry.subCategories = enrichDataCategories(categoryEntry.subCategories, conf, depth)
+            categoryEntry.subCategories = self:prepareCategoryData(categoryEntry.subCategories, conf, depth)
         end
 
         -- insert Data
         if  categoryEntry.Items then
             categoryEntry.Items = _.map(categoryEntry.Items, function(entry)
-                return formatToResultLines(entry)
+                return self:formatToResultLines(entry)
             end)
             categoryEntry.Items = _.flatten(categoryEntry.Items)
         end
@@ -106,93 +131,14 @@ local function enrichDataCategories(categories, config, depth)
     end)
 end
 
-function AHCC:prepareCategoryData(categoryData)
-    return enrichDataCategories(categoryData)
-end
-
-function AHCC:addItemstoDataStore(Items, nav)
-    _.forEach(Items, function(entry)
-        entry.nav = nav
-        tinsert(AHCC.data.dataStore, entry)
-    end)
-end
-
-
-AHCC.dataStore = {}
-
-
-AHCCData = {}
-
-function AHCCData:Init()
-    self.data = {}
-end
-
-function AHCCData:set(data)
-    self.data = data
-end
-
-function AHCCData:get()
-    return self.data or {}
-end
-
-
-
-function AHCCData:add(dataArg, config)
-    if not config then return end
-
-    local data = self:get()
-    if config.mode == "insert" and config.nav then 
-        if #config.nav == 0 then 
-            data = data
-        end
-        tAppendAll(data, AHCCData:createCategory(dataArg))
-    end
-
-    AHCCData:set(data)
-end
-
 
 function AHCCData:createCategory(Data)
-    local categoryEntries = AHCC:prepareCategoryData(Data)
+    local categoryEntries = AHCCData:prepareCategoryData(Data)
     return _.map(categoryEntries, function(categoryEntry) 
-        return AHCC:createCategory(categoryEntry)
+        return AHCCCategoryList:createCategory(categoryEntry)
     end)
 end
 
-AHCCCategoryList = {}
-
-function AHCCCategoryList:Init()
-    self.AuctionCategories =  _.union({},{_.last(AuctionCategories)}, _.initial(AuctionCategories))
-   
-end
-
-function AHCCCategoryList:update()
-    AHCC.dataStore = {}
-    local cData =  self:updateNav(AHCCData:get(), {}, 0)
-    AuctionCategories = _.union(cData, self.AuctionCategories)
-    AuctionFrameFilters_Update(AuctionHouseFrame.CategoriesList)
-end
-
-function AHCCCategoryList:updateNav(categories, nav, depth)
-    depth = depth + 1
-
-    return  _.map(categories, function(category, categoryId)
-        category.AHCC_Nav = {unpack(nav)}
-        category.AHCC_Nav[depth] = categoryId
-        
-        AHCC:addItemstoDataStore(category.Items, category.AHCC_Nav)
-
-        if category.subCategories then
-            self:updateNav(category.subCategories, category.AHCC_Nav, depth)
-        end
-        return category
-    end)
-end
-
-
-
-AHCCData:Init()
-AHCCCategoryList:Init()
 
 
 
@@ -208,7 +154,6 @@ AHCC_DATA = {
         AHCC_DATA__checkModules()
     end 
 }
-
 
 AHCC_DATA__ticker = nil
 

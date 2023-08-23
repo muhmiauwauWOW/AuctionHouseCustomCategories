@@ -13,21 +13,14 @@ function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
 
-
 AHCC.viewConfig = {}
 AHCC.Nav = {}
-
 AHCC.searchResultTable = nil
-AHCC.searchButton = nil
-
-AHCC.data = {}
-AHCC.data.dataStore = {}
-AHCC.AuctionCategories = {}
-AHCC.categoryData = {}
-
 
 function AHCC:OnInitialize()
-
+    AHCCItems:Init()
+    AHCCData:Init()
+    AHCCCategoryList:Init()
 end 
 
 function AHCC:OnEnable()
@@ -39,45 +32,12 @@ function AHCC:initQualityFrame()
 end
 
 
-function AHCC:createCategory(categoryEntry, categoryId)
-    local category = CreateFromMixins(AHCCAuctionCategoryMixin);
-    category:SetFlag("AHCC");
-    category.name = categoryEntry.name
-    category.AHCC_Id = categoryId
-    category.AHCC_config = categoryEntry.config
-    category.Items = categoryEntry.Items or {}
-
-    if categoryEntry.sortsID then 
-        g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] = g_auctionHouseSortsBySearchContext[categoryEntry.sortsID] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
-    end
-
-    if categoryEntry.subCategories then
-        category.subCategories = {}
-        _.forEach(categoryEntry["subCategories"],  function(subCategoryEntry)
-            category.subCategories[subCategoryEntry.id] = self:createCategory(subCategoryEntry, subCategoryEntry.id, category.subCategories)
-        end)
-    end
-    return category
-end
-
-local function arrayEqual(a1, a2)
-    for i, v in ipairs(a1) do
-        if a1[i] ~= a2[i] then
-            return false
-        end
-    end
-
-    return true
-end
-
 local getResults = function()
     if not AHCC.Nav[1] then return  end
     local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
     searchString = string.lower(searchString:gsub("%s+", ""))
 
-    local results = _.filter(AHCC.data.dataStore, function(entry)
-        return arrayEqual(AHCC.Nav, entry.nav)
-    end)
+    local results = AHCCItems:getByNav(AHCC.Nav)
 
     if (searchString ~= "") then 
         results = _.filter(results, function(filterEntry)

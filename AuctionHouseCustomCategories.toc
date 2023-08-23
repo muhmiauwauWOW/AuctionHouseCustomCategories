@@ -25,11 +25,14 @@ locale\locale.xml
 frames.xml
 AHCC.lua
 
-overwrites.lua
-
 config.lua
+overwrites.lua
 mixins.lua
-data.lua
+
+AHCCItems.lua
+AHCCData.lua
+AHCCCategoryList.lua
+
 
 
 data\enchants.lua

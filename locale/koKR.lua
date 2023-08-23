@@ -7,10 +7,12 @@ if not L then return end
 
 
 
-L["Optional Reagents"] = "선택 재료"
 L["CELL_STAMINA"] = "체력"
+L["Draconic Missive"] = "용언 서신"
+L["Embellishments"] = "장식"
 L["Flasks"] = "약병"
 L["Food"] = "음식"
+L["Optional Reagents"] = "선택 제작 재료"
 L["Potions"] = "물약"
 L["Runes"] = "룬"
 L["STAMINA"] = "체력"

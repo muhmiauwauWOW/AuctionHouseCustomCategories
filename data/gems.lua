@@ -10,14 +10,12 @@ Data.Config = {
 
 Data.Categories = {
     {
-        ["id"] = 2,
         ["name"] = L["Gems"],
         ["config"] = {
             ["columns"] = {"stat1", "stat2", "quality"}
         },
         ["subCategories"] = {
             {
-                ["id"] = 1,
                 ["name"] = L["CRITICAL_STRIKE"],
                 ["config"] = {
                     ["columns"] = {"stat2", "quality"}
@@ -30,7 +28,6 @@ Data.Categories = {
                 },
             },
             {
-                ["id"] = 2,
                 ["name"] = L["HASTE"],
                 ["config"] = {
                     ["columns"] = {"stat2", "quality"}
@@ -43,7 +40,6 @@ Data.Categories = {
                 },
             },
             {
-                ["id"] = 3,
                 ["name"] = L["MASTERY"],
                 ["config"] = {
                     ["columns"] = {"stat2", "quality"}
@@ -56,7 +52,6 @@ Data.Categories = {
                 },
             },
             {
-                ["id"] = 4,
                 ["name"] = L["VERSATILITY"],
                 ["config"] = {
                     ["columns"] = {"stat2", "quality"}
@@ -69,7 +64,6 @@ Data.Categories = {
                 },
             },
             {
-                ["id"] = 5,
                 ["name"] = L["STAMINA"],
                 ["config"] = {
                     ["columns"] = {"stat2", "quality"}

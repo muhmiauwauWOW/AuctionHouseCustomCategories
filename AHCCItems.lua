@@ -21,14 +21,15 @@ end
 
 function AHCCItems:add(Items, nav)
     if not nav then return end
-    if not _.table(nav) then return end
+    if not _.isTable(nav) then return end
+    if not Items then return end
 
-    if _.table(Items) then 
+    if _.isTable(Items) then 
         _.forEach(Items, function(entry)
             entry.nav = nav
             tinsert(self.items, entry)
         end)
-    else 
+    else
         Items.nav = nav
         tinsert(self.items, Items)
     end

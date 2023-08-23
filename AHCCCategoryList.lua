@@ -6,12 +6,18 @@ AHCCCategoryList = {}
 
 function AHCCCategoryList:Init()
     self.AuctionCategories =  _.union({},{_.last(AuctionCategories)}, _.initial(AuctionCategories))
-   
+    self.categoryList = self:createCategorys(AHCCData:get())
 end
+
+
+
+
+
 
 function AHCCCategoryList:update()
     AHCCItems:set({})
-    local cData =  self:updateNav(AHCCData:get(), {}, 0)
+
+    local cData =   self:updateNav(self.categoryList, {}, 0)
     AuctionCategories = _.union(cData, self.AuctionCategories)
     AuctionFrameFilters_Update(AuctionHouseFrame.CategoriesList)
 end
@@ -32,6 +38,12 @@ function AHCCCategoryList:updateNav(categories, nav, depth)
     end)
 end
 
+function AHCCCategoryList:createCategorys(Data)
+    local categoryEntries = AHCCData:prepareCategoryData(Data)
+    return _.map(categoryEntries, function(categoryEntry) 
+        return self:createCategory(categoryEntry)
+    end)
+end
 
 function AHCCCategoryList:createCategory(categoryEntry, categoryId)
     local category = CreateFromMixins(AHCCAuctionCategoryMixin);
@@ -47,8 +59,8 @@ function AHCCCategoryList:createCategory(categoryEntry, categoryId)
 
     if categoryEntry.subCategories then
         category.subCategories = {}
-        _.forEach(categoryEntry["subCategories"],  function(subCategoryEntry)
-            category.subCategories[subCategoryEntry.id] = self:createCategory(subCategoryEntry, subCategoryEntry.id, category.subCategories)
+        _.forEach(categoryEntry["subCategories"], function(subCategoryEntry)
+            category.subCategories[#category.subCategories + 1] = self:createCategory(subCategoryEntry, subCategoryEntry.id)
         end)
     end
     return category

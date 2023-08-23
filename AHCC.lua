@@ -20,7 +20,6 @@ AHCC.searchResultTable = nil
 function AHCC:OnInitialize()
     AHCCItems:Init()
     AHCCData:Init()
-    AHCCCategoryList:Init()
 end 
 
 function AHCC:OnEnable()

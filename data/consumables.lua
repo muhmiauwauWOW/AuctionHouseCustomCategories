@@ -9,11 +9,9 @@ Data.Config = {
 
 Data.Categories = {
     {
-        ["id"] = 3,
         ["name"] =  L["Consumables"],
         ["subCategories"] = {
             {
-                ["id"] = 1,
                 ["name"] = L["Runes"],
                 ["Items"] = {
                     { ["category"] = 3, ["subCategory"] = 1,  ["id"] = { 204858, 204859, 204860 } }, -- Vantusrune: Aberrus, Schmelztiegel der Schatten
@@ -28,7 +26,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 2,
                 ["name"] = L["Flasks"],
                 ["Items"] = {
                     { ["category"] = 3, ["subCategory"] = 2,  ["id"] = { 191327, 191328, 191329 } }, -- Eisige Phiole der verderbenden Wut 
@@ -44,7 +41,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 3,
                 ["name"] = L["Potions"],
                 ["Items"] = {
                     { ["category"] = 3, ["subCategory"] = 3,  ["id"] = { 191384, 191385, 191386 } }, -- Lufterfüllter Manatrank 
@@ -64,7 +60,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 4,
                 ["name"] = L["Food"],
                 ["config"] = {
                     ["columns"] = {}

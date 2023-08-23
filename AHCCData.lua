@@ -19,13 +19,24 @@ end
 
 function AHCCData:add(dataArg, config)
     if not config then return end
+    if not config.nav then return end
 
     local data = self:get()
-    if config.mode == "insert" and config.nav then 
+    if config.mode == "insert"then 
+
+        local nav = {}
+        _.forEach(config.nav, function(entry)
+            tinsert(nav, entry)
+            tinsert(nav, "subCategories")
+        end)
+
         if #config.nav == 0 then 
-            data = data
+            tAppendAll(data, dataArg)
+        else            
+            local position = _.get(data, nav)
+            if not position then return end
+            tAppendAll(position, dataArg)
         end
-        tAppendAll(data, AHCCData:createCategory(dataArg))
     end
 
     AHCCData:set(data)
@@ -170,6 +181,7 @@ function AHCC_DATA__checkModules()
     if check then
         AHCC_DATA__ticker = C_Timer.NewTimer(0.1, function()
             AHCC_DATA__ticker:Cancel()
+            AHCCCategoryList:Init()
             AHCCCategoryList:update()
         end)
     end

@@ -9,18 +9,15 @@ Data.Config = {
 
 Data.Categories = {
     {
-        ["id"] = 1,
         ["name"] =  L["Enchants"],
         ["subCategories"] = {
             {
-                ["id"] = 1,
                 ["name"] = L["NECK"],
                 ["Items"] = {
                     { ["id"] = { 192992, 192993, 192994 } }, -- Gestufte Medaillonfassung
                 }
             },
             {
-                ["id"] = 2,
                 ["name"] = L["SHOULDER"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 2,  ["id"] = { 204568, 204565, 204567 } }, -- Illusorische Verzierung: Sporen
@@ -31,7 +28,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 3,
                 ["name"] = L["CLOAK"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 3,  ["id"] = { 199949, 199991, 200033 } }, -- Umhang - Regenerativer Lebensraub
@@ -42,7 +38,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 4,
                 ["name"] = L["CHEST"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 4,  ["id"] = { 199944, 199986, 200028 } }, -- Brustrüstung - Reserve der Intelligenz 
@@ -51,7 +46,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 5,
                 ["name"] = L["WRIST"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 5,  ["id"] = { 199937, 199979, 200021 } }, -- Armschienen - Hingabe der Vermeidung 
@@ -60,14 +54,12 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 6,
                 ["name"] = L["WAIST"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 6,  ["id"] = { 205043, 205044, 205039 } }, -- Überschattete Gürtelschnalle 
                 }
             },
             {
-                ["id"] = 7,
                 ["name"] = L["LEGS"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 7,  ["id"] = { 194011, 194012, 194013 } }, -- Gefrorener Zauberfaden 
@@ -80,7 +72,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 8,
                 ["name"] = L["FEET"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 8,  ["id"] = { 199934, 199976, 200018 } }, -- Stiefel - Brise des Ebenenläufers 
@@ -89,7 +80,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 9,
                 ["name"] = L["FINGER"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 9,  ["id"] = { 199953, 199995, 200037 } }, -- Ring - Hingabe des kritischen Trefferwerts 
@@ -99,7 +89,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 10,
                 ["name"] = L["WEAPON"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 10,  ["id"] = { 204621, 204622, 204623 } }, -- Waffe - Umhüllung der Schattenflamme 
@@ -117,7 +106,6 @@ Data.Categories = {
                 }
             },
             {
-                ["id"] = 11,
                 ["name"] = L["RANGED"],
                 ["Items"] = {
                     { ["category"] = 1, ["subCategory"] = 11,  ["id"] = { 198313, 198314, 198315 } }, -- Geschossschleudertrieb 

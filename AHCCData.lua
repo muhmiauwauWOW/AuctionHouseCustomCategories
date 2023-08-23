@@ -46,7 +46,7 @@ function AHCCData:getResultLine(idx, id, entry)
 
     local minPrice = 1
     if Auctionator then 
-        minPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id)
+        minPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id) or 0
     end
 
     local stat1 = entry.stat1

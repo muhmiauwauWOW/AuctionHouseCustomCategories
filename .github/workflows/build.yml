@@ -1,16 +1,23 @@
-name: CI
+name: Package and release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - '**'
 
 jobs:
-  build:
-
+  release:
     runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Create Package
-        uses: BigWigsMods/packager@v2
+      - name: Clone project
+        uses: actions/checkout@v3
         with:
-          args: -p ${{ secrets.CF_API_KEY }} -a ${{ secrets.WAGO_API_TOKEN }}
+          fetch-depth: 0
+
+      - name: Package and release
+        uses: BigWigsMods/packager@v2

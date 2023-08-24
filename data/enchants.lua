@@ -30,8 +30,6 @@ Data.Categories = {
             {
                 ["name"] = L["CLOAK"],
                 ["Items"] = {
-                    { ["id"] = { 199949, 199991, 200033 } }, -- Umhang - Regenerativer Lebensraub
-                    { ["id"] = { 199949, 199991, 200033 } }, -- Umhang - Regenerativer Lebensraub
                     { ["id"] = { 199949, 199991, 200033 } }, -- Umhang - Regenerativer Lebensraub 
                     { ["id"] = { 199948, 199990, 200032 } }, -- Umhang - Schnelle Heimkehr 
                     { ["id"] = { 199947, 199989, 200031 } }, -- Umhang - Anmutiges Ausweichen 

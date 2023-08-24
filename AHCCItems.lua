@@ -21,16 +21,7 @@ function AHCCItems:setPrice(id, price)
     AHCC.db.global.prices[id] = price
 end
 
-function AHCCItems:getPrice(id)
-    if AHCC.db.global.prices[id] ==  nil then 
-        if Auctionator then 
-            local auctionatorPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id) or nil
-            if auctionatorPrice then 
-                self:setPrice(id, auctionatorPrice)
-            end
-        end
-    end
-    
+function AHCCItems:getPrice(id)    
     return AHCC.db.global.prices[id] or 0
 end
 

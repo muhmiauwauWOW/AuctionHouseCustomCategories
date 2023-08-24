@@ -99,8 +99,6 @@ local function OnEvent(self, event, itemKey)
 
     AHCCItems:updatePrice(itemKey.itemID, result[priceKey])
     AHCC:performSearch()
-    print("updated")
-
 end
 
 

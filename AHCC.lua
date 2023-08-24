@@ -58,7 +58,6 @@ local getResults = function()
     local results = AHCCItems:getByNav(AHCC.Nav)
     
     if (searchString ~= "") then 
-        print(searchString, #results)
         results = _.filter(results, function(filterEntry)
             return string.find(string.lower(filterEntry.Name), string.lower(searchString), 1, true)
         end)

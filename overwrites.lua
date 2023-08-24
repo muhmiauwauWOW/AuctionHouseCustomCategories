@@ -38,20 +38,29 @@ function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
     local displaymode =  _.last(AuctionHouseFrame:GetDisplayMode())
 
     if displaymode ~= "BrowseResultsFrame" then 
-        AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
+        local check = false
         local selectedCategoryIndex, selectedSubCategoryIndex, selectedSubSubCategoryIndex = self:GetSelectedCategory();
         if ( button.type == "category" ) then
             if ( selectedCategoryIndex ~= button.categoryIndex ) then
-                AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+                check = true
             end
         elseif ( button.type == "subCategory" ) then
             if ( selectedSubCategoryIndex ~= button.subCategoryIndex ) then
-                AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
+                check = true
             end
         elseif ( button.type ~= "subSubCategory" ) then
             if ( selectedSubSubCategoryIndex == button.subSubCategoryIndex ) then
+                check = true
+            end
+        end
+
+        if AHCC.isInCustomCategory then
+            AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
+            if check then 
                 AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
             end
+        else
+            AuctionHouseFrame.SearchBar:StartSearch()
         end
     else
         AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)

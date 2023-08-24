@@ -50,22 +50,28 @@ end
 AHCCQualitySelectButtonMixin = {}
 
 function AHCCQualitySelectButtonMixin:OnLoad()
-    self:SetState(AHCC.Config.ProfessionsQualityActive[self.tier])
     self:SetAtlas(self.iconAtlas, AHCC.Config.ProfessionsQualityIconSize);
-    SquareIconButtonMixin.OnLoad(self);
+    SquareIconButtonMixin.OnLoad(self)
+    self.normalTexture = self:GetNormalTexture()
+    self.disabledTexture = self:GetDisabledTexture()
+    self:SetNormalTexture(self.disabledTexture)
+    self:SetState(AHCC.Config.ProfessionsQualityActive[self.tier])
 end
 
 function AHCCQualitySelectButtonMixin:OnClick()
     local state = not AHCC.Config.ProfessionsQualityActive[self.tier]
     self:SetState(state)
+    self.Icon:SetPoint("CENTER", self, "CENTER", 0, 0);
     AHCC:performSearch()
 end
 
 function AHCCQualitySelectButtonMixin:SetState(state)
     AHCC.Config.ProfessionsQualityActive[self.tier] = state
     self.Icon:SetDesaturated(not state);
-end
 
+    local newTexture = state and self.normalTexture or self.disabledTexture
+    self:SetNormalTexture(newTexture)
+end
 
 
 

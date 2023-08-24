@@ -9,6 +9,19 @@ function AHCC:GetLibs()
 end 
 
 
+local DBdefaults = {
+    global = {
+        prices = {},
+    },
+    profile = {
+    },
+    char = {
+        qualitySelected = {false, false, true}
+    }
+
+}
+
+
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
@@ -18,6 +31,9 @@ AHCC.Nav = {}
 AHCC.searchResultTable = nil
 
 function AHCC:OnInitialize()
+    self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
+    AHCC.Config.ProfessionsQualityActive = self.db.char.qualitySelected
+
     AHCCItems:Init()
     AHCCData:Init()
 end 
@@ -31,16 +47,20 @@ function AHCC:initQualityFrame()
 end
 
 
+
+
 local getResults = function()
     if not AHCC.Nav[1] then return  end
-    local searchString = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString()
-    searchString = string.lower(searchString:gsub("%s+", ""))
-
+    function trim(s)
+        return (s:gsub("^%s*(.-)%s*$", "%1"))
+    end
+    local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
     local results = AHCCItems:getByNav(AHCC.Nav)
-
+    
     if (searchString ~= "") then 
+        print(searchString, #results)
         results = _.filter(results, function(filterEntry)
-            return string.find(string.lower(filterEntry.Name), searchString,1, true)
+            return string.find(string.lower(filterEntry.Name), string.lower(searchString), 1, true)
         end)
     end
 
@@ -145,3 +165,7 @@ function AHCC:Sort(sortOrder)
 
     BRF.ItemList:DirtyScrollFrame();
 end
+
+
+
+

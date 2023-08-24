@@ -44,10 +44,9 @@ end
 
 function AHCCData:getResultLine(idx, id, entry)
 
-    local minPrice = 1
-    if Auctionator then 
-        minPrice = Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", id) or 0
-    end
+    local minPrice = AHCCItems:getPrice(id)
+
+    AHCCItems:setPrice(id, minPrice)
 
     local stat1 = entry.stat1
      if not entry.stat1 then 
@@ -124,11 +123,7 @@ function AHCCData:prepareCategoryData(categories, config, depth)
             categoryEntry.Items = _.flatten(categoryEntry.Items)
         end
 
-        local cols = {"Name"}
-
-        if Auctionator then 
-            cols = {"Price", "Name"}
-        end
+        local cols = {"Price", "Name"}
 
         if categoryEntry.config.columns then 
             tAppendAll(cols, categoryEntry.config.columns)

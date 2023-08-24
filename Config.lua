@@ -2,14 +2,6 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
 AHCC.Config = {}
-AHCC.Config.sortOrder = {
-    name = 91,
-    stat1 = 92,
-    stat2 = 93,
-    minPrice = 98,
-    quality = 99
-}
-
 
 AHCC.Config.TableColums = {
     ["stat1"] = {
@@ -25,8 +17,6 @@ AHCC.Config.TableColums = {
         size = 84
     }
 }
-
-
 
 -- add Enum
 Enum.AuctionHouseSortOrder.stat1 = 92
@@ -59,6 +49,5 @@ AHCC.Config.ProfessionsQualityIconTable = {
 }
 
 AHCC.Config.ProfessionsQualityIconSize = 0.6
-
 
 AHCC.Config.ProfessionsQualityActive = {false, false, true}

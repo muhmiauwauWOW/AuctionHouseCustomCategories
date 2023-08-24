@@ -9,11 +9,6 @@ function AHCCCategoryList:Init()
     self.categoryList = self:createCategorys(AHCCData:get())
 end
 
-
-
-
-
-
 function AHCCCategoryList:update()
     AHCCItems:set({})
 

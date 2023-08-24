@@ -13,6 +13,9 @@ Libs\LibStub\LibStub.lua
 
 Libs\AceAddon-3.0\AceAddon-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
+
+
+Libs\AceDB-3.0\AceDB-3.0.xml
 #@end-no-lib-strip@
 
 Libs\Lodash\Lodash.lua

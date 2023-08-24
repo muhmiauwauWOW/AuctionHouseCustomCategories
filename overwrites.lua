@@ -75,6 +75,8 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         AHCC.viewConfig = cdata.AHCC_config
 
+        
+
         -- prevent double execution
         if not forceSelectionIntoView then 
             AHCC:performSearch()

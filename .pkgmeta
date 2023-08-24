@@ -1,4 +1,4 @@
 package-as: AuctionHouseCustomCategories
 
 ignore:
-  - readme.md
+  - README.md

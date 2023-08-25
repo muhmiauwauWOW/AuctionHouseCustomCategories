@@ -26,9 +26,9 @@ Data.Categories = {
                             ["columns"] = {"stat2", "quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 192553, 192554, 192552 },  ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
-                            { ["id"] = { 194579, 194580, 194578 },  ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-                            { ["id"] = { 194573, 194574, 194572 },  ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
+                            { ["id"] = { 192553, 192554, 192552 }, ["stat1"] = 1, ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
+                            { ["id"] = { 194579, 194580, 194578 }, ["stat1"] = 1, ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+                            { ["id"] = { 194573, 194574, 194572 }, ["stat1"] = 1, ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
                             
                         }
                     },
@@ -38,9 +38,9 @@ Data.Categories = {
                             ["columns"] = {"stat2", "quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 192553, 192554, 192552 }, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
-                            { ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
-                            { ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
+                            { ["id"] = { 192553, 192554, 192552 }, ["stat1"] = 2, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
+                            { ["id"] = { 194567, 194568, 194566 }, ["stat1"] = 2, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
+                            { ["id"] = { 194570, 194571, 194569 }, ["stat1"] = 2, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
 
                         }
                     },
@@ -50,9 +50,9 @@ Data.Categories = {
                             ["columns"] = {"stat2", "quality"}
                         },
                         ["Items"] = {
-                            { ["subSubCategory"] = 3,   ["id"] = { 194579, 194580, 194578 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-                            { ["subSubCategory"] = 3,   ["id"] = { 194567, 194568, 194566 }, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
-                            { ["subSubCategory"] = 3,   ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
+                            { ["id"] = { 194579, 194580, 194578 }, ["stat1"] = 3, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+                            { ["id"] = { 194567, 194568, 194566 }, ["stat1"] = 3, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
+                            { ["id"] = { 194576, 194577, 194575 }, ["stat1"] = 3, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
 
                         }
                     },
@@ -62,9 +62,9 @@ Data.Categories = {
                             ["columns"] = {"stat2", "quality"}
                         },
                         ["Items"] = {
-                            { ["subSubCategory"] = 4,   ["id"] = { 194573, 194574, 194572 }, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
-                            { ["subSubCategory"] = 4,   ["id"] = { 194570, 194571, 194569 }, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
-                            { ["subSubCategory"] = 4,   ["id"] = { 194576, 194577, 194575 }, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
+                            { ["id"] = { 194573, 194574, 194572 }, ["stat1"] = 4, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
+                            { ["id"] = { 194570, 194571, 194569 }, ["stat1"] = 4, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
+                            { ["id"] = { 194576, 194577, 194575 }, ["stat1"] = 4, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
 
                         }
                     },

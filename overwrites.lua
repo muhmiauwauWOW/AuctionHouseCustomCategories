@@ -134,3 +134,15 @@ function AuctionHouseFrame:SetSortOrder(searchContext, sortOrder)
         AuctionHouseFrame_SetSortOrder(self, searchContext, sortOrder)
     end
 end
+
+
+
+-- make sure blizz sortOrder is not broken
+local AuctionHouseFrame_SendBrowseQueryInternal = AuctionHouseFrame.SendBrowseQueryInternal
+function AuctionHouseFrame:SendBrowseQueryInternal(browseSearchContext, searchString, minLevel, maxLevel, filtersArray)
+    g_auctionHouseSortsBySearchContext[browseSearchContext] = _.map(g_auctionHouseSortsBySearchContext[browseSearchContext], function(sort) 
+        sort.sortOrder = (sort.sortOrder >= 90) and 0 or sort.sortOrder
+        return sort
+    end)
+    AuctionHouseFrame_SendBrowseQueryInternal(self, browseSearchContext, searchString, minLevel, maxLevel, filtersArray)
+end

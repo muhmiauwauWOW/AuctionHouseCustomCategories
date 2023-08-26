@@ -106,6 +106,8 @@ function AuctionHouseFrame.SearchBar:StartSearch()
     if AHCC.isInCustomCategory then
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
         AHCC:performSearch()
+
+        DevTools_Dump(AuctionCategories[5])
     else
         AuctionHouseSearchBarMixin_StartSearch(self)
     end
@@ -136,13 +138,14 @@ function AuctionHouseFrame:SetSortOrder(searchContext, sortOrder)
 end
 
 
-
 -- make sure blizz sortOrder is not broken
 local AuctionHouseFrame_SendBrowseQueryInternal = AuctionHouseFrame.SendBrowseQueryInternal
 function AuctionHouseFrame:SendBrowseQueryInternal(browseSearchContext, searchString, minLevel, maxLevel, filtersArray)
-    g_auctionHouseSortsBySearchContext[browseSearchContext] = _.map(g_auctionHouseSortsBySearchContext[browseSearchContext], function(sort) 
-        sort.sortOrder = (sort.sortOrder >= 90) and 0 or sort.sortOrder
-        return sort
-    end)
+    if not AHCC.isInCustomCategory then
+        g_auctionHouseSortsBySearchContext[browseSearchContext] = _.map(g_auctionHouseSortsBySearchContext[browseSearchContext], function(sort) 
+            sort.sortOrder = (sort.sortOrder >= 90) and 0 or sort.sortOrder
+            return sort
+        end)
+    end
     AuctionHouseFrame_SendBrowseQueryInternal(self, browseSearchContext, searchString, minLevel, maxLevel, filtersArray)
 end

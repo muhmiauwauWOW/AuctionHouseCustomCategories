@@ -17,6 +17,7 @@ Data.Categories = {
             {
                 ["name"] =  L["Draconic Missive"],
                 ["config"] = {
+                    ["allowDuplicates"] = true,
                     ["columns"] = {"stat1", "stat2", "quality"}
                 },
                 ["subCategories"] = {

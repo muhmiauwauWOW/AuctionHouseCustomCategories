@@ -69,6 +69,13 @@ function AHCCItems:getByNav(nav)
         return entry
     end)
 
+    local categoryConfig = AHCCCategoryList:getCategoryConfig(nav)
+    if not categoryConfig.allowDuplicates then 
+        filterd = _.uniq(filterd, function(n)
+            return n.itemKey.itemID
+        end)
+    end
+
     return filterd
 end
 

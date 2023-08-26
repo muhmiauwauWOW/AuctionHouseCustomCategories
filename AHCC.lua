@@ -90,7 +90,6 @@ function GetBrowseListLayout(AHCC, owner, itemList)
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
             else
-                print(colName)
                 AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
             end
         end)

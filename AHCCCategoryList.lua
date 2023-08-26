@@ -41,7 +41,7 @@ function AHCCCategoryList:createCategorys(Data)
 end
 
 function AHCCCategoryList:createCategory(categoryEntry, categoryId)
-    local category = CreateFromMixins(AHCCAuctionCategoryMixin);
+    local category = CreateFromMixins(AuctionCategoryMixin);
     category:SetFlag("AHCC");
     category.name = categoryEntry.name
     category.AHCC_Id = categoryId

@@ -72,13 +72,3 @@ function AHCCQualitySelectButtonMixin:SetState(state)
     local newTexture = state and self.normalTexture or self.disabledTexture
     self:SetNormalTexture(newTexture)
 end
-
-
-
-AHCCAuctionCategoryMixin = CreateFromMixins(AuctionCategoryMixin);
-
-function AHCCAuctionCategoryMixin:SetConfig(config)
-    self:SetFlag("AHCC");
-    local cfg = config or {}
-    self.AHCC_config = cfg
-end

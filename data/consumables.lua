@@ -21,7 +21,7 @@ Data.Categories = {
                     { ["id"] = { 194824, 194825, 194826 } }, -- Zwitscherrune 
                     { ["id"] = { 198160, 198161, 198162 } }, -- Vollkommen sichere Raketen 
                     { ["id"] = { 198163, 198164, 198165 } }, -- Endloser Nadelhaufen 
-                    { ["id"] = { 191939, 191933, 191940 } }, -- Urzeitlicher Schleifstein 
+                    { ["id"] = { 191933, 191939, 191940 } }, -- Urzeitlicher Schleifstein 
                     { ["id"] = { 191943, 191944, 191945 } }, -- Urzeitlicher Gewichtsstein 
                 }
             },

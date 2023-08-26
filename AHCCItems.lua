@@ -137,6 +137,7 @@ f4:RegisterEvent("AUCTION_HOUSE_BROWSE_RESULTS_ADDED");
 
 
 local function OnEvent3(self, event, results)
+    local auctions = {}
     for i = 0, C_AuctionHouse.GetNumReplicateItems()-1 do
 		auctions[i] = {C_AuctionHouse.GetReplicateItemInfo(i)}
 		if auctions[i][17] and auctions[i][10] then -- buyoutPrice 

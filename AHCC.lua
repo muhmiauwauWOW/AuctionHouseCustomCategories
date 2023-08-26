@@ -22,10 +22,6 @@ local DBdefaults = {
 }
 
 
-function firstToUpper(str)
-    return (str:gsub("^%l", string.upper))
-end
-
 AHCC.viewConfig = {}
 AHCC.Nav = {}
 AHCC.searchResultTable = nil
@@ -48,10 +44,9 @@ end
 
 
 
-
 local getResults = function()
     if not AHCC.Nav[1] then return  end
-    function trim(s)
+    local function trim(s)
         return (s:gsub("^%s*(.-)%s*$", "%1"))
     end
     local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
@@ -72,6 +67,9 @@ local getResults = function()
 end
 
 function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, name, width, key)
+    local function firstToUpper(str)
+        return (str:gsub("^%l", string.upper))
+    end
     local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, Enum.AuctionHouseSortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
     column:GetHeaderFrame():SetText(name);
 end

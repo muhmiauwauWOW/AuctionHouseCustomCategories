@@ -1,0 +1,116 @@
+{
+    "diagnostics": {
+        "disable": [
+            "inject-field",
+            "close-non-object",
+            "incomplete-signature-doc",
+            "missing-global-doc",
+            "missing-local-export-doc",
+            "duplicate-set-field",
+            "undefined-global",
+            "undefined-field"
+        ],
+        "groupFileStatus": {
+            "ambiguity": "Any",
+            "await": "Any",
+            "duplicate": "Any",
+            "global": "Any",
+            "luadoc": "Any",
+            "redefined": "Any",
+            "strict": "Any",
+            "type-check": "Any",
+            "unbalanced": "Any",
+            "unused": "Any"
+        },
+        "ignoredFiles": "Opened",
+        "libraryFiles": "Opened"
+    },
+    "runtime": {
+        "version": "Lua 5.1",
+        "path": [
+            "script/?.lua",
+            "script/?/init.lua",
+            "test/?.lua",
+            "test/?/init.lua",
+            "script/meta/?.lua"
+        ],
+        "pathStrict": true
+    },
+    "workspace": {
+        "maxPreload": 1600,
+        "preloadFileSize": 1000,
+        "ignoreDir": [
+            "/Libs/",
+            "/libs/",
+            "/.vscode"
+        ],
+        "checkThirdParty": false
+    },
+    "typeFormat": {
+        "config": {
+            "format_line": "false"
+        }
+    },
+    "type": {
+        "castNumberToInteger": false
+    },
+    "doc": {
+        "privateName": [
+            "_*"
+        ]
+    },
+    "diagnostics.globals": [
+        "TableBuilderCellMixin",
+        "PriceFontWhite",
+        "PriceFontGray",
+        "AUCTION_HOUSE_BROWSE_HEADER_NAME",
+        "AuctionHouseFrame",
+        "CreateAtlasMarkupWithAtlasSize",
+        "AuctionHouseFrameDisplayMode",
+        "AUCTION_HOUSE_SEARCH_BUTTON",
+        "AuctionFrame_CreateCategory",
+        "INVTYPE_NECK",
+        "INVTYPE_RANGED",
+        "INVTYPE_WEAPON",
+        "INVTYPE_FINGER",
+        "INVTYPE_FEET",
+        "INVTYPE_LEGS",
+        "INVTYPE_WAIST",
+        "INVTYPE_WRIST",
+        "INVTYPE_CHEST",
+        "INVTYPE_CLOAK",
+        "INVTYPE_SHOULDER",
+        "AUCTION_SUBCATEGORY_RANGED",
+        "AUCTION_CATEGORY_WEAPONS",
+        "AUCTION_CATEGORY_GEMS",
+        "AUCTION_CATEGORY_ITEM_ENHANCEMENT",
+        "AUCTION_CATEGORY_CONSUMABLES",
+        "AuctionCategories",
+        "AuctionHouseUtil",
+        "STAT_HASTE",
+        "STAT_CRITICAL_STRIKE",
+        "STAT_MASTERY",
+        "STAT_VERSATILITY",
+        "LE_UNIT_STAT_STAMINA",
+        "STA_LCD",
+        "CRIT_ABBR",
+        "SPELL_HASTE_ABBR",
+        "AuctionHouseSearchBarMixin",
+        "AuctionHouseSearchButtonMixin",
+        "AuctionCategoryMixin",
+        "Settings",
+        "MinimalSliderWithSteppersMixin",
+        "SettingsPanelMixin",
+        "ShowAppropriateDialog",
+        "SettingsPanel",
+        "TOKEN_FILTER_LABEL",
+        "CreateSettingsListSectionHeaderInitializer",
+        "NAMES_LABEL",
+        "AUCTION_CATEGORY_TRADE_GOODS",
+        "SquareIconButtonMixin",
+        "g_auctionHouseSortsBySearchContext",
+        "AuctionFrameFilters_Update",
+        "GAME_LOCALE",
+        "PRICE_DISPLAY_PADDING"
+    ]
+}

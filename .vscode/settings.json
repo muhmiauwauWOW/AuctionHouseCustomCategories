@@ -47,6 +47,8 @@
         "CreateSettingsListSectionHeaderInitializer",
         "NAMES_LABEL",
         "AUCTION_CATEGORY_TRADE_GOODS",
-        "SquareIconButtonMixin"
+        "SquareIconButtonMixin",
+        "g_auctionHouseSortsBySearchContext",
+        "AuctionFrameFilters_Update"
     ]
 }

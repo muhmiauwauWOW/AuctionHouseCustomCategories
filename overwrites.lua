@@ -106,8 +106,6 @@ function AuctionHouseFrame.SearchBar:StartSearch()
     if AHCC.isInCustomCategory then
         AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.Buy);
         AHCC:performSearch()
-
-        DevTools_Dump(AuctionCategories[5])
     else
         AuctionHouseSearchBarMixin_StartSearch(self)
     end

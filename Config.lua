@@ -4,24 +4,33 @@ local L, _ = AHCC:GetLibs()
 AHCC.Config = {}
 
 AHCC.Config.TableColums = {
-    ["stat1"] = {
+    ["Stat1"] = {
         name = L["TABLE_HEADER_STAT1"],
-        size = 120
+        width = 120,
+        padding = 0,
+        leftCellPadding = 14,
+        rightCellPadding = 14
     },
-    ["stat2"] = {
+    ["Stat2"] = {
         name = L["TABLE_HEADER_STAT2"],
-        size = 120
+        width = 120,
+        padding = 0,
+        leftCellPadding = 14,
+        rightCellPadding = 14
     },
-    ["quality"] = {
-        name = L["TABLE_HEADER_QUALITY"],
-        size = 84
+    ["Quality"] = {
+        name = "",
+        width = 24,
+        padding = 0,
+        leftCellPadding = 4,
+        rightCellPadding = 0
     }
 }
 
 -- add Enum
-Enum.AuctionHouseSortOrder.stat1 = 92
-Enum.AuctionHouseSortOrder.stat2 = 93
-Enum.AuctionHouseSortOrder.quality = 99
+Enum.AuctionHouseSortOrder.Stat1 = 92
+Enum.AuctionHouseSortOrder.Stat2 = 93
+Enum.AuctionHouseSortOrder.Quality = 99
 
 
 AHCC.Config.tableCellStatColors = {

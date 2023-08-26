@@ -64,10 +64,8 @@ end
 
 
 function AHCCCategoryList:getCategoryConfig(nav)
-
     local selectedCategoryIndex, selectedSubCategoryIndex, selectedSubSubCategoryIndex = unpack(nav);
-    print(selectedCategoryIndex, selectedSubCategoryIndex, selectedSubSubCategoryIndex)
-    if selectedCategoryIndex and selectedSubCategoryIndex and selectedSubSubCategoryIndex then
+     if selectedCategoryIndex and selectedSubCategoryIndex and selectedSubSubCategoryIndex then
 		return AuctionCategories[selectedCategoryIndex].subCategories[selectedSubCategoryIndex].subCategories[selectedSubSubCategoryIndex].AHCC_config or {};
 	elseif selectedCategoryIndex and selectedSubCategoryIndex then
 		return AuctionCategories[selectedCategoryIndex].subCategories[selectedSubCategoryIndex].AHCC_config or {};

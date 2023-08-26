@@ -48,12 +48,12 @@ function AHCCData:getResultLine(idx, id, entry)
 
     AHCCItems:setPrice(id, minPrice)
 
-    local stat1 = entry.stat1
-     if not entry.stat1 then 
+    local Stat1 = entry.Stat1
+     if not entry.Stat1 then 
         if entry.subSubCategory then 
-            stat1 = entry.subSubCategory
+            Stat1 = entry.subSubCategory
         else
-            stat1 = entry.subCategory
+            Stat1 = entry.subCategory
         end
     end
 
@@ -65,13 +65,13 @@ function AHCCData:getResultLine(idx, id, entry)
             balltePetSpeciesID = 0
         },
         Name = GetItemInfo(id),
-        quality = idx,
+        Quality = idx,
         containsOwnerItem=false,
         totalQuantity = 1,
         minPrice = minPrice,
         Price = minPrice,
-        stat1 = stat1,
-        stat2 = entry.stat2 or 0,
+        Stat1 = Stat1,
+        Stat2 = entry.Stat2 or 0,
         nav = { entry.category, entry.subCategory,  entry.subSubCategory }
     }
 
@@ -128,7 +128,7 @@ function AHCCData:prepareCategoryData(categories, config, depth)
         if categoryEntry.config.columns then 
             tAppendAll(cols, categoryEntry.config.columns)
         else
-            tinsert(cols, "quality")
+            tinsert(cols, "Quality")
         end
 
         categoryEntry.config.columns = cols

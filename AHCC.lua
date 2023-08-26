@@ -16,7 +16,7 @@ local DBdefaults = {
     profile = {
     },
     char = {
-        qualitySelected = {false, false, true}
+        QualitySelected = {false, false, true}
     }
 
 }
@@ -28,7 +28,7 @@ AHCC.searchResultTable = nil
 
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
-    AHCC.Config.ProfessionsQualityActive = self.db.char.qualitySelected
+    AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
     AHCCData:Init()
@@ -59,19 +59,20 @@ local getResults = function()
     end
 
     results = _.filter(results, function(entry)
-        return (entry.quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.quality] 
+        return (entry.Quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.Quality] 
     end)
 
     if #results == 0 then return nil end
     return results
 end
 
-function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, name, width, key)
-    local function firstToUpper(str)
-        return (str:gsub("^%l", string.upper))
-    end
-    local column = tableBuilder:AddFixedWidthColumn(owner, 0, width, 14, 14, Enum.AuctionHouseSortOrder[key], "AuctionHouseTableCell"..firstToUpper(key).."Template");
-    column:GetHeaderFrame():SetText(name);
+
+
+function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
+    if not _.has(AHCC.Config.TableColums, {key}) then return end
+    local colConfig = AHCC.Config.TableColums[key]
+    local column = tableBuilder:AddFixedWidthColumn(owner, colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[key], string.format("AuctionHouseTableCell%sTemplate", key));
+    column:GetHeaderFrame():SetText(colConfig.name);
 end
 
 
@@ -89,7 +90,8 @@ function GetBrowseListLayout(AHCC, owner, itemList)
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
             else
-                AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, AHCC.Config.TableColums[colName].name, AHCC.Config.TableColums[colName].size, colName)
+                print(colName)
+                AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
             end
         end)
 	end

@@ -11,8 +11,8 @@ function AuctionHouseTableCellQualityMixin:Populate(rowData, dataIndex)
     local noneAvailable = self.rowData.totalQuantity == 0;
     self.Text:SetFontObject(noneAvailable and PriceFontGray or PriceFontWhite);
 
-    if AHCC.Config.ProfessionsQualityIconTable[rowData.quality] then
-        local icon = CreateAtlasMarkupWithAtlasSize(AHCC.Config.ProfessionsQualityIconTable[rowData.quality], 0, 0, nil,nil, nil, AHCC.Config.ProfessionsQualityIconSize)
+    if AHCC.Config.ProfessionsQualityIconTable[rowData.Quality] then
+        local icon = CreateAtlasMarkupWithAtlasSize(AHCC.Config.ProfessionsQualityIconTable[rowData.Quality], 0, 0, nil,nil, nil, AHCC.Config.ProfessionsQualityIconSize)
         self.Text:SetText(icon);
     else
         self.Text:SetText("");
@@ -33,16 +33,16 @@ function AuctionHouseTableCellStatMixin:updateText(text)
     end
 end
 
--- stat1 column
+-- Stat1 column
 AuctionHouseTableCellStat1Mixin = CreateFromMixins(AuctionHouseTableCellStatMixin);
 function AuctionHouseTableCellStat1Mixin:Populate(rowData, dataIndex)
-    self:updateText(rowData.stat1)
+    self:updateText(rowData.Stat1)
 end
 
--- stat2 column
+-- Stat2 column
 AuctionHouseTableCellStat2Mixin = CreateFromMixins(AuctionHouseTableCellStatMixin);
 function AuctionHouseTableCellStat2Mixin:Populate(rowData, dataIndex)
-    self:updateText(rowData.stat2)
+    self:updateText(rowData.Stat2)
 end
 
 

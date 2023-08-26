@@ -18,54 +18,54 @@ Data.Categories = {
                 ["name"] =  L["Draconic Missive"],
                 ["config"] = {
                     ["allowDuplicates"] = true,
-                    ["columns"] = {"stat1", "stat2", "quality"}
+                    ["columns"] = {"Stat1", "Stat2", "Quality"}
                 },
                 ["subCategories"] = {
                     {
                         ["name"] = L["CRITICAL_STRIKE"],
                         ["config"] = {
-                            ["columns"] = {"stat2", "quality"}
+                            ["columns"] = {"Stat2", "Quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 192553, 192554, 192552 }, ["stat1"] = 1, ["stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
-                            { ["id"] = { 194579, 194580, 194578 }, ["stat1"] = 1, ["stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-                            { ["id"] = { 194573, 194574, 194572 }, ["stat1"] = 1, ["stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
+                            { ["id"] = { 192553, 192554, 192552 }, ["Stat1"] = 1, ["Stat2"] = 2 }, -- Drakonisches Schreiben des Feuerpeitsche
+                            { ["id"] = { 194579, 194580, 194578 }, ["Stat1"] = 1, ["Stat2"] = 3 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+                            { ["id"] = { 194573, 194574, 194572 }, ["Stat1"] = 1, ["Stat2"] = 4 }, -- Drakonisches Schreiben der Schnellklinge
                             
                         }
                     },
                     {
                         ["name"] = L["HASTE"],
                         ["config"] = {
-                            ["columns"] = {"stat2", "quality"}
+                            ["columns"] = {"Stat2", "Quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 192553, 192554, 192552 }, ["stat1"] = 2, ["stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
-                            { ["id"] = { 194567, 194568, 194566 }, ["stat1"] = 2, ["stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
-                            { ["id"] = { 194570, 194571, 194569 }, ["stat1"] = 2, ["stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
+                            { ["id"] = { 192553, 192554, 192552 }, ["Stat1"] = 2, ["Stat2"] = 1 }, -- Drakonisches Schreiben des Feuerpeitsche
+                            { ["id"] = { 194567, 194568, 194566 }, ["Stat1"] = 2, ["Stat2"] = 3 }, -- Drakonisches Schreiben des Hitzeschocks
+                            { ["id"] = { 194570, 194571, 194569 }, ["Stat1"] = 2, ["Stat2"] = 4 }, -- Drakonisches Schreiben der Aurora
 
                         }
                     },
                     {
                         ["name"] = L["MASTERY"],
                         ["config"] = {
-                            ["columns"] = {"stat2", "quality"}
+                            ["columns"] = {"Stat2", "Quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 194579, 194580, 194578 }, ["stat1"] = 3, ["stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
-                            { ["id"] = { 194567, 194568, 194566 }, ["stat1"] = 3, ["stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
-                            { ["id"] = { 194576, 194577, 194575 }, ["stat1"] = 3, ["stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
+                            { ["id"] = { 194579, 194580, 194578 }, ["Stat1"] = 3, ["Stat2"] = 1 }, -- Drakonisches Schreiben der Unvergleichlichkeit
+                            { ["id"] = { 194567, 194568, 194566 }, ["Stat1"] = 3, ["Stat2"] = 2 }, -- Drakonisches Schreiben des Hitzeschocks
+                            { ["id"] = { 194576, 194577, 194575 }, ["Stat1"] = 3, ["Stat2"] = 4 }, -- Drakonisches Schreiben der Harmonischen
 
                         }
                     },
                     {
                         ["name"] = L["VERSATILITY"],
                         ["config"] = {
-                            ["columns"] = {"stat2", "quality"}
+                            ["columns"] = {"Stat2", "Quality"}
                         },
                         ["Items"] = {
-                            { ["id"] = { 194573, 194574, 194572 }, ["stat1"] = 4, ["stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
-                            { ["id"] = { 194570, 194571, 194569 }, ["stat1"] = 4, ["stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
-                            { ["id"] = { 194576, 194577, 194575 }, ["stat1"] = 4, ["stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
+                            { ["id"] = { 194573, 194574, 194572 }, ["Stat1"] = 4, ["Stat2"] = 1 }, -- Drakonisches Schreiben der Schnellklinge
+                            { ["id"] = { 194570, 194571, 194569 }, ["Stat1"] = 4, ["Stat2"] = 2 }, -- Drakonisches Schreiben der Aurora
+                            { ["id"] = { 194576, 194577, 194575 }, ["Stat1"] = 4, ["Stat2"] = 3 }, -- Drakonisches Schreiben der Harmonischen
 
                         }
                     },
@@ -74,7 +74,7 @@ Data.Categories = {
             {
                 ["name"] =  L["Embellishments"],
                 ["config"] = {
-                    ["columns"] = {"quality"}
+                    ["columns"] = {"Quality"}
                 },
                 ["Items"] = {
                     { ["id"] = { 191532, 191533, 191534 }}, -- Potion Absorption Inhibitor

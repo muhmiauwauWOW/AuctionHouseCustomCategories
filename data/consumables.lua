@@ -55,7 +55,8 @@ Data.Categories = {
                     { ["id"] = { 191399, 191400, 191401 } }, -- Trank der schockierenden Offenbarung 
                     { ["id"] = { 191393, 191394, 191395 } }, -- Trank des verstummten Zephyrs 
                     { ["id"] = { 191369, 191370, 191371 } }, -- Trank der welkenden Vitalität 
-                    { ["id"] = { 191378, 191379, 191380 } }, -- Erfrischender Heiltrank 
+                    { ["id"] = { 207021, 207022, 207023 } }, -- Dreamwalker's Healing Potion
+                    { ["id"] = { 207039, 207040, 207041 } }, -- Potion of Withering Dreams
                     { ["id"] = { 191372, 191373, 191374 } }, -- Residualer Wirkstoff der Neuralkanalisierung 
                 }
             },

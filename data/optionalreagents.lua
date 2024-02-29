@@ -89,6 +89,7 @@ Data.Categories = {
                     { ["id"] = { 204708, 204709, 204710 }}, -- Shadowflame-Tempered Armor Patch
                     { ["id"] = { 204909, 205115, 205170 }}, -- Statuette of Foreseen Power
                     { ["id"] = { 205171, 205172, 205173 }}, -- Figurine of the Gathering Storm
+                    { ["id"] = { 210671, 210672, 210673 }}, -- Verdant Tether
                     { ["id"] = 203652 }, -- Gaunahs Allzweck-Verzierungspulver
                 }
             }

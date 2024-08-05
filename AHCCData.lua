@@ -17,9 +17,23 @@ function AHCCData:get()
 end
 
 
+function AHCCData:checkVersion(obj)
+    if obj.versionStart and obj.versionEnd then
+        return (tonumber(obj.versionStart) <= tonumber(AHCC.gameVersion)) and (tonumber(obj.versionEnd) > tonumber(AHCC.gameVersion))
+     elseif obj.versionStart then
+        return tonumber(obj.versionStart) <= tonumber(AHCC.gameVersion)
+     elseif obj.versionEnd then
+         return tonumber(obj.versionEnd) > tonumber(AHCC.gameVersion)
+     else
+         return true
+     end
+end
+
+
 function AHCCData:add(dataArg, config)
     if not config then return end
     if not config.nav then return end
+    if not AHCCData:checkVersion(config) then return end
 
     local data = self:get()
     if config.mode == "insert"then 
@@ -117,6 +131,10 @@ function AHCCData:prepareCategoryData(categories, config, depth)
 
         -- insert Data
         if  categoryEntry.Items then
+
+            categoryEntry.Items = _.filter(categoryEntry.Items, function(entry)
+                return AHCCData:checkVersion(entry)
+            end)
             categoryEntry.Items = _.map(categoryEntry.Items, function(entry)
                 return self:formatToResultLines(entry)
             end)

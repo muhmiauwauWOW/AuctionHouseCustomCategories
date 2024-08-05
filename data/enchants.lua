@@ -7,6 +7,7 @@ Data.Config = {
     nav = {}
 } 
 
+
 Data.Categories = {
     {
         ["name"] =  L["Enchants"],
@@ -110,7 +111,22 @@ Data.Categories = {
                     { ["id"] = { 198316, 198317, 198318 } }, -- Hochleistungsthermoscanner 
                     { ["id"] = { 198310, 198311, 198312 } }, -- Gyroskopisches Kaleidoskop 
                 }
-            }
+            },
+            {
+                ["name"] = L["TOOL"],
+                ["Items"] = {
+                    { ["id"] = { 199961, 200003, 200045 } }, -- Enchant Tool - Draconic Deftness
+                    { ["id"] = { 199962, 200004, 200046 } }, -- Enchant Tool - Draconic Finesse
+                    { ["id"] = { 199963, 200005, 200047 } }, -- Enchant Tool - Draconic Ingenuity
+                    { ["id"] = { 199964, 200006, 200048 } }, -- Enchant Tool - Draconic Perception
+                    { ["id"] = { 199965, 200007, 200049 } }, -- Enchant Tool - Draconic Resourcefulness
+                    { ["id"] = { 223693, 223694, 223695 }, ["versionStart"] = 110020 }, -- Enchant Tool - Algari Deftness
+                    { ["id"] = { 223696, 223697, 223698 }, ["versionStart"] = 110020 }, -- Enchant Tool - Algari Finesse
+                    { ["id"] = { 223699, 223700, 223701 }, ["versionStart"] = 110020 }, -- Enchant Tool - Algari Ingenuity
+                    { ["id"] = { 223702, 223703, 223704 }, ["versionStart"] = 110020 }, -- Enchant Tool - Algari Perception
+                    { ["id"] = { 223705, 223706, 223707 }, ["versionStart"] = 110020 }, -- Enchant Tool - Algari Resourcefulness
+                }
+            },
         }
     }
 }

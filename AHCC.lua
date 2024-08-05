@@ -8,6 +8,7 @@ function AHCC:GetLibs()
     return L, _
 end 
 
+AHCC.gameVersion = select(4, GetBuildInfo())
 
 local DBdefaults = {
     global = {

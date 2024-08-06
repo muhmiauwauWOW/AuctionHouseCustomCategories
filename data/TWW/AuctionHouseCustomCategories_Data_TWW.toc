@@ -3,7 +3,7 @@
 ## Notes: Datapack for The War Within
 ## Version: @project-version@
 ## Author: Muhmiauwau
-## DefaultState: Disabled
+## DefaultState: Enabled
 ## RequiredDeps: AuctionHouseCustomCategories
 ## LoadOnDemand: 1
 ## LoadWith: AuctionHouseCustomCategories

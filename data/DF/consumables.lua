@@ -1,4 +1,4 @@
-local Data = AHCC:NewModule("AHCC_DATA_consumables", AHCC_DATA)
+local Data = AHCC:NewModule("AHCC_DATA_DF_consumables", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
 
@@ -16,10 +16,9 @@ Data.Categories = {
             {
                 ["name"] = L["Runes"],
                 ["Items"] = {
-                    { ["id"] = { 198491, 198492, 198493 }, ["versionStart"] = 100000, ["versionEnd"] = 110020 }, -- Vantus Rune: Vault of the Incarnates
-                    { ["id"] = { 204858, 204859, 204860 }, ["versionStart"] = 100100, ["versionEnd"] = 110020 }, -- Vantus Rune: Aberrus, the Shadowed Crucible
-                    { ["id"] = { 210247, 210248, 210249 }, ["versionStart"] = 100200, ["versionEnd"] = 110020 }, -- Vantus Rune: Amirdrassil, the Dream's Hope
-                    { ["id"] = { 226034, 226035, 226036 }, ["versionStart"] = 110020, ["versionEnd"] = 120000 }, -- Vantus Rune: Nerub-ar Palace
+                    { ["id"] = { 198491, 198492, 198493 }, ["versionStart"] = 100000 }, -- Vantus Rune: Vault of the Incarnates
+                    { ["id"] = { 204858, 204859, 204860 }, ["versionStart"] = 100100 }, -- Vantus Rune: Aberrus, the Shadowed Crucible
+                    { ["id"] = { 210247, 210248, 210249 }, ["versionStart"] = 100200 }, -- Vantus Rune: Amirdrassil, the Dream's Hope
                     { ["id"] = { 194817, 194819, 194820 } }, -- Heulrune 
                     { ["id"] = { 194821, 194822, 194823 } }, -- Summrune 
                     { ["id"] = { 204971, 204972, 204973 } }, -- Zischende Rune 

@@ -1,12 +1,12 @@
 ## Interface: 110020
-## Title: Auction House - Custom Categories - Dragonflight
+## Title: Auction House - Custom Categories |cd3ff7d0aDragonflight|r
 ## Notes: Datapack for Dragonflight
 ## Version: @project-version@
 ## Author: Muhmiauwau
 ## DefaultState: Enabled
 ## RequiredDeps: AuctionHouseCustomCategories
 ## LoadOnDemand: 1
-## LoadWith: Blizzard_AuctionHouseUI
+## LoadWith: AuctionHouseCustomCategories
 
 enchants.lua
 gems.lua

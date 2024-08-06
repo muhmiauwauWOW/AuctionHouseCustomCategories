@@ -1,7 +1,7 @@
 ## Interface: 110020
 ## Title: Auction House - Custom Categories
 ## Notes: Adds custom categories to auction house
-## Version: 1.7.0
+## Version: @project-version@
 ## Author: Muhmiauwau
 ## SavedVariables: AHCCDB
 ## LoadOnDemand: 1

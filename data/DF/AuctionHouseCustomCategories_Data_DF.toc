@@ -1,7 +1,7 @@
 ## Interface: 110020
 ## Title: Auction House - Custom Categories - Dragonflight
 ## Notes: Datapack for Dragonflight
-## Version: 1.0.0
+## Version: @project-version@
 ## Author: Muhmiauwau
 ## DefaultState: Enabled
 ## RequiredDeps: AuctionHouseCustomCategories

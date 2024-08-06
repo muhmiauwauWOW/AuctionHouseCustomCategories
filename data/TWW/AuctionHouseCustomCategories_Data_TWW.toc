@@ -1,7 +1,7 @@
 ## Interface: 110020
 ## Title: Auction House - Custom Categories - The War Within
 ## Notes: Datapack for The War Within
-## Version: 1.0.0
+## Version: @project-version@
 ## Author: Muhmiauwau
 ## DefaultState: Enabled
 ## RequiredDeps: AuctionHouseCustomCategories

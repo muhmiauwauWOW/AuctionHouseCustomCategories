@@ -36,7 +36,7 @@ function AHCCData:add(dataArg, config)
     if not AHCCData:checkVersion(config) then return end
 
     local data = self:get()
-    if config.mode == "insert"then 
+    if config.mode == "insert" then 
 
         local nav = {}
         _.forEach(config.nav, function(entry)

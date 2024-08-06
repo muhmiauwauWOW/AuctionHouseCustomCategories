@@ -16,4 +16,6 @@ L["Flasks"] = "Flacons"
 L["Potions"] = "Potions"
 L["Runes"] = "Runes"
 L["STAMINA"] = "Endurance"
+L["SOCKETS"] = "châsses"
 
+L["TemporaryEnhancements"] = "Améliorations temporaires"

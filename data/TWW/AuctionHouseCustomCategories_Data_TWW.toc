@@ -1,0 +1,14 @@
+## Interface: 110020
+## Title: Auction House - Custom Categories - The War Within
+## Notes: Datapack for The War Within
+## Version: 1.0.0
+## Author: Muhmiauwau
+## DefaultState: Enabled
+## RequiredDeps: AuctionHouseCustomCategories
+## LoadOnDemand: 1
+## LoadWith: Blizzard_AuctionHouseUI
+
+enchants.lua
+gems.lua
+consumables.lua
+optionalreagents.lua

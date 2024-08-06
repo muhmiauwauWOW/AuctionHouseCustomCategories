@@ -1,4 +1,4 @@
-## Interface: 110000
+## Interface: 110020
 ## Title: Auction House - Custom Categories
 ## Notes: Adds custom categories to auction house
 ## Version: 1.7.0
@@ -20,8 +20,6 @@ Libs\Lodash\Lodash.lua
 
 locale\locale.xml
 
-
-
 frames.xml
 AHCC.lua
 
@@ -32,8 +30,3 @@ mixins.lua
 AHCCItems.lua
 AHCCData.lua
 AHCCCategoryList.lua
-
-data\enchants.lua
-data\gems.lua
-data\consumables.lua
-data\optionalreagents.lua

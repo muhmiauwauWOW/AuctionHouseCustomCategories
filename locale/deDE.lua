@@ -11,7 +11,7 @@ L["Optional Reagents"] = "Optionale Reagenzien"
 L["Embellishments"] = "Verziert"
 L["Draconic Missive"] = "Drakonische Schreiben"
 
-
+L["SOCKETS"] = "Sockel"
 L["Runes"] = "Runen"
 L["Flasks"] = "Phiolen"
 L["Food"] = "Essen"
@@ -22,3 +22,5 @@ L["TABLE_HEADER_QUALITY"] = "Qualität"
 L["TABLE_HEADER_STAT1"] = "Hauptwert"
 L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
 
+
+L["TemporaryEnhancements"] = "Temporäre Verzauberungen"

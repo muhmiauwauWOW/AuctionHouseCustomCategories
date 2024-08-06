@@ -1,10 +1,12 @@
-local Data = AHCC:NewModule("AHCC_DATA_optionalreagents", AHCC_DATA)
+local Data = AHCC:NewModule("AHCC_DATA_DF_optionalreagents", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
 
 Data.Config = {
     mode = "insert",
-    nav = {}
+    nav = {},
+    versionStart = 100000,
+    versionEnd = 110020
 } 
 
 

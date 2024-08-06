@@ -18,7 +18,6 @@ Data.Categories = {
                 ["name"] = L["SOCKETS"],
                 ["Items"] = {
                     { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
-                    { ["id"] = 213778 }, -- Vicious Jeweler's Setting
                 }
             },
             {

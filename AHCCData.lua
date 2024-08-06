@@ -78,7 +78,7 @@ function AHCCData:getResultLine(idx, id, entry)
             itemID = id,
             balltePetSpeciesID = 0
         },
-        Name = GetItemInfo(id),
+        Name = C_Item.GetItemInfo(id),
         Quality = idx,
         containsOwnerItem=false,
         totalQuantity = 1,

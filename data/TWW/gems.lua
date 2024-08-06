@@ -6,7 +6,7 @@ Data.Config = {
     mode = "insert",
     nav = {},
     versionStart = 110020,
-    versionEnd = 120000
+    versionEnd = 120020
 } 
 
 

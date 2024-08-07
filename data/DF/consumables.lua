@@ -6,7 +6,7 @@ Data.Config = {
     mode = "insert",
     nav = {},
     versionStart = 100000,
-    versionEnd = 110020
+    versionEnd = 110002
 } 
 
 Data.Categories = {

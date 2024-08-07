@@ -29,7 +29,7 @@ Data.Categories = {
                             ["columns"] = {"Stat2", "Quality"}
                         },
                         ["Items"] = {
-                            { ["Stat1"] = 1, ["Stat2"] = 3, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
+                            { ["Stat1"] = 1, ["Stat2"] = 2, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash
                             { ["Stat1"] = 1, ["Stat2"] = 3, ["id"] = { 222591, 222592, 222593 } }, -- Algari Missive of the Peerless
                             { ["Stat1"] = 1, ["Stat2"] = 4, ["id"] = { 222594, 222595, 222596 } }, -- Algari Missive of the Quickblade
                         }
@@ -41,9 +41,8 @@ Data.Categories = {
                         },
                         ["Items"] = {
                             { ["Stat1"] = 2, ["Stat2"] = 1, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash
-                            { ["Stat1"] = 2, ["Stat2"] = 2, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash
-                            { ["Stat1"] = 2, ["Stat2"] = 4, ["id"] = { 222579, 222580, 222581 } }, -- Algari Missive of the Aurora
-
+                            { ["Stat1"] = 2, ["Stat2"] = 3, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
+                            { ["Stat1"] = 2, ["Stat2"] = 4, ["id"] = { 222579, 222580, 222581 } }, -- Algari Missive of the Aurora                      
                         }
                     },
                     {
@@ -53,7 +52,7 @@ Data.Categories = {
                         },
                         ["Items"] = {
                             { ["Stat1"] = 3, ["Stat2"] = 1, ["id"] = { 222591, 222592, 222593 } }, -- Algari Missive of the Peerless
-                            { ["Stat1"] = 3, ["Stat2"] = 1, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
+                            { ["Stat1"] = 3, ["Stat2"] = 2, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
                             { ["Stat1"] = 3, ["Stat2"] = 4, ["id"] = { 222588, 222589, 222590 } }, -- Algari Missive of the Harmonious
 
                         }

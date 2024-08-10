@@ -1,4 +1,4 @@
-## Interface: 110020
+## Interface: 110002
 ## Title: Auction House - Custom Categories |cd3ff7d0aDragonflight|r
 ## Notes: Datapack for Dragonflight
 ## Version: @project-version@

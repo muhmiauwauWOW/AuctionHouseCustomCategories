@@ -4,6 +4,16 @@ local L, _ = AHCC:GetLibs()
 
 AHCCData = {}
 
+
+AHCCData.Items = {}
+
+function AHCCData:addItem(id)
+    if not _.get(self.Items, {id}) then 
+        table.insert(self.Items, id)
+    end
+end
+
+
 function AHCCData:Init()
     self.data = {}
 end
@@ -61,6 +71,8 @@ function AHCCData:getResultLine(idx, id, entry)
     local minPrice = AHCCItems:getPrice(id)
 
     AHCCItems:setPrice(id, minPrice)
+
+    self:addItem(id)
 
     local Stat1 = entry.Stat1
      if not entry.Stat1 then 

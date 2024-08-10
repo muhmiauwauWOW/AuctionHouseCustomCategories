@@ -2,6 +2,8 @@ AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("Lodash"):Get()
 
+local LibAHTab = LibStub("LibAHTab-1-0")
+
 AHCC:SetDefaultModuleState(true)
 
 function AHCC:GetLibs()
@@ -31,9 +33,6 @@ AHCC.searchResultTable = nil
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
 
-    AHCC.db.global.prices = {}
-    AHCC.db.global.lastReplicateDate = 0
-
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
@@ -58,9 +57,16 @@ function AHCC:initReplicateButton()
     AuctionHouseFrame.SearchBar.ReplicateButton:SetText("Perform Price Scan")
     AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
     AuctionHouseFrame.SearchBar.ReplicateButton:SetScript("OnClick", function(self, button)
-        AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
-        AHCC.isReplicateRunning = true
-        C_AuctionHouse.ReplicateItems()
+        if LibAHTab:DoesIDExist("AuctionatorTabs_Auctionator") then
+            AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
+            LibAHTab:SetSelected("AuctionatorTabs_Auctionator")
+            AuctionatorScanButtonMixin:OnClick()
+            AHCC.db.global.lastReplicateDate = GetServerTime()
+        else
+            AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
+            AHCC.isReplicateRunning = true
+            C_AuctionHouse.ReplicateItems()
+        end
     end)
 
     C_Timer.After(2, function()

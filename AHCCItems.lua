@@ -4,6 +4,7 @@ local L, _ = AHCC:GetLibs()
 
 AHCCItems = {}
 
+
 function AHCCItems:Init()
     self.items = {}
     self.prices = AHCC.db.global.prices
@@ -86,19 +87,16 @@ local lastCall = time()
 local function OnEvent(self, event, itemKey)
     if lastCall + 1  >= time() then return end
     lastCall = time()
-
+   
     local itemKey = _.isTable(itemKey) and itemKey or C_AuctionHouse.MakeItemKey(itemKey)
 
     local priceKey = "buyoutAmount"
-    if event == "COMMODITY_SEARCH_RESULTS_UPDATED" then 
-        priceKey = "unitPrice"
-    end
-
     local result = nil
 
     if event == "COMMODITY_SEARCH_RESULTS_UPDATED" then 
+        priceKey = "unitPrice"
         result = C_AuctionHouse.GetCommoditySearchResultInfo(itemKey.itemID, 1)
-    else 
+    else
         result = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
     end
 
@@ -144,13 +142,20 @@ f4:RegisterEvent("AUCTION_HOUSE_BROWSE_RESULTS_ADDED");
 
 
 local function OnEvent3(self, event, results)
-    local auctions = {}
-    for i = 0, C_AuctionHouse.GetNumReplicateItems()-1 do
-		auctions[i] = {C_AuctionHouse.GetReplicateItemInfo(i)}
-		if auctions[i][17] and auctions[i][10] then -- buyoutPrice 
-            AHCCItems:updatePrice(auctions[i][17], auctions[i][10])
-		end
-	end
+    print(event, AHCC.isReplicateRunning)
+    if AHCC.isReplicateRunning and AHCC.db.global.lastReplicateDate + 900 < GetServerTime() then
+        print(event, "set Prices")
+        local auctions = {}
+        AHCC.db.global.lastReplicateDate = GetServerTime()
+        for i = 0, C_AuctionHouse.GetNumReplicateItems()-1 do
+            auctions[i] = {C_AuctionHouse.GetReplicateItemInfo(i)}
+            if auctions[i][17] and auctions[i][10] then -- buyoutPrice 
+                AHCCItems:updatePrice(auctions[i][17], auctions[i][10])
+            end
+        end
+
+        AHCC.isReplicateRunning = false
+    end
 end
 
 local f5 = CreateFrame("Frame")

@@ -60,3 +60,6 @@ AHCC.Config.ProfessionsQualityIconTable = {
 AHCC.Config.ProfessionsQualityIconSize = 0.6
 
 AHCC.Config.ProfessionsQualityActive = {false, false, true}
+
+
+AHCC.Config.ReplicateDataIntervall = 259200 -- 3 days

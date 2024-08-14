@@ -45,25 +45,27 @@ function AHCCData:add(dataArg, config)
     if not config.nav then return end
     if not AHCCData:checkVersion(config) then return end
 
-    local data = self:get()
-    if config.mode == "insert" then 
+    if GetExpansionLevel() == config.expansionLevel then
+        local data = self:get()
+        if config.mode == "insert" then 
 
-        local nav = {}
-        _.forEach(config.nav, function(entry)
-            tinsert(nav, entry)
-            tinsert(nav, "subCategories")
-        end)
+            local nav = {}
+            _.forEach(config.nav, function(entry)
+                tinsert(nav, entry)
+                tinsert(nav, "subCategories")
+            end)
 
-        if #config.nav == 0 then 
-            tAppendAll(data, dataArg)
-        else            
-            local position = _.get(data, nav)
-            if not position then return end
-            tAppendAll(position, dataArg)
+            if #config.nav == 0 then 
+                tAppendAll(data, dataArg)
+            else            
+                local position = _.get(data, nav)
+                if not position then return end
+                tAppendAll(position, dataArg)
+            end
         end
-    end
 
-    AHCCData:set(data)
+        AHCCData:set(data)
+    end
 end
 
 function AHCCData:getResultLine(idx, id, entry)

@@ -5,8 +5,7 @@ local L, _ = AHCC:GetLibs()
 Data.Config = {
     mode = "insert",
     nav = {},
-    versionStart = 110002,
-    versionEnd = 120002
+    expansionLevel = 10
 } 
 
 

@@ -2,11 +2,12 @@ local Data = AHCC:NewModule("AHCC_DATA_TWW_consumables", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
 
+--print(C_AddOns.GetAddOnMetadata("AuctionHouseCustomCategories_Data_TWW", "Version"))
+
 Data.Config = {
     mode = "insert",
     nav = {},
-    versionStart = 110002,
-    versionEnd = 120002
+    expansionLevel = 10
 } 
 
 Data.Categories = {
@@ -16,7 +17,7 @@ Data.Categories = {
             {
                 ["name"] = L["TemporaryEnhancements"],
                 ["Items"] = {
-                    { ["id"] = { 226034, 226035, 226036 }}, -- Vantus Rune: Nerub-ar Palace
+                    { ["id"] = { 226034, 226035, 226036 } }, -- Vantus Rune: Nerub-ar Palace
                     { ["id"] = { 222502, 222503, 222504 } }, -- Ironclaw Whetstone
                     { ["id"] = { 222505, 222506, 222507 } }, -- Ironclaw Razorstone
                     { ["id"] = { 222508, 222509, 222510 } }, -- Ironclaw Weightstone

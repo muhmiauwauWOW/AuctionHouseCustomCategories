@@ -24,7 +24,6 @@ local DBdefaults = {
 
 }
 
-
 AHCC.Nav = nil
 AHCC.searchResultTable = nil
 
@@ -34,6 +33,15 @@ function AHCC:OnInitialize()
 
     AHCCItems:Init()
 end 
+
+function AHCC:OnEnable()
+    self:initQualityFrame()
+    self:initReplicateButton()
+end
+
+function AHCC:initQualityFrame()
+   AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
+end
 
 
 AHCC.isReplicateRunning = false

@@ -9,10 +9,6 @@ function AHCCItems:Init()
     self.prices = AHCC.db.global.prices
 end
 
-function AHCCItems:set(data)
-    self.items = data
-end
-
 
 function AHCCItems:add(Item)
     tAppendAll(self.items, self:formatToResultLines(Item))
@@ -20,38 +16,32 @@ end
 
 function AHCCItems:formatToResultLines(Item)
     local function getResultLine(idx, id, entry)
- 
-         local minPrice = AHCCItems:getPrice(id)
-     
-         AHCCItems:setPrice(id, minPrice)
-     
-     
-         local Stat1 = entry.Stat1
-          if not entry.Stat1 then 
-             if entry.subSubCategory then 
-                 Stat1 = entry.subSubCategory
-             else
-                 Stat1 = entry.subCategory
-             end
-         end
-     
-         return {
-             itemKey = {
-                 itemLevel = 0,
-                 itemSuffix = 0,
-                 itemID = id,
-                 balltePetSpeciesID = 0
-             },
-             Name = C_Item.GetItemInfo(id),
-             Quality = idx,
-             containsOwnerItem=false,
-             totalQuantity = 1,
-             minPrice = minPrice,
-             Price = minPrice,
-             Stat1 = Stat1,
-             Stat2 = entry.Stat2 or 0,
-             nav = Item.nav
-         }
+        local Stat1 = entry.Stat1
+        if not entry.Stat1 then 
+            if entry.subSubCategory then 
+                Stat1 = entry.subSubCategory
+            else
+                Stat1 = entry.subCategory
+            end
+        end
+    
+        return {
+            itemKey = {
+                itemLevel = 0,
+                itemSuffix = 0,
+                itemID = id,
+                balltePetSpeciesID = 0
+            },
+            Name = C_Item.GetItemInfo(id),
+            Quality = idx,
+            containsOwnerItem = false,
+            totalQuantity = 1,
+            minPrice = AHCCItems:getPrice(id),
+            Price = AHCCItems:getPrice(id),
+            Stat1 = Stat1,
+            Stat2 = entry.Stat2 or 0,
+            nav = Item.nav
+        }
      
      end
  
@@ -69,8 +59,24 @@ function AHCCItems:formatToResultLines(Item)
      return table
  end
 
-function AHCCItems:get()
-    return self.items or {}
+
+ 
+function AHCCItems:set(id, Item)
+    if not id then return  end
+    local find = _.find(self.items, function(entry, idx)
+        return entry.itemKey.itemID == id
+    end)
+
+    if find then
+        find = Item
+    end
+end
+
+function AHCCItems:get(id)
+    if not id then return  self.items end
+    return _.find(self.items, function(entry, idx)
+        return entry.itemKey.itemID == id
+    end)
 end
 
 function AHCCItems:setPrice(id, price)
@@ -83,6 +89,12 @@ end
 
 function AHCCItems:updatePrice(id, price)
     if not self:getPrice(id) then return end
+    local item = AHCCItems:get(id)
+    if item then 
+        item.minPrice =price
+        item.Price = price
+    end 
+    AHCCItems:set(id, item)
     self:setPrice(id, price)
 end
 
@@ -117,7 +129,6 @@ local function OnEvent(self, event, itemKey)
     end
 
     if not result then return end
-
     AHCCItems:updatePrice(itemKey.itemID, result[priceKey])
 
     if AHCCQualitySelectFrame:IsShown() then 

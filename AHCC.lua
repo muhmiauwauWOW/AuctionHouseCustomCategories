@@ -1,7 +1,7 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-
 local _ = LibStub("LibLodash-1"):Get()
+local LibAHTab = LibStub("LibAHTab-1-0")
 
 AHCC:SetDefaultModuleState(true)
 

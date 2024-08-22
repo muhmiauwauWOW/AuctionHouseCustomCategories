@@ -3,16 +3,71 @@ local L, _ = AHCC:GetLibs()
 
 
 AHCCItems = {}
-
+AHCCItems.items = {}
 
 function AHCCItems:Init()
-    self.items = {}
     self.prices = AHCC.db.global.prices
 end
 
 function AHCCItems:set(data)
     self.items = data
 end
+
+
+function AHCCItems:add(Item)
+    tAppendAll(self.items, self:formatToResultLines(Item))
+end
+
+function AHCCItems:formatToResultLines(Item)
+    local function getResultLine(idx, id, entry)
+ 
+         local minPrice = AHCCItems:getPrice(id)
+     
+         AHCCItems:setPrice(id, minPrice)
+     
+     
+         local Stat1 = entry.Stat1
+          if not entry.Stat1 then 
+             if entry.subSubCategory then 
+                 Stat1 = entry.subSubCategory
+             else
+                 Stat1 = entry.subCategory
+             end
+         end
+     
+         return {
+             itemKey = {
+                 itemLevel = 0,
+                 itemSuffix = 0,
+                 itemID = id,
+                 balltePetSpeciesID = 0
+             },
+             Name = C_Item.GetItemInfo(id),
+             Quality = idx,
+             containsOwnerItem=false,
+             totalQuantity = 1,
+             minPrice = minPrice,
+             Price = minPrice,
+             Stat1 = Stat1,
+             Stat2 = entry.Stat2 or 0,
+             nav = Item.nav
+         }
+     
+     end
+ 
+ 
+     local table = {}
+     if _.isTable(Item.id) then 
+         table = _.map(Item.id, function(item, idx)
+          --  _.debug(getResultLine(idx, item, Item))
+            return getResultLine(idx, item, Item)
+         end)
+     else
+         table = { getResultLine(0, Item.id, Item) }
+     end
+ 
+     return table
+ end
 
 function AHCCItems:get()
     return self.items or {}
@@ -31,54 +86,15 @@ function AHCCItems:updatePrice(id, price)
     self:setPrice(id, price)
 end
 
-function AHCCItems:add(Items, nav)
-    if not nav then return end
-    if not _.isTable(nav) then return end
-    if not Items then return end
-
-    if _.isTable(Items) then 
-        _.forEach(Items, function(entry)
-            entry.nav = nav
-            tinsert(self.items, entry)
-        end)
-    else
-        Items.nav = nav
-        tinsert(self.items, Items)
-    end
-end
-
-
 function AHCCItems:getByNav(nav)
-    local function arrayEqual(a1, a2)
-        for i, v in ipairs(a1) do
-            if a1[i] ~= a2[i] then
-                return false
-            end
-        end
-
-        return true
-    end
-
-    local filterd = _.filter(self:get(), function(entry)
-        return arrayEqual(nav, entry.nav)
+    local filterd =  _.filter(self:get(), function(Item) 
+       -- return Item.nav == nav 
+        return Item.nav:sub(1, #nav) == nav 
     end)
 
-    filterd = _.map(filterd, function(entry)
-        local price = AHCCItems:getPrice(entry.itemKey.itemID)
-        entry.minPrice = price
-        entry.Price = price
-        return entry
-    end)
-
-    local categoryConfig = AHCCCategoryList:getCategoryConfig(nav)
-    if not categoryConfig.allowDuplicates then 
-        filterd = _.uniq(filterd, function(n)
-            return n.itemKey.itemID
-        end)
-    end
-
-    return filterd
+    return  _.uniq(filterd, function(n) return n.itemKey.itemID end)
 end
+
 
 
 

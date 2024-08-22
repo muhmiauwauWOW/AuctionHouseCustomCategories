@@ -32,5 +32,6 @@ frames.xml
 
 
 AHCCItems.lua
+AHCCCategory.lua
 AHCCData.lua
 AHCCCategoryList.lua

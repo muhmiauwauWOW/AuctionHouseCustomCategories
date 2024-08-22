@@ -26,7 +26,7 @@ local DBdefaults = {
 
 
 AHCC.viewConfig = {}
-AHCC.Nav = {}
+AHCC.Nav = ""
 AHCC.searchResultTable = nil
 
 function AHCC:OnInitialize()
@@ -35,7 +35,7 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
-    AHCCData:Init()
+  --  AHCCData:Init()
 end 
 
 function AHCC:OnEnable()
@@ -44,7 +44,7 @@ function AHCC:OnEnable()
 end
 
 function AHCC:initQualityFrame()
-    AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
+   AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
 end
 
 AHCC.isReplicateRunning = false
@@ -92,13 +92,12 @@ end
 
 
 
-local getResults = function()
-    if not AHCC.Nav[1] then return  end
+local getResultsObj = function(nav)
     local function trim(s)
         return (s:gsub("^%s*(.-)%s*$", "%1"))
     end
     local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
-    local results = AHCCItems:getByNav(AHCC.Nav)
+    local results = AHCCItems:getByNav(nav)
     
     if (searchString ~= "") then 
         results = _.filter(results, function(filterEntry)
@@ -151,7 +150,9 @@ function AHCC:performSearch()
     self:checkReplicateButton()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
     AHCC:Reset()
-    AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
+    AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
+
+  
 
     if AHCC.searchResultTable then
         BRF.searchStarted = true;
@@ -172,26 +173,28 @@ function AHCC:Reset()
 end
 
 function AHCC:Sort(sortOrder)
+
     local BRF = AuctionHouseFrame.BrowseResultsFrame
-    
     local searchContext = AuctionHouseFrame:GetCategorySearchContext();
     local sorts = AuctionHouseFrame:GetSortsForContext(searchContext)
+
+    if not _.isTable(sorts) then return end
+    
+    if  sorts[1] == nil then 
+        sorts[1] = { reverseSort = false, sortOrder = 1}
+    end
 
     if #sorts == 1 then 
         sorts[2] = sorts[1]
     end
 
     local function getKey(idx)
-        local enum = sorts[idx].sortOrder
-        local findK = _.findKey(Enum.AuctionHouseSortOrder,  function(v)
-            return v == enum
-        end)
-
-        return findK
+        return _.findKey(Enum.AuctionHouseSortOrder, function(v) return v == sorts[idx].sortOrder end)
     end
 
-    local priComp = sorts[1].reverseSort and _.lt or _.gt
-    local comp = sorts[2].reverseSort and _.lt or _.gt
+
+    local priComp = (sorts[1] and sorts[1].reverseSort) and _.lt or _.gt
+    local comp = (sorts[2] and sorts[2].reverseSort) and _.lt or _.gt
 
     local k1 = getKey(1)
     local k2 = getKey(2)

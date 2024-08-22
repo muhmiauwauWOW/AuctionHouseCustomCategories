@@ -29,5 +29,6 @@ overwrites.lua
 mixins.lua
 
 AHCCItems.lua
+AHCCCategory.lua
 AHCCData.lua
 AHCCCategoryList.lua

@@ -78,7 +78,7 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
     end
 
     if cdata and cdata:HasFlag("AHCC") then
-        AHCC.Nav = cdata.AHCC_Nav
+        AHCC.Nav = cdata.AHCC_Id
         AHCC.isInCustomCategory = true
         AuctionHouseFrame.SearchBar.QualityFrame:Show()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
@@ -98,8 +98,6 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
 end)
 
 
-
-
 -- overwrites
 local AuctionHouseSearchBarMixin_StartSearch = AuctionHouseFrame.SearchBar.StartSearch
 function AuctionHouseFrame.SearchBar:StartSearch()
@@ -114,8 +112,8 @@ end
 local AuctionHouseUtil_ConvertCategoryToSearchContext = AuctionHouseUtil.ConvertCategoryToSearchContext
 function AuctionHouseUtil.ConvertCategoryToSearchContext(selectedCategoryIndex)
     if selectedCategoryIndex then 
-        if AuctionCategories[selectedCategoryIndex].AHCC_Id then 
-            return AuctionCategories[selectedCategoryIndex].AHCC_Id + 300
+        if AuctionCategories[selectedCategoryIndex].AHCC_Index then 
+            return AuctionCategories[selectedCategoryIndex].AHCC_Index + 300
         end
     end
     return AuctionHouseUtil_ConvertCategoryToSearchContext(selectedCategoryIndex)

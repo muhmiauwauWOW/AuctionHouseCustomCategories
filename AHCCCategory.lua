@@ -29,7 +29,7 @@ end
 function AHCCCategory:merge(entry)
    -- print(entry.name,entry.parent)
     local newParent = _.find(self.categories, function(data)
-        return data.name == entry.name and data.parent == entry.parent
+        return data.id == entry.id and data.parent == entry.parent
     end)
 
     if newParent then  return newParent.id end

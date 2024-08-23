@@ -15,7 +15,6 @@ function AHCCCategoryList:update()
     AuctionFrameFilters_Update(AuctionHouseFrame.CategoriesList)
 end
 
-
 function AHCCCategoryList:createCategorys(parent)
     local cats = _.filter(AHCCCategory:get(), function(entry) return entry.parent == parent end)
     return _.map(cats, function(entry)
@@ -29,11 +28,7 @@ function AHCCCategoryList:createCategory(categoryEntry)
     local category = CreateFromMixins(AuctionCategoryMixin);
     category:SetFlag("AHCC");
     category.name = categoryEntry.name
-    category.AHCC_Id = categoryEntry.id
-    category.AHCC_Index = categoryEntry.index
-    category.AHCC_config = categoryEntry.config
-
-    g_auctionHouseSortsBySearchContext[categoryEntry.index] = g_auctionHouseSortsBySearchContext[categoryEntry.index] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
-
+    category.AHCC_NAV = categoryEntry.id
+    
     return category
 end

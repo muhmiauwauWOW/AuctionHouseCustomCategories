@@ -214,6 +214,7 @@ AHCCTest = {}
 
 function AHCCTest.checkData()
 
+
     -- local obj1 = {  a = "a"}
     -- local obj2 = {  a = "a"}
 
@@ -227,7 +228,6 @@ function AHCCTest.checkData()
     else
         print(GREEN_FONT_COLOR:WrapTextInColorCode("#### Test successfull"))
     end
-
 
 end
 

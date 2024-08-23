@@ -78,13 +78,10 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
     end
 
     if cdata and cdata:HasFlag("AHCC") then
-        AHCC.Nav = cdata.AHCC_Id
+        AHCC.Nav = cdata.AHCC_NAV
         AHCC.isInCustomCategory = true
         AuctionHouseFrame.SearchBar.QualityFrame:Show()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
-        AHCC.viewConfig = cdata.AHCC_config
-
-        
 
         -- prevent double execution
         if not forceSelectionIntoView then 
@@ -109,11 +106,13 @@ function AuctionHouseFrame.SearchBar:StartSearch()
     end
 end
 
+g_auctionHouseSortsBySearchContext[300] = g_auctionHouseSortsBySearchContext[300] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
+
 local AuctionHouseUtil_ConvertCategoryToSearchContext = AuctionHouseUtil.ConvertCategoryToSearchContext
 function AuctionHouseUtil.ConvertCategoryToSearchContext(selectedCategoryIndex)
     if selectedCategoryIndex then 
-        if AuctionCategories[selectedCategoryIndex].AHCC_Index then 
-            return AuctionCategories[selectedCategoryIndex].AHCC_Index + 300
+        if AuctionCategories[selectedCategoryIndex] then 
+            return 300
         end
     end
     return AuctionHouseUtil_ConvertCategoryToSearchContext(selectedCategoryIndex)

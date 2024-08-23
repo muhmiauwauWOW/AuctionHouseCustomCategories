@@ -25,17 +25,14 @@ local DBdefaults = {
 }
 
 
-AHCC.viewConfig = {}
-AHCC.Nav = ""
+AHCC.Nav = nil
 AHCC.searchResultTable = nil
 
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
-
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
-  --  AHCCData:Init()
 end 
 
 function AHCC:OnEnable()
@@ -130,7 +127,7 @@ function GetBrowseListLayout(AHCC, owner, itemList)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-        _.forEach(AHCC.viewConfig.columns, function(colName)
+        _.forEach(AHCCCategory.config:getColumns(AHCC.Nav), function(colName)
             if colName == "Price" then 
                 tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
             elseif colName == "Name" then 

@@ -2,8 +2,6 @@ local Data = AHCC:NewModule("AHCC_DATA_TWW_consumables", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
 
---print(C_AddOns.GetAddOnMetadata("AuctionHouseCustomCategories_Data_TWW", "Version"))
-
 Data.Config = {
     mode = "insert",
     nav = {},
@@ -59,12 +57,17 @@ Data.Categories = {
                     ["columns"] = {}
                 },
                 ["Items"] = {
-                    { ["id"] = 204072 }, -- Teuflisch gefüllte Eier
-                    { ["id"] = 197792 }, -- Schicksalhafter Glückskeks
-
-                    { ["id"] = 197793 }, -- Yusas herzhafter Eintopf
-                    { ["id"] = 197795 }, -- Vorrat an drakonischen Delikatessen
-                    { ["id"] = 197794 }, -- Großbankett der Kalu'ak
+                    { ["id"] = 222733 }, -- Feast of the Midnight Masquerade
+                    { ["id"] = 222732 }, -- feast-of-the-divine-day
+                    { ["id"] = 222720 }, -- the-sushi-special
+                    { ["id"] = 222727 }, -- anglers-delight
+                    { ["id"] = 222725 }, -- mycobloom-risotto
+                    { ["id"] = 222726 }, -- stuffed-cave-peppers
+                    { ["id"] = 222724 }, -- sizzling-honey-roast
+                    { ["id"] = 222731 }, -- outsiders-provisions
+                    { ["id"] = 222729 }, -- empress-farewell
+                    { ["id"] = 222730 }, -- jesters-board
+                    { ["id"] = 222735 }, -- everything-stew
                 }
             }
         }

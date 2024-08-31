@@ -10,6 +10,7 @@ L["Consumables"] = "Verbrauchbares"
 L["Optional Reagents"] = "Optionale Reagenzien"
 L["Embellishments"] = "Verziert"
 L["Draconic Missive"] = "Drakonische Schreiben"
+L["Algari Missive"] = "Algarisches Schreiben"
 
 L["SOCKETS"] = "Sockel"
 L["Runes"] = "Runen"

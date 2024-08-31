@@ -9,6 +9,7 @@ if not L then return end
 
 L["CELL_STAMINA"] = "체력"
 L["Draconic Missive"] = "용언 서신"
+L["Algari Missive"] = "알가르 서신"
 L["Embellishments"] = "장식"
 L["Flasks"] = "약병"
 L["Food"] = "음식"

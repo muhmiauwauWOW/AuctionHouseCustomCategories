@@ -13,12 +13,12 @@ Data.Categories = {
     {
         ["name"] =  L["Enchants"],
         ["subCategories"] = {
-            {
-                ["name"] = L["SOCKETS"],
-                ["Items"] = {
-                    { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
-                }
-            },
+            -- { -- wait for season 1
+            --     ["name"] = L["SOCKETS"],
+            --     ["Items"] = {
+            --         { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
+            --     }
+            -- },
             {
                 ["name"] = L["SHOULDER"],
                 ["Items"] = {
@@ -119,7 +119,7 @@ Data.Categories = {
                     { ["id"] = { 223773, 223774, 223775 } }, -- Enchant Weapon - Authority of Air
                     { ["id"] = { 223776, 223777, 223778 } }, -- Enchant Weapon - Authority of Fiery Resolve
                     { ["id"] = { 223779, 223780, 223781 } }, -- Enchant Weapon - Authority of Radiant Power
-                    { ["id"] = { 223782, 223783, 223784 } }, -- Enchant Weapon - Authority of the Depths
+                    -- { ["id"] = { 223782, 223783, 223784 } }, -- Enchant Weapon - Authority of the Depths  -- wait for Season 1
                 }
             },
             {

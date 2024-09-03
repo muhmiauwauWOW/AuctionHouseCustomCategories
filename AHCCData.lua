@@ -82,25 +82,19 @@ function AHCCData:add(data, mode)
 
     local function addItemsRecursiv(data, parent)        
         _.forEach(data, function(entry, key)
-            if _.isString(key) then 
-                --local id = createId(parent, key, {})
+            if _.isString(key) then
                 addItemsRecursiv(entry, key)
                 return
             end
-            _.forEach(data, function(Item)
-                Item.nav = parent;
-                AHCCItems:add(Item) 
-            end)
+
+            entry.nav = parent;
+            AHCCItems:add(entry)
         end)
     end
 
     addItemsRecursiv(data.Items, data.id)
 
-
-    AHCCItems:add({ ["id"] = { 192965, 192966, 192967 }, ["Stat1"] = 3, ["Stat2"] = 0, ["nav"] = data.name .. "_Cat_1"  })
 end
-
-
 
 
 
@@ -160,9 +154,10 @@ function AHCC_DATA__checkModules()
 
             AHCCCategoryList:Init()
             AHCCCategoryList:update()
+
             --@do-not-package@
                 if UnitName("player") == "Muhmiauwaudk" then
-                    AHCCTest.checkData()
+                    --AHCCTest.checkData()
 
                 end
             --@end-do-not-package@

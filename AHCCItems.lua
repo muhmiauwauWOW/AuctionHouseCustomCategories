@@ -73,7 +73,7 @@ function AHCCItems:set(id, Item)
 end
 
 function AHCCItems:get(id)
-    if not id then return  self.items end
+    if not id then return self.items end
     return _.find(self.items, function(entry, idx)
         return entry.itemKey.itemID == id
     end)
@@ -94,13 +94,12 @@ function AHCCItems:updatePrice(id, price)
         item.minPrice =price
         item.Price = price
     end 
-    AHCCItems:set(id, item)
+    self:set(id, item)
     self:setPrice(id, price)
 end
 
 function AHCCItems:getByNav(nav)
     local filterd =  _.filter(self:get(), function(Item) 
-       -- return Item.nav == nav 
         return Item.nav:sub(1, #nav) == nav 
     end)
 

@@ -51,9 +51,9 @@ Data.Items = {
         { ["id"] = { 223720, 223721, 223722 } }, -- Enchant Bracer - Whisper of Armored Speed
         { ["id"] = { 223723, 223724, 223725 } }, -- Enchant Bracer - Chant of Armored SpeedBonus        
     },
-    [getCategoryId("enchants", "WAIST")] = {
+    -- [getCategoryId("enchants", "WAIST")] = {
      
-    },
+    -- },
     [getCategoryId("enchants", "LEGS")] = {
         { ["id"] = { 219906, 219907, 219908 } }, -- Defender's Armor Kit
         { ["id"] = { 219909, 219910, 219911 } }, -- Stormbound Armor Kit

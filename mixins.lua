@@ -103,3 +103,17 @@ function AHCCReplicateButtonMixin:OnClick()
         C_AuctionHouse.ReplicateItems()
     end
 end
+
+
+function AHCCReplicateButtonMixin:check()
+    if AHCC.isReplicateRunning then 
+        self:Hide()
+        return 
+    end
+    
+    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
+        self:Show()
+    else
+        self:Hide()
+    end
+end

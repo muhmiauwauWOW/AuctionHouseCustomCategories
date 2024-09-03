@@ -12,8 +12,8 @@ tools-used:
 
 
 move-folders:
-    AuctionHouseCustomCategories/data/DF: AuctionHouseCustomCategories_Data_DF
-    AuctionHouseCustomCategories/data/TWW: AuctionHouseCustomCategories_Data_TWW
+  AuctionHouseCustomCategories/data/DF: AuctionHouseCustomCategories_Data_DF
+  AuctionHouseCustomCategories/data/TWW: AuctionHouseCustomCategories_Data_TWW
     
 
 ignore:

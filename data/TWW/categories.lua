@@ -54,7 +54,7 @@ Data.Categories = {
         id = "optionalReagents",
         categories =  {
             { 
-                name = L["Draconic Missive"],
+                name = L["Algari Missive"],
                 columns = {"Stat1", "Stat2", "Quality"},
                 categories =  {
                     { name = L["CRITICAL_STRIKE"], columns = {"Stat2", "Quality"} },

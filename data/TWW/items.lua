@@ -13,9 +13,9 @@ local function getCategoryId(name, ...)
 end
 
 Data.Items = {
-    [getCategoryId("enchants", "NECK")] = {
-        { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
-    },
+    -- [getCategoryId("enchants", "NECK")] = {
+    --    { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
+    -- },
     [getCategoryId("enchants", "SHOULDER")] = {
         { ["id"] = { 200614, 200615, 200616 } }, -- Illusory Adornment: Fire
         { ["id"] = { 201312, 201311, 201310 } }, -- Illusory Adornment: Frost
@@ -90,7 +90,7 @@ Data.Items = {
         { ["id"] = { 223773, 223774, 223775 } }, -- Enchant Weapon - Authority of Air
         { ["id"] = { 223776, 223777, 223778 } }, -- Enchant Weapon - Authority of Fiery Resolve
         { ["id"] = { 223779, 223780, 223781 } }, -- Enchant Weapon - Authority of Radiant Power
-        { ["id"] = { 223782, 223783, 223784 } }, -- Enchant Weapon - Authority of the Depths
+        -- wait for Season 1 { ["id"] = { 223782, 223783, 223784 } }, -- Enchant Weapon - Authority of the Depths
     },
     [getCategoryId("enchants", "RANGED")] = {
         { ["id"] = { 198313, 198314, 198315 } }, -- Geschossschleudertrieb 
@@ -166,29 +166,34 @@ Data.Items = {
         { ["id"] = { 212266, 212267, 212268 } }, -- Potion of the Reborn Cheetah
     }
     ,[getCategoryId("consumables", "Food")] = {
-        { ["id"] = 204072 }, -- Teuflisch gefüllte Eier
-        { ["id"] = 197792 }, -- Schicksalhafter Glückskeks
-
-        { ["id"] = 197793 }, -- Yusas herzhafter Eintopf
-        { ["id"] = 197795 }, -- Vorrat an drakonischen Delikatessen
-        { ["id"] = 197794 }, -- Großbankett der Kalu'ak
+        { ["id"] = 222733 }, -- Feast of the Midnight Masquerade
+        { ["id"] = 222732 }, -- feast-of-the-divine-day
+        { ["id"] = 222720 }, -- the-sushi-special
+        { ["id"] = 222727 }, -- anglers-delight
+        { ["id"] = 222725 }, -- mycobloom-risotto
+        { ["id"] = 222726 }, -- stuffed-cave-peppers
+        { ["id"] = 222724 }, -- sizzling-honey-roast
+        { ["id"] = 222731 }, -- outsiders-provisions
+        { ["id"] = 222729 }, -- empress-farewell
+        { ["id"] = 222730 }, -- jesters-board
+        { ["id"] = 222735 }, -- everything-stew
     }
-    ,[getCategoryId("optionalReagents", "Draconic Missive", "CRITICAL_STRIKE")] = {
+    ,[getCategoryId("optionalReagents", "Algari Missive", "CRITICAL_STRIKE")] = {
         { ["Stat1"] = 1, ["Stat2"] = 2, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash
         { ["Stat1"] = 1, ["Stat2"] = 3, ["id"] = { 222591, 222592, 222593 } }, -- Algari Missive of the Peerless
         { ["Stat1"] = 1, ["Stat2"] = 4, ["id"] = { 222594, 222595, 222596 } }, -- Algari Missive of the Quickblade
     }
-    ,[getCategoryId("optionalReagents", "Draconic Missive", "HASTE")] = {
+    ,[getCategoryId("optionalReagents", "Algari Missive", "HASTE")] = {
         { ["Stat1"] = 2, ["Stat2"] = 1, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash
         { ["Stat1"] = 2, ["Stat2"] = 3, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
         { ["Stat1"] = 2, ["Stat2"] = 4, ["id"] = { 222579, 222580, 222581 } }, -- Algari Missive of the Aurora                      
     }
-    ,[getCategoryId("optionalReagents", "Draconic Missive", "MASTERY")] = {
+    ,[getCategoryId("optionalReagents", "Algari Missive", "MASTERY")] = {
         { ["Stat1"] = 3, ["Stat2"] = 1, ["id"] = { 222591, 222592, 222593 } }, -- Algari Missive of the Peerless
         { ["Stat1"] = 3, ["Stat2"] = 2, ["id"] = { 222582, 222583, 222584 } }, -- Algari Missive of the Feverflare
         { ["Stat1"] = 3, ["Stat2"] = 4, ["id"] = { 222588, 222589, 222590 } }, -- Algari Missive of the Harmonious
     }
-    ,[getCategoryId("optionalReagents", "Draconic Missive", "VERSATILITY")] = {
+    ,[getCategoryId("optionalReagents", "Algari Missive", "VERSATILITY")] = {
         { ["Stat1"] = 4, ["Stat2"] = 1, ["id"] = { 222594, 222595, 222596 } }, -- Algari Missive of the Quickblade
         { ["Stat1"] = 4, ["Stat2"] = 2, ["id"] = { 222579, 222580, 222581 } }, -- Algari Missive of the Aurora
         { ["Stat1"] = 4, ["Stat2"] = 3, ["id"] = { 222588, 222589, 222590 } }, -- Algari Missive of the Harmonious
@@ -201,12 +206,12 @@ Data.Items = {
         { ["id"] = { 221938, 221939, 221940 } }, -- Concealed Chaos Module
         { ["id"] = { 221941, 221942, 221943 } }, -- Energy Redistribution Beacon
         { ["id"] = { 219495, 219496, 219497 } }, -- Blessed Weapon Grip
-        { ["id"] = { 222452, 222453, 222454 } }, -- Echoing Impact Seal
-        { ["id"] = { 222455, 222456, 222457 } }, -- Arathor Armor Patch
+        -- wait for Season 1 { ["id"] = { 222452, 222453, 222454 } }, -- Echoing Impact Seal
+        -- wait for Season 1 { ["id"] = { 222455, 222456, 222457 } }, -- Arathor Armor Patch
         { ["id"] = { 219504, 219505, 219506 } }, -- Writhing Armor Banding
         { ["id"] = { 222868, 222869, 222870 } }, -- Dawnthread Lining
-        { ["id"] = { 222871, 222872, 222873 } }, -- Duskthread Lining
-        { ["id"] = { 222389, 221622, 221623 } }, -- Duskthread Lining
+        -- wait for Season 1 { ["id"] = { 222871, 222872, 222873 } }, -- Duskthread Lining
+        -- wait for Season 1 { ["id"] = { 222389, 221622, 221623 } }, -- Duskthread Lining
         { ["id"] = 228921 }, -- Griftah's Heavy-Duty Embellishing Powder
     }
 }

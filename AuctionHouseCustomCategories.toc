@@ -8,6 +8,7 @@
 ## LoadWith: Blizzard_AuctionHouseUI
 ## X-Curse-Project-ID: 898041
 ## X-Wago-ID: bGoMYk60
+## X-WoWI-ID: 26837
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua

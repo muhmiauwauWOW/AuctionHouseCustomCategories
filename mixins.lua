@@ -1,9 +1,14 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
+local LibAHTab = LibStub("LibAHTab-1-0")
 
 
 
+AHCCQualitySelectMixin = {}
+function AHCCQualitySelectMixin:OnLoad()
+    self:SetParent(AuctionHouseFrame.SearchBar)
+end
 
 -- Quality column
 AuctionHouseTableCellQualityMixin = CreateFromMixins(TableBuilderCellMixin);
@@ -71,4 +76,30 @@ function AHCCQualitySelectButtonMixin:SetState(state)
 
     local newTexture = state and self.normalTexture or self.disabledTexture
     self:SetNormalTexture(newTexture)
+end
+
+
+
+AHCCReplicateButtonMixin = {}
+
+
+function AHCCReplicateButtonMixin:OnLoad()
+    C_Timer.After(2, function()
+        if _.size(AHCCData.Items) * 0.8 > _.size(_.filter(AHCC.db.global.prices, function(e) return _.lt(1, e) end)) then
+            AHCC.db.global.lastReplicateDate = 0
+        end
+    end)
+end
+
+
+function AHCCReplicateButtonMixin:OnClick()
+    self:Hide()
+    if LibAHTab:DoesIDExist("AuctionatorTabs_Auctionator") then
+        LibAHTab:SetSelected("AuctionatorTabs_Auctionator")
+        AuctionatorScanButtonMixin:OnClick()
+        AHCC.db.global.lastReplicateDate = GetServerTime()
+    else
+        AHCC.isReplicateRunning = true
+        C_AuctionHouse.ReplicateItems()
+    end
 end

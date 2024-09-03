@@ -80,19 +80,19 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
     if cdata and cdata:HasFlag("AHCC") then
         AHCC.Nav = cdata.AHCC_Nav
         AHCC.isInCustomCategory = true
-        AuctionHouseFrame.SearchBar.QualityFrame:Show()
+        AHCCQualitySelectFrame:Show()
+        AHCC:checkReplicateButton()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         AHCC.viewConfig = cdata.AHCC_config
-
         
-
         -- prevent double execution
         if not forceSelectionIntoView then 
             AHCC:performSearch()
         end
     else
         AHCC.isInCustomCategory = false
-        AuctionHouseFrame.SearchBar.QualityFrame:Hide()
+        AHCCQualitySelectFrame:Hide()
+        AHCCReplicateButton:Hide()
         AuctionHouseFrame.SearchBar.FilterButton:Show()
     end
 end)

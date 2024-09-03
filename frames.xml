@@ -6,8 +6,23 @@
    <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 
 
-    <Frame name="AHCCQualitySelectFrameTemplate" virtual="true">
+   <Button name="AHCCReplicateButton" parent="AuctionHouseFrame" mixin="AHCCReplicateButtonMixin" inherits="UIPanelButtonTemplate" text="Perform Price Scan" hidden="true">
+      <Size x="160" y="26"/>
+      <Anchors>
+         <Anchor point="BOTTOMRIGHT" relativeKey="$parent.BrowseResultsFrame" relativePoint="BOTTOMRIGHT" x="10" y="-25"/>
+      </Anchors>
+      <Scripts>
+         <OnLoad method="OnLoad"/>
+         <OnClick method="OnClick"/>
+      </Scripts>
+   </Button>
+
+
+   <Frame name="AHCCQualitySelectFrame" parent="AuctionHouseFrame" mixin="AHCCQualitySelectMixin" hidden="true">
       <Size x="80" y="23"/>
+      <Anchors>
+         <Anchor point="LEFT" relativeKey="$parent.SearchBar.SearchBox" relativePoint="RIGHT" x="8" y="0"/>
+      </Anchors>
 		<Frames>
 			<Button parentKey="Quality1Button"  mixin="AHCCQualitySelectButtonMixin" inherits="SquareIconButtonTemplate">
             <KeyValues>
@@ -49,8 +64,8 @@
             </Anchors>
          </Button>
 		</Frames>
-		<Anchors>
-			<Anchor point="LEFT" relativeKey="$parent.SearchBox" relativePoint="RIGHT" x="8" y="0"/>
-		</Anchors>
+      <Scripts>
+         <OnLoad method="OnLoad"/>
+      </Scripts>
 	</Frame>
 </Ui>

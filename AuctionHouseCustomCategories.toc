@@ -21,12 +21,15 @@ Libs\Lodash\Lodash.lua
 
 locale\locale.xml
 
-frames.xml
-AHCC.lua
 
+AHCC.lua
 config.lua
 overwrites.lua
+
 mixins.lua
+frames.xml
+
+
 
 AHCCItems.lua
 AHCCData.lua

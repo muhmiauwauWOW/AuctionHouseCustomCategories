@@ -2,7 +2,6 @@ AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("Lodash"):Get()
 
-local LibAHTab = LibStub("LibAHTab-1-0")
 
 AHCC:SetDefaultModuleState(true)
 
@@ -39,54 +38,18 @@ function AHCC:OnInitialize()
     AHCCData:Init()
 end 
 
-function AHCC:OnEnable()
-    self:initQualityFrame()
-    self:initReplicateButton()
-end
-
-function AHCC:initQualityFrame()
-    AuctionHouseFrame.SearchBar.QualityFrame = CreateFrame ("Frame", nil, AuctionHouseFrame.SearchBar, "AHCCQualitySelectFrameTemplate")
-end
-
 AHCC.isReplicateRunning = false
-
-function AHCC:initReplicateButton()
-    AuctionHouseFrame.SearchBar.ReplicateButton = CreateFrame ("Button", nil, AuctionHouseFrame.SearchBar.QualityFrame, "UIPanelButtonTemplate")
-    AuctionHouseFrame.SearchBar.ReplicateButton:SetPoint("BOTTOMRIGHT", AuctionHouseFrame.BrowseResultsFrame, "BOTTOMRIGHT", 10, -25)
-    AuctionHouseFrame.SearchBar.ReplicateButton:SetSize(160, 26)
-    AuctionHouseFrame.SearchBar.ReplicateButton:SetText("Perform Price Scan")
-    AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
-    AuctionHouseFrame.SearchBar.ReplicateButton:SetScript("OnClick", function(self, button)
-        if LibAHTab:DoesIDExist("AuctionatorTabs_Auctionator") then
-            AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
-            LibAHTab:SetSelected("AuctionatorTabs_Auctionator")
-            AuctionatorScanButtonMixin:OnClick()
-            AHCC.db.global.lastReplicateDate = GetServerTime()
-        else
-            AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
-            AHCC.isReplicateRunning = true
-            C_AuctionHouse.ReplicateItems()
-        end
-    end)
-
-    C_Timer.After(2, function()
-        if _.size(AHCCData.Items) * 0.8 > _.size(_.filter(AHCC.db.global.prices, function(e) return _.lt(1, e) end)) then
-            AHCC.db.global.lastReplicateDate = 0
-        end
-    end)
-end
-
 
 function AHCC:checkReplicateButton()
     if AHCC.isReplicateRunning then 
-        AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
+        AHCCReplicateButton:Hide()
         return 
     end
     
     if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-        AuctionHouseFrame.SearchBar.ReplicateButton:Show()
+       AHCCReplicateButton:Show()
     else
-        AuctionHouseFrame.SearchBar.ReplicateButton:Hide()
+       AHCCReplicateButton:Hide()
     end
 end
 

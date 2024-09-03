@@ -27,6 +27,7 @@ local DBdefaults = {
 
 AHCC.Nav = nil
 AHCC.searchResultTable = nil
+AHCC.isReplicateRunning = false
 
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
@@ -34,22 +35,6 @@ function AHCC:OnInitialize()
 
     AHCCItems:Init()
 end 
-
-
-AHCC.isReplicateRunning = false
-
-function AHCC:checkReplicateButton()
-    if AHCC.isReplicateRunning then 
-        AHCCReplicateButton:Hide()
-        return 
-    end
-    
-    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-       AHCCReplicateButton:Show()
-    else
-       AHCCReplicateButton:Hide()
-    end
-end
 
 
 
@@ -109,7 +94,7 @@ end
 
 
 function AHCC:performSearch()
-    self:checkReplicateButton()
+    AHCCReplicateButton:check()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
     AHCC:Reset()
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil

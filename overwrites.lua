@@ -81,7 +81,7 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AHCC.Nav = cdata.AHCC_NAV
         AHCC.isInCustomCategory = true
         AHCCQualitySelectFrame:Show()
-        AHCC:checkReplicateButton()
+        AHCCReplicateButton:check()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         
         -- prevent double execution

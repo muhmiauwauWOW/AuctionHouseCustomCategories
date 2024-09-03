@@ -83,6 +83,7 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AHCCQualitySelectFrame:Show()
         AHCC:checkReplicateButton()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
+        
         -- prevent double execution
         if not forceSelectionIntoView then 
             AHCC:performSearch()

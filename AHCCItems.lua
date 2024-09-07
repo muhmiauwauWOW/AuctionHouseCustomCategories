@@ -103,7 +103,10 @@ local function OnEvent(self, event, itemKey)
     if not result then return end
 
     AHCCItems:updatePrice(itemKey.itemID, result[priceKey])
-    AHCC:performSearch()
+
+    if AHCCQualitySelectFrame:IsShown() then 
+        AHCC:performSearch()
+    end
 end
 
 

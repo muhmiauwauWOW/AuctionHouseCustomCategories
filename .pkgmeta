@@ -7,9 +7,6 @@ externals:
   Libs/LibLodash: https://github.com/muhmiauwauWOW/LibLodash.git
   Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
 
-tools-used:
-    - liblodash
-
 
 move-folders:
   AuctionHouseCustomCategories/data/DF: AuctionHouseCustomCategories_Data_DF

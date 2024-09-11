@@ -32,7 +32,7 @@ end
 
 
 
--- return to BrowseResultsFrame on category select 
+--return to BrowseResultsFrame on category select 
 local AuctionHouseCategoriesListMixin_OnFilterClicked =  AuctionHouseFrame.CategoriesList.OnFilterClicked
 function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
     local displaymode =  _.last(AuctionHouseFrame:GetDisplayMode())
@@ -60,7 +60,9 @@ function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
                 AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
             end
         else
+            AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
             AuctionHouseFrame.SearchBar:StartSearch()
+
         end
     else
         AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)

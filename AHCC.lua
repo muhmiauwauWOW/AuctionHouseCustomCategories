@@ -97,14 +97,12 @@ function AHCC:performSearch()
     AHCC:Reset()
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
 
-  
 
     if AHCC.searchResultTable then
         BRF.searchStarted = true;
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));
         BRF.tableBuilderLayoutDirty = true;
-        DevTool:AddData(AHCC.searchResultTable, "searchResultTable")
         BRF.browseResults = AHCC.searchResultTable;
         AHCC:Sort()
     end

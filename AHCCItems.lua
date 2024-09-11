@@ -24,6 +24,12 @@ function AHCCItems:formatToResultLines(Item)
                 Stat1 = entry.subCategory
             end
         end
+
+
+        local priceTime =  AHCCItems:getPriceTime(id)
+        local age = (GetServerTime() - priceTime)
+        local ageCheck = age < AHCC.Config.ReplicateDataIntervall
+        local price = ageCheck and AHCCItems:getPrice(id) or -1
     
         return {
             itemKey = {
@@ -36,8 +42,8 @@ function AHCCItems:formatToResultLines(Item)
             Quality = idx,
             containsOwnerItem = false,
             totalQuantity = 1,
-            minPrice = AHCCItems:getPrice(id),
-            Price = AHCCItems:getPrice(id),
+            minPrice = price,
+            Price = price,
             Stat1 = Stat1,
             Stat2 = entry.Stat2 or 0,
             nav = Item.nav
@@ -80,18 +86,29 @@ function AHCCItems:get(id)
 end
 
 function AHCCItems:setPrice(id, price)
-    AHCC.db.global.prices[id] = price
+    AHCC.db.global.prices[id] = {
+        price = price,
+        time = GetServerTime()
+    }
 end
 
+
+
+
 function AHCCItems:getPrice(id)    
-    return AHCC.db.global.prices[id] or 0
+    return _.get( AHCC.db.global.prices, {id, "price"}, _.get( AHCC.db.global.prices, {id}, 0))
+end
+
+
+function AHCCItems:getPriceTime(id)    
+    return _.get( AHCC.db.global.prices, {id, "time"}, AHCC.db.global.lastReplicateDate)
 end
 
 function AHCCItems:updatePrice(id, price)
     if not self:getPrice(id) then return end
     local item = AHCCItems:get(id)
     if item then 
-        item.minPrice =price
+        item.minPrice = price
         item.Price = price
     end 
     self:set(id, item)

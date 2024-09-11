@@ -1,7 +1,6 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
 local _ = LibStub("LibLodash-1"):Get()
-local LibAHTab = LibStub("LibAHTab-1-0")
 
 AHCC:SetDefaultModuleState(true)
 
@@ -78,7 +77,7 @@ function GetBrowseListLayout(AHCC, owner, itemList)
 
         _.forEach(AHCCCategory.config:getColumns(AHCC.Nav), function(colName)
             if colName == "Price" then 
-                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
+                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate", "ddd");
             elseif colName == "Name" then 
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
@@ -105,6 +104,7 @@ function AHCC:performSearch()
         BRF.ItemList:SetRefreshCallback(nil)
         BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));
         BRF.tableBuilderLayoutDirty = true;
+        DevTool:AddData(AHCC.searchResultTable, "searchResultTable")
         BRF.browseResults = AHCC.searchResultTable;
         AHCC:Sort()
     end

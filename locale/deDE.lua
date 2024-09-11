@@ -25,3 +25,6 @@ L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
 
 
 L["TemporaryEnhancements"] = "Temporäre Verzauberungen"
+
+
+L["price_too_old"] = "Preisdaten zu alt"

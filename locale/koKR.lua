@@ -20,3 +20,5 @@ L["STAMINA"] = "체력"
 L["TABLE_HEADER_QUALITY"] = "품질"
 L["TABLE_HEADER_STAT1"] = "주스탯"
 L["TABLE_HEADER_STAT2"] = "보조 스탯"
+
+L["price_too_old"] = "가격 데이터가 너무 오래됨"

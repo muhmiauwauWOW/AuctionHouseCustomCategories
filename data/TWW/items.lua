@@ -92,11 +92,6 @@ Data.Items = {
         { ["id"] = { 223779, 223780, 223781 } }, -- Enchant Weapon - Authority of Radiant Power
         -- wait for Season 1 { ["id"] = { 223782, 223783, 223784 } }, -- Enchant Weapon - Authority of the Depths
     },
-    [getCategoryId("enchants", "RANGED")] = {
-        { ["id"] = { 198313, 198314, 198315 } }, -- Geschossschleudertrieb 
-        { ["id"] = { 198316, 198317, 198318 } }, -- Hochleistungsthermoscanner 
-        { ["id"] = { 198310, 198311, 198312 } }, -- Gyroskopisches Kaleidoskop 
-    },
     [getCategoryId("enchants", "TOOL")] = {
         { ["id"] = { 223693, 223694, 223695 } }, -- Enchant Tool - Algari Deftness
         { ["id"] = { 223696, 223697, 223698 } }, -- Enchant Tool - Algari Finesse

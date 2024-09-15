@@ -23,7 +23,6 @@ Data.Categories = {
             { name =  L["FEET"] },
             { name =  L["FINGER"] },
             { name =  L["WEAPON"] },
-            { name =  L["RANGED"] },
             { name =  L["TOOL"] }
         }
     },

@@ -123,14 +123,6 @@ Data.Categories = {
                 }
             },
             {
-                ["name"] = L["RANGED"],
-                ["Items"] = {
-                    { ["id"] = { 198313, 198314, 198315 } }, -- Geschossschleudertrieb 
-                    { ["id"] = { 198316, 198317, 198318 } }, -- Hochleistungsthermoscanner 
-                    { ["id"] = { 198310, 198311, 198312 } }, -- Gyroskopisches Kaleidoskop 
-                }
-            },
-            {
                 ["name"] = L["TOOL"],
                 ["Items"] = {
                     { ["id"] = { 223693, 223694, 223695 } }, -- Enchant Tool - Algari Deftness

@@ -1,7 +1,6 @@
 AHCC = LibStub("AceAddon-3.0"):NewAddon("AHCC")
 local L = LibStub("AceLocale-3.0"):GetLocale("AHCC")
-local _ = LibStub("Lodash"):Get()
-
+local _ = LibStub("LibLodash-1"):Get()
 
 AHCC:SetDefaultModuleState(true)
 
@@ -24,45 +23,26 @@ local DBdefaults = {
 
 }
 
-
-AHCC.viewConfig = {}
-AHCC.Nav = {}
+AHCC.Nav = nil
 AHCC.searchResultTable = nil
+AHCC.isReplicateRunning = false
 
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
-
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
-    AHCCData:Init()
 end 
 
-AHCC.isReplicateRunning = false
-
-function AHCC:checkReplicateButton()
-    if AHCC.isReplicateRunning then 
-        AHCCReplicateButton:Hide()
-        return 
-    end
-    
-    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-       AHCCReplicateButton:Show()
-    else
-       AHCCReplicateButton:Hide()
-    end
-end
 
 
 
-
-local getResults = function()
-    if not AHCC.Nav[1] then return  end
+local getResultsObj = function(nav)
     local function trim(s)
         return (s:gsub("^%s*(.-)%s*$", "%1"))
     end
     local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
-    local results = AHCCItems:getByNav(AHCC.Nav)
+    local results = AHCCItems:getByNav(nav)
     
     if (searchString ~= "") then 
         results = _.filter(results, function(filterEntry)
@@ -95,9 +75,9 @@ function GetBrowseListLayout(AHCC, owner, itemList)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
 
-        _.forEach(AHCC.viewConfig.columns, function(colName)
+        _.forEach(AHCCCategory.config:getColumns(AHCC.Nav), function(colName)
             if colName == "Price" then 
-                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AuctionHouseTableCellMinPriceTemplate");
+                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate", "ddd");
             elseif colName == "Name" then 
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
@@ -112,10 +92,11 @@ end
 
 
 function AHCC:performSearch()
-    self:checkReplicateButton()
+    AHCCReplicateButton:check()
     local BRF = AuctionHouseFrame.BrowseResultsFrame
     AHCC:Reset()
-    AHCC.searchResultTable = AHCC.isInCustomCategory and getResults() or nil
+    AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
+
 
     if AHCC.searchResultTable then
         BRF.searchStarted = true;
@@ -136,26 +117,28 @@ function AHCC:Reset()
 end
 
 function AHCC:Sort(sortOrder)
+
     local BRF = AuctionHouseFrame.BrowseResultsFrame
-    
     local searchContext = AuctionHouseFrame:GetCategorySearchContext();
     local sorts = AuctionHouseFrame:GetSortsForContext(searchContext)
+
+    if not _.isTable(sorts) then return end
+    
+    if  sorts[1] == nil then 
+        sorts[1] = { reverseSort = false, sortOrder = 1}
+    end
 
     if #sorts == 1 then 
         sorts[2] = sorts[1]
     end
 
     local function getKey(idx)
-        local enum = sorts[idx].sortOrder
-        local findK = _.findKey(Enum.AuctionHouseSortOrder,  function(v)
-            return v == enum
-        end)
-
-        return findK
+        return _.findKey(Enum.AuctionHouseSortOrder, function(v) return v == sorts[idx].sortOrder end)
     end
 
-    local priComp = sorts[1].reverseSort and _.lt or _.gt
-    local comp = sorts[2].reverseSort and _.lt or _.gt
+
+    local priComp = (sorts[1] and sorts[1].reverseSort) and _.lt or _.gt
+    local comp = (sorts[2] and sorts[2].reverseSort) and _.lt or _.gt
 
     local k1 = getKey(1)
     local k2 = getKey(2)

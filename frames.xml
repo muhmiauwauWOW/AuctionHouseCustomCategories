@@ -6,6 +6,20 @@
    <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 
 
+   <Frame name="AHCCTableCellMoneyTemplate" mixin="AHCCTableCellMoneyMixin" inherits="AuctionHouseTableMoneyDisplayTemplate" virtual="true" >
+      <Layers>
+			<Layer level="BACKGROUND">
+				<FontString parentKey="Text" inherits="Number14FontGray" justifyH="RIGHT" setAllPoints="true"/>
+			</Layer>
+		</Layers>
+      <Scripts>
+         <OnLoad method="OnLoad"/>
+      </Scripts>
+   </Frame>
+
+
+
+
    <Button name="AHCCReplicateButton" parent="AuctionHouseFrame" mixin="AHCCReplicateButtonMixin" inherits="UIPanelButtonTemplate" text="Perform Price Scan" hidden="true">
       <Size x="160" y="26"/>
       <Anchors>

@@ -32,7 +32,7 @@ end
 
 
 
--- return to BrowseResultsFrame on category select 
+--return to BrowseResultsFrame on category select 
 local AuctionHouseCategoriesListMixin_OnFilterClicked =  AuctionHouseFrame.CategoriesList.OnFilterClicked
 function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
     local displaymode =  _.last(AuctionHouseFrame:GetDisplayMode())
@@ -60,7 +60,9 @@ function AuctionHouseFrame.CategoriesList:OnFilterClicked(button, buttonName)
                 AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
             end
         else
+            AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
             AuctionHouseFrame.SearchBar:StartSearch()
+
         end
     else
         AuctionHouseCategoriesListMixin_OnFilterClicked(self, button, buttonName)
@@ -78,13 +80,11 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
     end
 
     if cdata and cdata:HasFlag("AHCC") then
-        AHCC.Nav = cdata.AHCC_Nav
+        AHCC.Nav = cdata.AHCC_NAV
         AHCC.isInCustomCategory = true
         AHCCQualitySelectFrame:Show()
-        AHCC:checkReplicateButton()
+        AHCCReplicateButton:check()
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
-        AHCC.viewConfig = cdata.AHCC_config
-        
         -- prevent double execution
         if not forceSelectionIntoView then 
             AHCC:performSearch()
@@ -98,8 +98,6 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
 end)
 
 
-
-
 -- overwrites
 local AuctionHouseSearchBarMixin_StartSearch = AuctionHouseFrame.SearchBar.StartSearch
 function AuctionHouseFrame.SearchBar:StartSearch()
@@ -111,11 +109,13 @@ function AuctionHouseFrame.SearchBar:StartSearch()
     end
 end
 
+g_auctionHouseSortsBySearchContext[300] = g_auctionHouseSortsBySearchContext[300] or {{ sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false }}
+
 local AuctionHouseUtil_ConvertCategoryToSearchContext = AuctionHouseUtil.ConvertCategoryToSearchContext
 function AuctionHouseUtil.ConvertCategoryToSearchContext(selectedCategoryIndex)
     if selectedCategoryIndex then 
-        if AuctionCategories[selectedCategoryIndex].AHCC_Id then 
-            return AuctionCategories[selectedCategoryIndex].AHCC_Id + 300
+        if AuctionCategories[selectedCategoryIndex] then 
+            return 300
         end
     end
     return AuctionHouseUtil_ConvertCategoryToSearchContext(selectedCategoryIndex)

@@ -6,6 +6,21 @@ local LibAHTab = LibStub("LibAHTab-1-0")
 
 
 AHCCQualitySelectMixin = {}
+
+function AHCCQualitySelectMixin:Init(owner)
+	self.owner = owner;
+end
+
+function AHCCQualitySelectMixin:GetOwner()
+	return self.owner;
+end
+
+function AHCCQualitySelectMixin:GetAuctionHouseFrame()
+	return self:GetOwner():GetAuctionHouseFrame();
+end
+
+
+
 function AHCCQualitySelectMixin:OnLoad()
     self:SetParent(AuctionHouseFrame.SearchBar)
 end
@@ -49,6 +64,29 @@ AuctionHouseTableCellStat2Mixin = CreateFromMixins(AuctionHouseTableCellStatMixi
 function AuctionHouseTableCellStat2Mixin:Populate(rowData, dataIndex)
     self:updateText(rowData.Stat2)
 end
+
+
+
+
+-- Stat2 column
+AHCCTableCellMoneyMixin = CreateFromMixins(AuctionHouseTableCellStatMixin);
+
+
+function AHCCTableCellMoneyMixin:OnLoad(owner)
+    self.MoneyDisplay:ClearAllPoints();
+	self.MoneyDisplay:SetPoint("LEFT");
+
+    self.Text:SetText(L["price_too_old"])
+end
+
+function AHCCTableCellMoneyMixin:Populate(rowData, dataIndex)
+    local ageCheck = rowData.minPrice > -1 
+    self.MoneyDisplay:SetShown(ageCheck)
+    self.Text:SetShown(not ageCheck)
+    self.MoneyDisplay:SetAmount(rowData.minPrice);
+end
+
+
 
 
 
@@ -101,5 +139,19 @@ function AHCCReplicateButtonMixin:OnClick()
     else
         AHCC.isReplicateRunning = true
         C_AuctionHouse.ReplicateItems()
+    end
+end
+
+
+function AHCCReplicateButtonMixin:check()
+    if AHCC.isReplicateRunning then 
+        self:Hide()
+        return 
+    end
+    
+    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
+        self:Show()
+    else
+        self:Hide()
     end
 end

@@ -8,7 +8,5 @@
 ## LoadOnDemand: 1
 ## LoadWith: AuctionHouseCustomCategories
 
-enchants.lua
-gems.lua
-consumables.lua
-optionalreagents.lua
+categories.lua
+items.lua

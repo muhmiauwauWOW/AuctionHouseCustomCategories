@@ -4,29 +4,6 @@ local L, _ = AHCC:GetLibs()
 
 AHCCData = {}
 
-
-AHCCData.Items = {}
-
-function AHCCData:addItem(id)
-    if not _.get(self.Items, {id}) then 
-        table.insert(self.Items, id)
-    end
-end
-
-
-function AHCCData:Init()
-    self.data = {}
-end
-
-function AHCCData:set(data)
-    self.data = data
-end
-
-function AHCCData:get()
-    return self.data or {}
-end
-
-
 function AHCCData:checkVersion(obj)
     if obj.versionStart and obj.versionEnd then
         return (tonumber(obj.versionStart) <= tonumber(AHCC.gameVersion)) and (tonumber(obj.versionEnd) > tonumber(AHCC.gameVersion))
@@ -40,158 +17,109 @@ function AHCCData:checkVersion(obj)
 end
 
 
-function AHCCData:add(dataArg, config)
-    if not config then return end
-    if not config.nav then return end
-    if not AHCCData:checkVersion(config) then return end
-
-    if GetExpansionLevel() == config.expansionLevel then
-        local data = self:get()
-        if config.mode == "insert" then 
-
-            local nav = {}
-            _.forEach(config.nav, function(entry)
-                tinsert(nav, entry)
-                tinsert(nav, "subCategories")
-            end)
-
-            if #config.nav == 0 then 
-                tAppendAll(data, dataArg)
-            else            
-                local position = _.get(data, nav)
-                if not position then return end
-                tAppendAll(position, dataArg)
-            end
+function AHCCData:add(data, mode)
+    if data.Config then 
+        if not AHCCData:checkVersion(data.Config) then return end
+        local function checkExpansionLevel(expansionLevel)
+            if not expansionLevel then return true end
+            return GetExpansionLevel() == expansionLevel
         end
 
-        AHCCData:set(data)
-    end
-end
-
-function AHCCData:getResultLine(idx, id, entry)
-
-    local minPrice = AHCCItems:getPrice(id)
-
-    AHCCItems:setPrice(id, minPrice)
-
-    self:addItem(id)
-
-    local Stat1 = entry.Stat1
-     if not entry.Stat1 then 
-        if entry.subSubCategory then 
-            Stat1 = entry.subSubCategory
-        else
-            Stat1 = entry.subCategory
-        end
+        if not checkExpansionLevel(data.Config.expansionLevel) then return end
     end
 
-    return {
-        itemKey = {
-            itemLevel = 0,
-            itemSuffix = 0,
-            itemID = id,
-            balltePetSpeciesID = 0
-        },
-        Name = C_Item.GetItemInfo(id),
-        Quality = idx,
-        containsOwnerItem=false,
-        totalQuantity = 1,
-        minPrice = minPrice,
-        Price = minPrice,
-        Stat1 = Stat1,
-        Stat2 = entry.Stat2 or 0,
-        nav = { entry.category, entry.subCategory,  entry.subSubCategory }
-    }
-
-end
-
-
-function AHCCData:formatToResultLines(entry)
-    local table = {}
-    if type(entry.id) == "table" then 
-        table = _.map(entry.id, function(item, idx)
-            return self:getResultLine(idx, item, entry)
-        end)
-    else
-        table = {self:getResultLine(0, entry.id, entry)}
+    local function createId(parent, name, entry)
+        if entry.id then return entry.id end
+        local id = parent .. " " .. name
+        return id:gsub(" ", "_")
     end
-
-    return table
-end
-
-function AHCCData:prepareCategoryData(categories, config, depth)
-    config = config or {}
-    depth = depth or 0
-    depth = depth + 1
-
-    return _.map(categories, function(categoryEntry, categoryId)
-        -- add sortsID
-        if depth == 1 then 
-            categoryEntry.sortsID = categoryId + 300
-        end
-
-        --config
-        categoryEntry.config = categoryEntry.config or {}
-        _.forEach(config, function(value, key)
-            if not categoryEntry.config[key] then 
-                categoryEntry.config[key] = value
-            end
-        end)
     
-        if categoryEntry.subCategories then
-            local conf = categoryEntry.config or config
-            categoryEntry.subCategories = self:prepareCategoryData(categoryEntry.subCategories, conf, depth)
-        end
+    data.id = data.name
 
-        -- insert Data
-        if  categoryEntry.Items then
+    if data.Config.root then 
+        print(data.Config.root)
+        data.IsEnabled = false
+        data.parent = data.Config.root
+    end
 
-            categoryEntry.Items = _.filter(categoryEntry.Items, function(entry)
-                return AHCCData:checkVersion(entry)
-            end)
-            categoryEntry.Items = _.map(categoryEntry.Items, function(entry)
-                return self:formatToResultLines(entry)
-            end)
-            categoryEntry.Items = _.flatten(categoryEntry.Items)
-        end
+    -- categories
+    local function addCategoriesRecursiv(data)
+        local root = data.IsEnabled and true or false
+        _.forEach(data.Categories, function(entry)
 
-        local cols = {"Price", "Name"}
+            if data.Config and data.Config.root then 
+                data.id = data.Config.root
+            end
 
-        if categoryEntry.config.columns then 
-            tAppendAll(cols, categoryEntry.config.columns)
-        else
-            tinsert(cols, "Quality")
-        end
+            local id = createId(data.id, entry.name, entry)
+            entry.id = id
+            entry.parent = (root == true) and "root" or data.id
 
-        categoryEntry.config.columns = cols
+          
+            if mode == "merge" then 
+                id = AHCCCategory:merge(entry)
+            else
+                AHCCCategory:add(entry)
+            end
 
-        return categoryEntry
-    end)
+            if entry.categories then
+                local e = {
+                    id = id,
+                    name = entry.name,
+                    parent = entry.parent,
+                    Categories = entry.categories
+                }
+                addCategoriesRecursiv(e)
+            end
+        end)
+    end
+
+    addCategoriesRecursiv(data)
+
+
+
+   -- AHCCItems
+
+    local function addItemsRecursiv(data, parent)        
+        _.forEach(data, function(entry, key)
+            if _.isString(key) then
+                addItemsRecursiv(entry, key)
+                return
+            end
+
+            entry.nav = parent;
+            AHCCItems:add(entry)
+        end)
+    end
+
+    addItemsRecursiv(data.Items, data.id)
+
 end
 
 
-function AHCCData:createCategory(Data)
-    local categoryEntries = AHCCData:prepareCategoryData(Data)
-    return _.map(categoryEntries, function(categoryEntry) 
-        return AHCCCategoryList:createCategory(categoryEntry)
-    end)
+
+
+
+
+
+AHCC_DATA = AHCC_DATA or {}
+
+local DataTable = {}
+
+AHCC_DATA["OnEnable"] = function(self)
+   -- AHCCData:add(self)
+    table.insert(DataTable, {
+        data = self
+    })
+    self.loaded = true
+    AHCC_DATA__checkModules()
 end
 
-
-
-
-AHCC_DATA = {
-    OnEnable = function(self)
-        AHCCData:add(self.Categories, self.Config)
-        self.loaded = true
-        AHCC_DATA__checkModules()
-    end,
-    OnDisable = function(self)
-        AHCCData:add(self.Categories, self.Config)
-        self.loaded = false
-        AHCC_DATA__checkModules()
-    end 
-}
+AHCC_DATA["OnDisable"] = function(self)
+  -- AHCCData:add(self.Categories, self.Config)
+    self.loaded = false
+    AHCC_DATA__checkModules()
+end 
 
 AHCC_DATA__ticker = nil
 
@@ -206,10 +134,98 @@ function AHCC_DATA__checkModules()
 	end
 
     if check then
-        AHCC_DATA__ticker = C_Timer.NewTimer(0.1, function()
+        AHCC_DATA__ticker = C_Timer.NewTimer(0.01, function()
             AHCC_DATA__ticker:Cancel()
+            local insertData =_.filter(DataTable, function(data)
+                return data.data.Config.mode == nil or data.data.Config.mode == "insert"
+            end)
+
+            _.forEach(insertData, function(data)
+                AHCCData:add(data.data, "insert")
+            end)
+
+            local mergeData =_.filter(DataTable, function(data)
+                return  data.data.Config.mode == "merge"
+            end)
+
+            _.forEach(mergeData, function(data)
+                AHCCData:add(data.data, "merge")
+            end)
+
             AHCCCategoryList:Init()
             AHCCCategoryList:update()
+
+            --@do-not-package@
+                if UnitName("player") == "Muhmiauwaudk" then
+                    --AHCCTest.checkData()
+
+                end
+            --@end-do-not-package@
         end)
     end
 end
+
+
+
+
+
+--@do-not-package@
+    local function deep_equals(o1, o2, ignore_mt)
+        -- same object
+        if o1 == o2 then return true end
+    
+        local o1Type = type(o1)
+        local o2Type = type(o2)
+        --- different type
+        if o1Type ~= o2Type then return false end
+        --- same type but not table, already compared above
+        if o1Type ~= 'table' then return false end
+    
+        -- use metatable method
+        if not ignore_mt then
+            local mt1 = getmetatable(o1)
+            if mt1 and mt1.__eq then
+                --compare using built in method
+                return o1 == o2
+            end
+        end
+    
+        -- iterate over o1
+        for key1, value1 in pairs(o1) do
+            local value2 = o2[key1]
+            if value2 == nil or deep_equals(value1, value2, ignore_mt) == false then
+                return false
+            end
+        end
+    
+        --- check keys in o2 but missing from o1
+        for key2, _ in pairs(o2) do
+            if o1[key2] == nil then return false end
+        end
+        return true
+    end
+
+AHCCTest = {}
+
+function AHCCTest.checkData()
+
+
+    -- local obj1 = {  a = "a"}
+    -- local obj2 = {  a = "a"}
+
+    local obj1 = AHCCCategory:get()
+    local obj2 = AHCC.TestObj
+
+    _.debug(obj1)
+
+    if deep_equals(obj1, obj2) == false then 
+        print(RED_FONT_COLOR:WrapTextInColorCode("#### Test failed"))
+    else
+        print(GREEN_FONT_COLOR:WrapTextInColorCode("#### Test successfull"))
+    end
+
+end
+
+
+
+--@end-do-not-package@

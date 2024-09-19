@@ -14,7 +14,7 @@ end
 
 Data.Items = {
     [getCategoryId("enchants", "SOCKETS")] = {
-       { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
+        { ["id"] = 213777 }, -- Magnificent Jeweler's Setting
     },
     [getCategoryId("enchants", "SHOULDER")] = {
         { ["id"] = { 200614, 200615, 200616 } }, -- Illusory Adornment: Fire
@@ -201,12 +201,12 @@ Data.Items = {
         { ["id"] = { 221938, 221939, 221940 } }, -- Concealed Chaos Module
         { ["id"] = { 221941, 221942, 221943 } }, -- Energy Redistribution Beacon
         { ["id"] = { 219495, 219496, 219497 } }, -- Blessed Weapon Grip
-        { ["id"] = { 222452, 222453, 222454 } }, -- Echoing Impact Seal
-        { ["id"] = { 222455, 222456, 222457 } }, -- Arathor Armor Patch
+        -- { ["id"] = { 222452, 222453, 222454 } }, -- Echoing Impact Seal
+        -- { ["id"] = { 222455, 222456, 222457 } }, -- Arathor Armor Patch
         { ["id"] = { 219504, 219505, 219506 } }, -- Writhing Armor Banding
         { ["id"] = { 222868, 222869, 222870 } }, -- Dawnthread Lining
         { ["id"] = { 222871, 222872, 222873 } }, -- Duskthread Lining
-        { ["id"] = { 222389, 221622, 221623 } }, -- Duskthread Lining
+        -- { ["id"] = { 222389, 221622, 221623 } }, -- Duskthread Lining
         { ["id"] = 228921 }, -- Griftah's Heavy-Duty Embellishing Powder
     }
 }

@@ -38,6 +38,8 @@ L["SOCKETS"] = "Sockets"
 L["TemporaryEnhancements"] = "Temporary Enhancements"
 
 
+L["pricescan_inProgress"] = "Price Scan in progress"
+
 L["price_too_old"] = "Price data too old"
 
 

@@ -118,40 +118,37 @@ end
 
 
 
+
+
+
+
+
+
+
 AHCCReplicateButtonMixin = {}
 
 
 function AHCCReplicateButtonMixin:OnLoad()
-    C_Timer.After(2, function()
-        if _.size(AHCCData.Items) * 0.8 > _.size(_.filter(AHCC.db.global.prices, function(e) return _.lt(1, e) end)) then
-            AHCC.db.global.lastReplicateDate = 0
-        end
-    end)
+    self.scanFrame = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
+
+    -- C_Timer.After(2, function()
+    --     if _.size(AHCCData.Items) * 0.8 > _.size(_.filter(AHCC.db.global.prices, function(e) return _.lt(1, e) end)) then
+    --         AHCC.db.global.lastReplicateDate = 0
+    --     end
+    -- end)
 end
 
 
 function AHCCReplicateButtonMixin:OnClick()
     self:Hide()
-    if LibAHTab:DoesIDExist("AuctionatorTabs_Auctionator") then
-        LibAHTab:SetSelected("AuctionatorTabs_Auctionator")
-        AuctionatorScanButtonMixin:OnClick()
-        AHCC.db.global.lastReplicateDate = GetServerTime()
-    else
-        AHCC.isReplicateRunning = true
-        C_AuctionHouse.ReplicateItems()
-    end
+    self.scanFrame:Show()
 end
 
 
-function AHCCReplicateButtonMixin:check()
-    if AHCC.isReplicateRunning then 
-        self:Hide()
-        return 
-    end
-    
-    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-        self:Show()
+function AHCCReplicateButtonMixin:check()    
+    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < C_DateAndTime.GetServerTimeLocal() then 
+       self:Show()
     else
-        self:Hide()
+       self:Hide()
     end
 end

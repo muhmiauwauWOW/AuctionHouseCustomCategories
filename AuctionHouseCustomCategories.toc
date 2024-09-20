@@ -27,6 +27,7 @@ AHCC.lua
 config.lua
 overwrites.lua
 
+AHCCPriceScan.lua
 mixins.lua
 frames.xml
 
@@ -36,3 +37,4 @@ AHCCItems.lua
 AHCCCategory.lua
 AHCCData.lua
 AHCCCategoryList.lua
+

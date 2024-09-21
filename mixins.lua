@@ -130,12 +130,6 @@ AHCCReplicateButtonMixin = {}
 
 function AHCCReplicateButtonMixin:OnLoad()
     self.scanFrame = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
-
-    -- C_Timer.After(2, function()
-    --     if _.size(AHCCData.Items) * 0.8 > _.size(_.filter(AHCC.db.global.prices, function(e) return _.lt(1, e) end)) then
-    --         AHCC.db.global.lastReplicateDate = 0
-    --     end
-    -- end)
 end
 
 
@@ -146,7 +140,8 @@ end
 
 
 function AHCCReplicateButtonMixin:check()    
-    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < C_DateAndTime.GetServerTimeLocal() then 
+function AHCCReplicateButtonMixin:check()
+    if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
        self:Show()
     else
        self:Hide()

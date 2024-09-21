@@ -28,7 +28,7 @@ AHCC.searchResultTable = nil
 AHCC.isReplicateRunning = false
 
 function AHCC:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("AHCCDB", DBdefaults, true)
+    self.db = LibStub("AceDB-3.0"):New("AHCCDB2", DBdefaults, true)
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()

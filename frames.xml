@@ -19,7 +19,7 @@
 
 
 
-   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AuctionHouseFrame" enableMouse="true" mixin="AHCCPriceScanMixin" virtual="true">
+   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AuctionHouseFrame" enableMouse="true" hidden="true" mixin="AHCCPriceScanMixin" virtual="true">
       <Size x="160" y="26"/>
       <Anchors>
          <Anchor point="TOPLEFT" x="3" y="-3"/>

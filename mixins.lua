@@ -138,8 +138,6 @@ function AHCCReplicateButtonMixin:OnClick()
     self.scanFrame:Show()
 end
 
-
-function AHCCReplicateButtonMixin:check()    
 function AHCCReplicateButtonMixin:check()
     if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
        self:Show()

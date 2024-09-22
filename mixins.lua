@@ -92,7 +92,7 @@ end
 
 AHCCQualitySelectButtonMixin = {}
 
-function AHCCQualitySelectButtonMixin:OnLoad()
+function AHCCQualitySelectButtonMixin:OnShow()
     self:SetAtlas(self.iconAtlas, AHCC.Config.ProfessionsQualityIconSize);
     SquareIconButtonMixin.OnLoad(self)
     self.normalTexture = self:GetNormalTexture()

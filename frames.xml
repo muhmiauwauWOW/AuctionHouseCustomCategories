@@ -69,7 +69,7 @@
                <KeyValue key="tier" value="1" type="number"/>
             </KeyValues>
             <Scripts>
-               <OnLoad method="OnLoad"/>
+               <OnShow method="OnShow"/>
                <OnClick method="OnClick"/>
             </Scripts>
              <Anchors>
@@ -82,7 +82,7 @@
                <KeyValue key="tier" value="2" type="number"/>
             </KeyValues>
             <Scripts>
-               <OnLoad method="OnLoad"/>
+               <OnShow method="OnShow"/>
                <OnClick method="OnClick"/>
             </Scripts>
             <Anchors>
@@ -95,7 +95,7 @@
                <KeyValue key="tier" value="3" type="number"/>
             </KeyValues>
             <Scripts>
-               <OnLoad method="OnLoad"/>
+               <OnShow method="OnShow"/>
                <OnClick method="OnClick"/>
             </Scripts>
             <Anchors>

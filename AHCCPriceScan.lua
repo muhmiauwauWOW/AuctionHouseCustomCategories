@@ -10,10 +10,10 @@ end
 function AHCCPriceScanMixin:OnShow()
     self:RegisterEvent("AUCTION_HOUSE_BROWSE_RESULTS_UPDATED");
     local items = AHCCItems:getAll()
-    self.chunks = _.chunk(items, 80)
+    self.chunks = _.chunk(items, 50)
     self.progress = 0
     self.total = #self.chunks
-
+    
     self:Perform()
 
     self:TickerFn()
@@ -64,6 +64,11 @@ function AHCCPriceScanMixin:Perform()
         {sortOrder = Enum.AuctionHouseSortOrder.Price, reverseSort = false},
         {sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false},
     }
+
+
+    --@do-not-package@
+       -- DevTool:AddData(ItemKeys,  self.progress)
+    --@end-do-not-package@
 
     C_AuctionHouse.SearchForItemKeys(ItemKeys, sorts)
 end

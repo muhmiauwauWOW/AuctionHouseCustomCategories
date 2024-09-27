@@ -130,6 +130,7 @@ AHCCReplicateButtonMixin = {}
 
 function AHCCReplicateButtonMixin:OnLoad()
     self.scanFrame = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
+    self:SetParent(AuctionHouseFrame.BrowseResultsFrame)
 end
 
 

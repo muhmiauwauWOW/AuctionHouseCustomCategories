@@ -161,17 +161,22 @@ Data.Items = {
         { ["id"] = { 212266, 212267, 212268 } }, -- Potion of the Reborn Cheetah
     }
     ,[getCategoryId("consumables", "Food")] = {
+        { ["id"] = 222710 }, -- Meat and Potatoes
+        { ["id"] = 222711 }, -- Rib Stickers
+        { ["id"] = 222712 }, -- Sweet and Sour Meatballs
+        { ["id"] = 222713 }, -- Tender Twilight Jerky
+        { ["id"] = 222720 }, -- The Sushi Special
+        { ["id"] = 222724 }, -- Sizzling Honey Roast
+        { ["id"] = 222725 }, -- Mycobloom Risotto
+        { ["id"] = 222726 }, -- Stuffed Cave Peppers
+        { ["id"] = 222727 }, -- Angler's Delight
+        { ["id"] = 222728 }, -- Beledar's Bounty
+        { ["id"] = 222729 }, -- Empress' Farewell
+        { ["id"] = 222730 }, -- Jester's Board
+        { ["id"] = 222731 }, -- Outsider's Provisions
+        { ["id"] = 222732 }, -- Feast of the Divine Day
         { ["id"] = 222733 }, -- Feast of the Midnight Masquerade
-        { ["id"] = 222732 }, -- feast-of-the-divine-day
-        { ["id"] = 222720 }, -- the-sushi-special
-        { ["id"] = 222727 }, -- anglers-delight
-        { ["id"] = 222725 }, -- mycobloom-risotto
-        { ["id"] = 222726 }, -- stuffed-cave-peppers
-        { ["id"] = 222724 }, -- sizzling-honey-roast
-        { ["id"] = 222731 }, -- outsiders-provisions
-        { ["id"] = 222729 }, -- empress-farewell
-        { ["id"] = 222730 }, -- jesters-board
-        { ["id"] = 222735 }, -- everything-stew
+        { ["id"] = 222735 }, -- Everything Stew
     }
     ,[getCategoryId("optionalReagents", "Algari Missive", "CRITICAL_STRIKE")] = {
         { ["Stat1"] = 1, ["Stat2"] = 2, ["id"] = { 222585, 222586, 222587 } }, -- Algari Missive of the Fireflash

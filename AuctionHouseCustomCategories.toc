@@ -29,6 +29,7 @@ overwrites.lua
 
 AHCCPriceScan.lua
 mixins.lua
+AHCCBrowseResultsMixin.lua
 frames.xml
 
 

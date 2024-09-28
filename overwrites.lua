@@ -87,13 +87,28 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         -- prevent double execution
         if not forceSelectionIntoView then 
+            AuctionHouseFrame.BrowseResultsFrame:Hide()
+            AHCCBrowseResultsFrame:Show()
             AHCC:performSearch()
         end
     else
         AHCC.isInCustomCategory = false
         AHCCQualitySelectFrame:Hide()
         AHCCReplicateButton:Hide()
+        AHCCBrowseResultsFrame:Hide()
         AuctionHouseFrame.SearchBar.FilterButton:Show()
+
+        if cdata and cdata:HasFlag("WOW_TOKEN_FLAG") then return end
+        AuctionHouseFrame.BrowseResultsFrame:Show()
+    end
+end)
+
+
+
+AuctionHouseFrame.CommoditiesBuyFrame.BackButton:HookScript("OnClick" , function()
+    if AHCC.isInCustomCategory then
+        AuctionHouseFrame.BrowseResultsFrame:Hide()
+        AHCCBrowseResultsFrame:Show()
     end
 end)
 

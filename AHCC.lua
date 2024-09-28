@@ -32,9 +32,12 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
+
+    AHCC:Init()
 end 
 
-
+function AHCC:Init()
+end
 
 
 local getResultsObj = function(nav)
@@ -68,57 +71,29 @@ function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
 end
 
 
-
-
-function GetBrowseListLayout(AHCC, owner, itemList)
-	local function LayoutBrowseListTableBuilder(tableBuilder)
-		tableBuilder:SetColumnHeaderOverlap(2);
-		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
-
-        _.forEach(AHCCCategory.config:getColumns(AHCC.Nav), function(colName)
-            if colName == "Price" then 
-                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate", "ddd");
-            elseif colName == "Name" then 
-                local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
-                nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
-            else
-                AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
-            end
-        end)
-	end
-
-	return LayoutBrowseListTableBuilder;
-end
-
-
 function AHCC:performSearch()
     AHCCReplicateButton:check()
-    local BRF = AuctionHouseFrame.BrowseResultsFrame
     AHCC:Reset()
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
 
-
     if AHCC.searchResultTable then
-        BRF.searchStarted = true;
-        BRF.ItemList:SetRefreshCallback(nil)
-        BRF.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, BRF, BRF.ItemList));
-        BRF.tableBuilderLayoutDirty = true;
-        BRF.browseResults = AHCC.searchResultTable;
+        AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
         AHCC:Sort()
     end
 end
 
 function AHCC:Reset()
-    local BRF = AuctionHouseFrame.BrowseResultsFrame
+    local BRF = AHCCBrowseResultsFrame
     BRF:Reset()
     BRF.headers = {}
     BRF.browseResults = {}
     BRF.ItemList:DirtyScrollFrame();
+
 end
 
 function AHCC:Sort(sortOrder)
 
-    local BRF = AuctionHouseFrame.BrowseResultsFrame
+    local BRF = AHCCBrowseResultsFrame
     local searchContext = AuctionHouseFrame:GetCategorySearchContext();
     local sorts = AuctionHouseFrame:GetSortsForContext(searchContext)
 

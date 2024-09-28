@@ -80,10 +80,11 @@ function AHCCTableCellMoneyMixin:OnLoad(owner)
 end
 
 function AHCCTableCellMoneyMixin:Populate(rowData, dataIndex)
-    local ageCheck = rowData.minPrice > -1 
+    local ageCheck = rowData.minPrice and rowData.minPrice > -1 or false
+    local price = rowData.minPrice or 0
     self.MoneyDisplay:SetShown(ageCheck)
     self.Text:SetShown(not ageCheck)
-    self.MoneyDisplay:SetAmount(rowData.minPrice);
+    self.MoneyDisplay:SetAmount(price);
 end
 
 
@@ -125,6 +126,10 @@ end
 
 
 
+
+
+
+
 AHCCReplicateButtonMixin = {}
 
 
@@ -147,3 +152,11 @@ function AHCCReplicateButtonMixin:check()
     --    self:Hide()
     -- end
 end
+
+
+
+
+
+
+
+

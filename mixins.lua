@@ -1,10 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
-local LibAHTab = LibStub("LibAHTab-1-0")
-
-
-
 AHCCQualitySelectMixin = {}
 
 function AHCCQualitySelectMixin:Init(owner)

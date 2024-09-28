@@ -62,12 +62,6 @@ end
 
 
 
-function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
-    if not _.has(AHCC.Config.TableColums, {key}) then return end
-    local colConfig = AHCC.Config.TableColums[key]
-    local column = tableBuilder:AddFixedWidthColumn(owner, colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[key], string.format("AuctionHouseTableCell%sTemplate", key));
-    column:GetHeaderFrame():SetText(colConfig.name);
-end
 
 
 function AHCC:performSearch(refresh)
@@ -78,6 +72,5 @@ function AHCC:performSearch(refresh)
         AHCCBrowseResultsFrame:Refresh(AHCC.searchResultTable)
         return 
     end
-
     AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
 end

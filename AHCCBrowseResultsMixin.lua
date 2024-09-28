@@ -1,9 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
-local LibAHTab = LibStub("LibAHTab-1-0")
-
-
 
 local AuctionHouseSortOrderState = tInvert({
 	"None",
@@ -13,7 +10,16 @@ local AuctionHouseSortOrderState = tInvert({
 	"Reversed",
 });
 
-function GetBrowseListLayout(AHCC, owner, itemList)
+
+
+local function AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
+    if not _.has(AHCC.Config.TableColums, {key}) then return end
+    local colConfig = AHCC.Config.TableColums[key]
+    local column = tableBuilder:AddFixedWidthColumn(owner, colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[key], string.format("AuctionHouseTableCell%sTemplate", key));
+    column:GetHeaderFrame():SetText(colConfig.name);
+end
+
+local function GetBrowseListLayout(AHCC, owner, itemList)
 
 	local function LayoutBrowseListTableBuilder(tableBuilder)
 		tableBuilder:SetColumnHeaderOverlap(2);
@@ -26,7 +32,7 @@ function GetBrowseListLayout(AHCC, owner, itemList)
                 local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                 nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
             else
-                AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
+                AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
             end
         end)
 	end
@@ -39,27 +45,23 @@ end
 AHCCBrowseResultsMixin  = CreateFromMixins(AuctionHouseSortOrderSystemMixin);
 
 function AHCCBrowseResultsMixin:SetupTableBuilder()
-    -- self.ItemList:SetTableBuilderLayout(AuctionHouseTableBuilder.GetBrowseListLayout(self, self.ItemList, extraInfoColumn));
-
     self.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, self, self.ItemList));
+
 	self.tableBuilderLayoutDirty = false;
 end
 
 function AHCCBrowseResultsMixin:OnLoad()
-
     self:SetParent(AuctionHouseFrame.CategoriesList)
-
 
     self:SetFrameLevel(10)
     AuctionHouseSortOrderSystemMixin.OnLoad(self);
-
 
 	self.ItemList:SetLineTemplate("AuctionHouseFavoritableLineTemplate");
 
 	self.ItemList:SetSelectionCallback(function(browseResult)
 		AuctionHouseFrame:SelectBrowseResult(browseResult);
         self:Hide()
-		return false; -- browse lines are never selected.
+		return false;
 	end);
 
 	self.ItemList:SetLineOnEnterCallback(AuctionHouseUtil.LineOnEnterCallback);

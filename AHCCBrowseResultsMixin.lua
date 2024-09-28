@@ -5,6 +5,14 @@ local LibAHTab = LibStub("LibAHTab-1-0")
 
 
 
+local AuctionHouseSortOrderState = tInvert({
+	"None",
+	"PrimarySorted",
+	"PrimaryReversed",
+	"Sorted",
+	"Reversed",
+});
+
 function GetBrowseListLayout(AHCC, owner, itemList)
 	local function LayoutBrowseListTableBuilder(tableBuilder)
 		tableBuilder:SetColumnHeaderOverlap(2);
@@ -27,7 +35,7 @@ end
 
 
 
-AHCCBrowseResultsMixin = {}
+AHCCBrowseResultsMixin  = CreateFromMixins(AuctionHouseSortOrderSystemMixin);
 
 function AHCCBrowseResultsMixin:SetupTableBuilder()
     -- self.ItemList:SetTableBuilderLayout(AuctionHouseTableBuilder.GetBrowseListLayout(self, self.ItemList, extraInfoColumn));
@@ -40,6 +48,7 @@ function AHCCBrowseResultsMixin:OnLoad()
 
 
     self:SetFrameLevel(10)
+    AuctionHouseSortOrderSystemMixin.OnLoad(self);
 
 
 	self.ItemList:SetLineTemplate("AuctionHouseFavoritableLineTemplate");
@@ -55,14 +64,14 @@ function AHCCBrowseResultsMixin:OnLoad()
 
     self:SetupTableBuilder();
 
+    
+
     self.searchStarted =  true
     self.browseResults = {}
 
     
-
-
 	local function BrowseListSearchStarted()
-		return self.searchStarted, "lalaal";
+		return self.searchStarted, AUCTION_HOUSE_BROWSE_FAVORITES_TIP;
 	end
 
 	local function BrowseListGetNumEntries()
@@ -78,10 +87,7 @@ function AHCCBrowseResultsMixin:OnLoad()
 	end
 
 	self.ItemList:SetDataProvider(BrowseListSearchStarted, BrowseListGetEntry, BrowseListGetNumEntries, hasFullResultsFun);
-
 	self:Reset();
-
-
 end
 
 function AHCCBrowseResultsMixin:Reset()
@@ -92,12 +98,81 @@ function AHCCBrowseResultsMixin:Reset()
 end
 
 function AHCCBrowseResultsMixin:Update(items)
-    
+    self.sortOrder = 1 --AHCC.db.global.sort[1].sortOrder
     self.ItemList:SetRefreshCallback(nil)
     self.searchStarted = true;
     self.browseResults = items
     self:SetupTableBuilder();
+    -- self:UpdateHeaders();
+    self:Sort();
     self.ItemList:Reset();
+    self.ItemList:DirtyScrollFrame();
+end
+
+local function GetSortOrderState(sortOrder)
+	local sorts = AHCC.db.global.sort
+	if not sorts then
+		return AuctionHouseSortOrderState.None;
+	end
+
+	for i, sortType in ipairs(sorts) do
+		if sortType.sortOrder == sortOrder then
+			if sortType.reverseSort then
+				return (i == 1) and AuctionHouseSortOrderState.PrimaryReversed or AuctionHouseSortOrderState.Reversed;
+			else
+				return (i == 1) and AuctionHouseSortOrderState.PrimarySorted or AuctionHouseSortOrderState.Sorted;
+			end
+		end
+	end
+
+	return AuctionHouseSortOrderState.None;
+end
+
+function AHCCBrowseResultsMixin:SetSortOrder(sortOrder)
+    local sort1 = AHCC.db.global.sort[1]
+    sort1.reverseSort = sort1.sortOrder == sortOrder and not sort1.reverseSort
+    sort1.sortOrder = sortOrder
+
+    AHCC.db.global.sort = {
+        sort1,
+        AHCC.db.global.sort[2]
+    }
+
+    self:Sort(sortOrder)
+	self:UpdateHeaders();
+end
+
+function AHCCBrowseResultsMixin:GetSortOrderState(sortOrder)
+	return GetSortOrderState(sortOrder)
+end
+
+function AHCCBrowseResultsMixin:Sort(sortOrder)
+    local sorts = AHCC.db.global.sort
+   
+    local function getKey(idx)
+        return _.findKey(Enum.AuctionHouseSortOrder, function(v) return v == sorts[idx].sortOrder end)
+    end
+
+    local priComp = (sorts[1] and sorts[1].reverseSort) and _.gt or _.lt
+    local comp = (sorts[2] and sorts[2].reverseSort) and _.gt or _.lt
+
+    local k1 = getKey(1)
+    local k2 = getKey(2)
+
+    table.sort(self.browseResults, function (a, b)
+        if not a[k1] then return false end
+        if not b[k1] then return false end
+
+        if #sorts == 1 then 
+            return  priComp(a[k1], b[k1])
+        else
+            if not a[k2] then return false end
+            if not b[k2] then return false end
+            return  priComp(a[k1], b[k1]) or 
+                ( a[k1] == b[k1] and comp(a[k2], b[k2]))
+        end
+    end)
+
     self.ItemList:DirtyScrollFrame();
 end
 
@@ -107,9 +182,8 @@ function AHCCBrowseResultsMixin:OnShow()
 end
 
 function AHCCBrowseResultsMixin:OnHide()
-
 end
 
 function AHCCBrowseResultsMixin:OnEvent(event, ...)
-	print("NOOO OnEvent")
+	
 end

@@ -14,6 +14,10 @@ local DBdefaults = {
     global = {
         lastReplicateDate = 0,
         prices = {},
+        sort = {
+            { reverseSort = false, sortOrder = 0 },
+            { reverseSort = false, sortOrder = 1 },
+        }
     },
     profile = {
     },
@@ -32,12 +36,8 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
 
     AHCCItems:Init()
-
-    AHCC:Init()
 end 
 
-function AHCC:Init()
-end
 
 
 local getResultsObj = function(nav)
@@ -73,67 +73,9 @@ end
 
 function AHCC:performSearch()
     AHCCReplicateButton:check()
-    AHCC:Reset()
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
 
     if AHCC.searchResultTable then
         AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
-        AHCC:Sort()
     end
 end
-
-function AHCC:Reset()
-    local BRF = AHCCBrowseResultsFrame
-    BRF:Reset()
-    BRF.headers = {}
-    BRF.browseResults = {}
-    BRF.ItemList:DirtyScrollFrame();
-
-end
-
-function AHCC:Sort(sortOrder)
-
-    local BRF = AHCCBrowseResultsFrame
-    local searchContext = AuctionHouseFrame:GetCategorySearchContext();
-    local sorts = AuctionHouseFrame:GetSortsForContext(searchContext)
-
-    if not _.isTable(sorts) then return end
-    
-    if  sorts[1] == nil then 
-        sorts[1] = { reverseSort = false, sortOrder = 1}
-    end
-
-    if #sorts == 1 then 
-        sorts[2] = sorts[1]
-    end
-
-    local function getKey(idx)
-        return _.findKey(Enum.AuctionHouseSortOrder, function(v) return v == sorts[idx].sortOrder end)
-    end
-
-
-    local priComp = (sorts[1] and sorts[1].reverseSort) and _.lt or _.gt
-    local comp = (sorts[2] and sorts[2].reverseSort) and _.lt or _.gt
-
-    local k1 = getKey(1)
-    local k2 = getKey(2)
-
-    table.sort(BRF.browseResults, function (a, b)
-        if not a[k1] then return false end
-        if not b[k1] then return false end
-
-        if #sorts == 1 then 
-            return  priComp(a[k1], b[k1])
-        else
-            if not a[k2] then return false end
-            if not b[k2] then return false end
-            return  priComp(a[k1], b[k1]) or 
-                ( a[k1] == b[k1] and comp(a[k2], b[k2]))
-        end
-    end)
-
-    BRF.ItemList:DirtyScrollFrame();
-end
-
-
-

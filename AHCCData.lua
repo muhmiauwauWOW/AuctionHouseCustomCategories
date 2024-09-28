@@ -37,7 +37,6 @@ function AHCCData:add(data, mode)
     data.id = data.name
 
     if data.Config.root then 
-        print(data.Config.root)
         data.IsEnabled = false
         data.parent = data.Config.root
     end

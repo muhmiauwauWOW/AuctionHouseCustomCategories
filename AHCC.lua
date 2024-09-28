@@ -12,7 +12,6 @@ AHCC.gameVersion = select(4, GetBuildInfo())
 
 local DBdefaults = {
     global = {
-        lastReplicateDate = 0,
         prices = {},
         sort = {
             { reverseSort = false, sortOrder = 0 },
@@ -29,13 +28,13 @@ local DBdefaults = {
 
 AHCC.Nav = nil
 AHCC.searchResultTable = nil
-AHCC.isReplicateRunning = false
 
 function AHCC:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("AHCCDB2", DBdefaults, true)
+    self.db = LibStub("AceDB-3.0"):New("AHCCDB3", DBdefaults, true)
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
-
     AHCCItems:Init()
+
+    self.PriceScan = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
 end 
 
 
@@ -71,11 +70,14 @@ function AHCC:AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
 end
 
 
-function AHCC:performSearch()
-    AHCCReplicateButton:check()
+function AHCC:performSearch(refresh)
     AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
+    if not AHCC.searchResultTable then return end
 
-    if AHCC.searchResultTable then
-        AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
+    if refresh then
+        AHCCBrowseResultsFrame:Refresh(AHCC.searchResultTable)
+        return 
     end
+
+    AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
 end

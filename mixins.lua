@@ -80,8 +80,8 @@ function AHCCTableCellMoneyMixin:OnLoad(owner)
 end
 
 function AHCCTableCellMoneyMixin:Populate(rowData, dataIndex)
-    local ageCheck = rowData.minPrice and rowData.minPrice > -1 or false
-    local price = rowData.minPrice or 0
+    local ageCheck = tonumber(rowData.minPrice) > -1 
+    local price = rowData.minPrice
     self.MoneyDisplay:SetShown(ageCheck)
     self.Text:SetShown(not ageCheck)
     self.MoneyDisplay:SetAmount(price);
@@ -116,47 +116,3 @@ function AHCCQualitySelectButtonMixin:SetState(state)
     local newTexture = state and self.normalTexture or self.disabledTexture
     self:SetNormalTexture(newTexture)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-AHCCReplicateButtonMixin = {}
-
-
-function AHCCReplicateButtonMixin:OnLoad()
-    self.scanFrame = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
-    self:SetParent(AuctionHouseFrame.BrowseResultsFrame)
-end
-
-
-function AHCCReplicateButtonMixin:OnClick()
-    self:Hide()
-    self.scanFrame:Show()
-end
-
-function AHCCReplicateButtonMixin:check()
-    self:Show()
-    -- if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-    --    self:Show()
-    -- else
-    --    self:Hide()
-    -- end
-end
-
-
-
-
-
-
-
-

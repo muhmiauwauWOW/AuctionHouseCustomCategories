@@ -3,7 +3,7 @@
 ## Notes: Adds custom categories to auction house
 ## Version: @project-version@
 ## Author: Muhmiauwau
-## SavedVariables: AHCCDB2
+## SavedVariables: AHCCDB3
 ## LoadOnDemand: 1
 ## LoadWith: Blizzard_AuctionHouseUI
 ## X-Curse-Project-ID: 898041

@@ -14,6 +14,7 @@ local AuctionHouseSortOrderState = tInvert({
 });
 
 function GetBrowseListLayout(AHCC, owner, itemList)
+
 	local function LayoutBrowseListTableBuilder(tableBuilder)
 		tableBuilder:SetColumnHeaderOverlap(2);
 		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
@@ -45,6 +46,8 @@ function AHCCBrowseResultsMixin:SetupTableBuilder()
 end
 
 function AHCCBrowseResultsMixin:OnLoad()
+
+    self:SetParent(AuctionHouseFrame.CategoriesList)
 
 
     self:SetFrameLevel(10)
@@ -102,12 +105,21 @@ function AHCCBrowseResultsMixin:Update(items)
     self.ItemList:SetRefreshCallback(nil)
     self.searchStarted = true;
     self.browseResults = items
+    self:UpdatePrices()
+
     self:SetupTableBuilder();
-    -- self:UpdateHeaders();
     self:Sort();
     self.ItemList:Reset();
     self.ItemList:DirtyScrollFrame();
 end
+
+
+function AHCCBrowseResultsMixin:Refresh(items)
+    self.browseResults = items
+    self:Sort();
+    self.ItemList:DirtyScrollFrame();
+end
+
 
 local function GetSortOrderState(sortOrder)
 	local sorts = AHCC.db.global.sort
@@ -185,5 +197,24 @@ function AHCCBrowseResultsMixin:OnHide()
 end
 
 function AHCCBrowseResultsMixin:OnEvent(event, ...)
+	
+end
+
+function AHCCBrowseResultsMixin:UpdatePrices(force)
+    local updateNeeded = force and true or false
+
+    if not force then 
+        _.forEach(self.browseResults, function(item)
+            if updateNeeded then return end
+            if item.minPrice == -1 and not updateNeeded then updateNeeded = true return end
+        end)
+    end
+
+    if not updateNeeded then return end
+
+    -- run that update 
+
+    AHCC.PriceScan.items = CopyTable(self.browseResults)
+    AHCC.PriceScan:Show()
 	
 end

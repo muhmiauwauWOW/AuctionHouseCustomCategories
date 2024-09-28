@@ -22,18 +22,11 @@
    <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AuctionHouseFrame" enableMouse="true" hidden="true" mixin="AHCCPriceScanMixin" virtual="true">
       <Size x="160" y="26"/>
       <Anchors>
-         <Anchor point="TOPLEFT" x="3" y="-3"/>
          <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
       </Anchors>
       <Layers>
 			<Layer level="OVERLAY">
 				<FontString parentKey="Text" inherits="Number14FontWhite" justifyH="CENTER" setAllPoints="true"/>
-				<Texture file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
-					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="0"/>
-						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
-					</Anchors>
-				</Texture>
 			</Layer>
 		</Layers>
       <Scripts>
@@ -43,19 +36,6 @@
          <OnEvent method="OnEvent"/>
       </Scripts>
    </Frame>
-
-
-   <Button name="AHCCReplicateButton" parent="AuctionHouseFrame" mixin="AHCCReplicateButtonMixin" inherits="UIPanelButtonTemplate" text="Perform Price Scan" hidden="true">
-      <Size x="160" y="26"/>
-      <Anchors>
-         <Anchor point="BOTTOMRIGHT" relativeKey="$parent.BrowseResultsFrame" relativePoint="BOTTOMRIGHT" x="10" y="-25"/>
-      </Anchors>
-      <Scripts>
-         <OnLoad method="OnLoad"/>
-         <OnClick method="OnClick"/>
-      </Scripts>
-   </Button>
-
 
    <Frame name="AHCCQualitySelectFrame" parent="AuctionHouseFrame" mixin="AHCCQualitySelectMixin" hidden="true">
       <Size x="80" y="23"/>
@@ -111,8 +91,9 @@
 
    <Frame name="AHCCBrowseResultsFrame" parent="AuctionHouseFrame" mixin="AHCCBrowseResultsMixin" hidden="true">
       <Anchors>
-         <Anchor point="TOPLEFT" relativeKey="$parent.BrowseResultsFrame" relativePoint="TOPLEFT" x="0" y="0"/>
-         <Anchor point="BOTTOMRIGHT" relativeKey="$parent.BrowseResultsFrame" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+         <Anchor point="TOPLEFT" relativeKey="$parent.CategoriesList" relativePoint="TOPRIGHT" x="0" y="0"/>
+         <Anchor point="BOTTOMLEFT" relativeKey="$parent.CategoriesList" relativePoint="BOTTOMRIGHT" x="8" y="0"/>
+         <Anchor point="RIGHT" x="-23" y="0"/>
       </Anchors>
       <Frames>
 			<Frame parentKey="ItemList" inherits="AuctionHouseItemListTemplate">

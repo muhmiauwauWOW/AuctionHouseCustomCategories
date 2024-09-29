@@ -19,32 +19,33 @@ local function AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
     column:GetHeaderFrame():SetText(colConfig.name);
 end
 
-local function GetBrowseListLayout(AHCC, owner, itemList)
 
-	local function LayoutBrowseListTableBuilder(tableBuilder)
-		tableBuilder:SetColumnHeaderOverlap(2);
-		tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
-
-        _.forEach(AHCCCategory.config:getColumns(AHCC.Nav), function(colName)
-            if colName == "Price" then 
-                tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate");
-            elseif colName == "Name" then 
-                local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
-                nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
-            else
-                AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
-            end
-        end)
-	end
-
-	return LayoutBrowseListTableBuilder;
-end
 
 
 
 AHCCBrowseResultsMixin  = CreateFromMixins(AuctionHouseSortOrderSystemMixin);
 
 function AHCCBrowseResultsMixin:SetupTableBuilder()
+    local function GetBrowseListLayout(AHCC, owner, itemList)
+
+        local function LayoutBrowseListTableBuilder(tableBuilder)
+            tableBuilder:SetColumnHeaderOverlap(2);
+            tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
+    
+            _.forEach(self.columns, function(colName)
+                if colName == "Price" then 
+                    tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate");
+                elseif colName == "Name" then 
+                    local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
+                    nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
+                else
+                    AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
+                end
+            end)
+        end
+    
+        return LayoutBrowseListTableBuilder;
+    end
     self.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, self, self.ItemList));
 
 	self.tableBuilderLayoutDirty = false;
@@ -52,6 +53,8 @@ end
 
 function AHCCBrowseResultsMixin:OnLoad()
     self:SetParent(AuctionHouseFrame.CategoriesList)
+
+    self.columns = {}
 
     self:SetFrameLevel(10)
     AuctionHouseSortOrderSystemMixin.OnLoad(self);
@@ -109,7 +112,18 @@ function AHCCBrowseResultsMixin:Update(items)
     self.browseResults = items
     self:UpdatePrices()
 
-    self:SetupTableBuilder();
+    --  run tableBuidler only on difference
+    local columns = AHCCCategory.config:getColumns(AHCC.Nav)
+    local diff1 = _.difference(columns, self.columns)
+    local diff2 = _.difference(self.columns, columns)
+    local diff =  _.size(diff1) > 0 or _.size(diff2) > 0
+    self.columns = columns
+
+    if diff then 
+        DevTool:AddData(self.columns, "cols")
+        self:SetupTableBuilder();
+    end
+
     self:Sort();
     self.ItemList:Reset();
     self.ItemList:DirtyScrollFrame();
@@ -219,4 +233,39 @@ function AHCCBrowseResultsMixin:UpdatePrices(force)
     AHCC.PriceScan.items = CopyTable(self.browseResults)
     AHCC.PriceScan:Show()
 	
+end
+
+
+
+
+function AHCCBrowseResultsMixin:performSearch(refresh)
+    local getResultsObj = function(nav)
+        local function trim(s)
+            return (s:gsub("^%s*(.-)%s*$", "%1"))
+        end
+        local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
+        local results = AHCCItems:getByNav(nav)
+        
+        if (searchString ~= "") then 
+            results = _.filter(results, function(filterEntry)
+                return string.find(string.lower(filterEntry.Name), string.lower(searchString), 1, true)
+            end)
+        end
+    
+        results = _.filter(results, function(entry)
+            return (entry.Quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.Quality] 
+        end)
+    
+        if #results == 0 then return nil end
+        return results
+    end
+
+    local searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
+    if not searchResultTable then return end
+
+    if refresh then
+        self:Refresh(searchResultTable)
+        return 
+    end
+    self:Update(searchResultTable)
 end

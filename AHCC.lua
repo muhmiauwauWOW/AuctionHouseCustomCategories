@@ -27,7 +27,6 @@ local DBdefaults = {
 }
 
 AHCC.Nav = nil
-AHCC.searchResultTable = nil
 
 function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB3", DBdefaults, true)
@@ -35,42 +34,9 @@ function AHCC:OnInitialize()
     AHCCItems:Init()
 
     self.PriceScan = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
-end 
-
-
-
-local getResultsObj = function(nav)
-    local function trim(s)
-        return (s:gsub("^%s*(.-)%s*$", "%1"))
-    end
-    local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
-    local results = AHCCItems:getByNav(nav)
-    
-    if (searchString ~= "") then 
-        results = _.filter(results, function(filterEntry)
-            return string.find(string.lower(filterEntry.Name), string.lower(searchString), 1, true)
-        end)
-    end
-
-    results = _.filter(results, function(entry)
-        return (entry.Quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.Quality] 
-    end)
-
-    if #results == 0 then return nil end
-    return results
 end
 
 
-
-
-
 function AHCC:performSearch(refresh)
-    AHCC.searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
-    if not AHCC.searchResultTable then return end
-
-    if refresh then
-        AHCCBrowseResultsFrame:Refresh(AHCC.searchResultTable)
-        return 
-    end
-    AHCCBrowseResultsFrame:Update(AHCC.searchResultTable)
+    AHCCBrowseResultsFrame:performSearch(refresh)
 end

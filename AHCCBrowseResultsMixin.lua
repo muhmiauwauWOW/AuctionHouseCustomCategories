@@ -100,13 +100,11 @@ end
 
 function AHCCBrowseResultsMixin:Reset()
 	self.browseResults = {};
-	self.sortOrder = nil;
 	self.isSortOrderReversed = false;
 	self.searchStarted = false;
 end
 
 function AHCCBrowseResultsMixin:Update(items)
-    self.sortOrder = 1 --AHCC.db.global.sort[1].sortOrder
     self.ItemList:SetRefreshCallback(nil)
     self.searchStarted = true;
     self.browseResults = items
@@ -119,14 +117,20 @@ function AHCCBrowseResultsMixin:Update(items)
     local diff =  _.size(diff1) > 0 or _.size(diff2) > 0
     self.columns = columns
 
-    if diff then 
-        DevTool:AddData(self.columns, "cols")
+    if diff then
         self:SetupTableBuilder();
     end
 
     self:Sort();
     self.ItemList:Reset();
     self.ItemList:DirtyScrollFrame();
+
+    if #self.browseResults == 0 then 
+        self.searchStarted = false;
+        -- print(BROWSE_NO_RESULTS)
+        -- self.ItemList.ResultsText:Show();
+        self.ItemList.ResultsText:SetText(BROWSE_NO_RESULTS)
+    end
 end
 
 
@@ -256,13 +260,13 @@ function AHCCBrowseResultsMixin:performSearch(refresh)
             return (entry.Quality == 0) and true or AHCC.Config.ProfessionsQualityActive[entry.Quality] 
         end)
     
-        if #results == 0 then return nil end
+        if #results == 0 then return {} end
         return results
     end
 
-    local searchResultTable = AHCC.isInCustomCategory and getResultsObj(AHCC.Nav) or nil
+    local searchResultTable = getResultsObj(AHCC.Nav)
     if not searchResultTable then return end
-
+    searchResultTable = {}
     if refresh then
         self:Refresh(searchResultTable)
         return 

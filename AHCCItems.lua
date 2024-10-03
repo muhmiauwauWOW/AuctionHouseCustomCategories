@@ -4,9 +4,15 @@ local L, _ = AHCC:GetLibs()
 
 AHCCItems = {}
 AHCCItems.items = {}
+AHCCItems.prices = {}
+
+-- reset prices
+AuctionHouseFrame:HookScript("OnShow" , function()
+    AHCCItems.prices = {}
+end)
+
 
 function AHCCItems:Init()
-    self.prices = AHCC.db.global.prices
 end
 
 
@@ -25,12 +31,6 @@ function AHCCItems:formatToResultLines(Item)
             end
         end
 
-
-        local priceTime =  AHCCItems:getPriceTime(id)
-        local age = (GetServerTime() - priceTime)
-        local ageCheck = age < AHCC.Config.ReplicateDataIntervall
-        local price = ageCheck and AHCCItems:getPrice(id) or -1
-    
         return {
             itemKey = {
                 itemLevel = 0,
@@ -42,8 +42,8 @@ function AHCCItems:formatToResultLines(Item)
             Quality = idx,
             containsOwnerItem = false,
             totalQuantity = 1,
-            minPrice = price,
-            Price = price,
+            minPrice = -1,
+            Price = -1,
             Stat1 = Stat1,
             Stat2 = entry.Stat2 or 0,
             nav = Item.nav
@@ -55,7 +55,6 @@ function AHCCItems:formatToResultLines(Item)
      local table = {}
      if _.isTable(Item.id) then 
          table = _.map(Item.id, function(item, idx)
-          --  _.debug(getResultLine(idx, item, Item))
             return getResultLine(idx, item, Item)
          end)
      else
@@ -79,39 +78,31 @@ function AHCCItems:set(id, Item)
 end
 
 function AHCCItems:get(id)
-    if not id then return self.items end
+    if not id then 
+        return _.map(self.items, function(entry)
+            entry.Price = self:getPrice(entry.itemKey.itemID)
+            entry.minPrice = entry.Price
+
+            return entry
+        end)
+    end
     return _.find(self.items, function(entry, idx)
+        entry.Price = self:getPrice(id)  
+        entry.minPrice = entry.Price
         return entry.itemKey.itemID == id
     end)
 end
 
 function AHCCItems:setPrice(id, price)
-    AHCC.db.global.prices[id] = {
-        price = price,
-        time = GetServerTime()
-    }
+    self.prices[id] = price
 end
-
-
-
 
 function AHCCItems:getPrice(id)    
-    return _.get( AHCC.db.global.prices, {id, "price"}, _.get( AHCC.db.global.prices, {id}, 0))
-end
-
-
-function AHCCItems:getPriceTime(id)    
-    return _.get( AHCC.db.global.prices, {id, "time"}, AHCC.db.global.lastReplicateDate)
+    return _.get(self.prices, { id }, -1)
 end
 
 function AHCCItems:updatePrice(id, price)
     if not self:getPrice(id) then return end
-    local item = AHCCItems:get(id)
-    if item then 
-        item.minPrice = price
-        item.Price = price
-    end 
-    self:set(id, item)
     self:setPrice(id, price)
 end
 

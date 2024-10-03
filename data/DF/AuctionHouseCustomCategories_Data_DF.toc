@@ -3,7 +3,7 @@
 ## Notes: Datapack for Dragonflight
 ## Version: @project-version@
 ## Author: Muhmiauwau
-## DefaultState: Enabled
+## DefaultState: Disabled
 ## RequiredDeps: AuctionHouseCustomCategories
 ## LoadOnDemand: 1
 ## LoadWith: AuctionHouseCustomCategories

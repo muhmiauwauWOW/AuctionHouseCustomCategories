@@ -1,10 +1,6 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
-local LibAHTab = LibStub("LibAHTab-1-0")
-
-
-
 AHCCQualitySelectMixin = {}
 
 function AHCCQualitySelectMixin:Init(owner)
@@ -80,10 +76,11 @@ function AHCCTableCellMoneyMixin:OnLoad(owner)
 end
 
 function AHCCTableCellMoneyMixin:Populate(rowData, dataIndex)
-    local ageCheck = rowData.minPrice > -1 
+    local ageCheck = tonumber(rowData.minPrice) > -1 
+    local price = rowData.minPrice
     self.MoneyDisplay:SetShown(ageCheck)
     self.Text:SetShown(not ageCheck)
-    self.MoneyDisplay:SetAmount(rowData.minPrice);
+    self.MoneyDisplay:SetAmount(price);
 end
 
 
@@ -114,36 +111,4 @@ function AHCCQualitySelectButtonMixin:SetState(state)
 
     local newTexture = state and self.normalTexture or self.disabledTexture
     self:SetNormalTexture(newTexture)
-end
-
-
-
-
-
-
-
-
-
-
-AHCCReplicateButtonMixin = {}
-
-
-function AHCCReplicateButtonMixin:OnLoad()
-    self.scanFrame = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
-    self:SetParent(AuctionHouseFrame.BrowseResultsFrame)
-end
-
-
-function AHCCReplicateButtonMixin:OnClick()
-    self:Hide()
-    self.scanFrame:Show()
-end
-
-function AHCCReplicateButtonMixin:check()
-    self:Show()
-    -- if AHCC.db.global.lastReplicateDate + AHCC.Config.ReplicateDataIntervall < GetServerTime() then 
-    --    self:Show()
-    -- else
-    --    self:Hide()
-    -- end
 end

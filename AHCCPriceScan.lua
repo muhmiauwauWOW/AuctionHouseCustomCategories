@@ -5,12 +5,13 @@ local L, _ = AHCC:GetLibs()
 AHCCPriceScanMixin = {}
 
 function AHCCPriceScanMixin:OnLoad()
+   -- self.items = AHCCItems:getAll()
 end
 
 function AHCCPriceScanMixin:OnShow()
     self:RegisterEvent("AUCTION_HOUSE_BROWSE_RESULTS_UPDATED");
-    local items = AHCCItems:getAll()
-    self.chunks = _.chunk(items, 50)
+    -- local items = AHCCItems:getAll()
+    self.chunks = _.chunk(self.items, 50)
     self.progress = 0
     self.total = #self.chunks
     
@@ -24,15 +25,20 @@ function AHCCPriceScanMixin:OnShow()
     end)
 end
 
+
+
+
 function AHCCPriceScanMixin:TickerFn()
-    if self.progress == self.total then self:Done(); return end
-    self.Text:SetText(string.format(L["pricescan_inProgress"] .. " \n %s / %s",self.progress, self.total))
+    -- if self.progress == self.total then self:Done(); return end
+    --self.Text:SetText(string.format(L["pricescan_inProgress"] .. "  %s / %s",self.progress, self.total))
 end
 
 function AHCCPriceScanMixin:Done()
-    AHCC.db.global.lastReplicateDate = GetServerTime()
     self:Hide()
-    AHCC:performSearch()
+   
+    AuctionHouseFrame.BrowseResultsFrame:Reset()
+    AuctionHouseFrame.BrowseResultsFrame.ItemList:DirtyScrollFrame();
+    AHCC:performSearch(true)
 end
 
 function AHCCPriceScanMixin:OnHide()
@@ -41,9 +47,14 @@ end
 
 function AHCCPriceScanMixin:OnEvent(event)
     local items =  AuctionHouseFrame.BrowseResultsFrame.browseResults
-    _.forEach(items, function(item) 
+    _.forEach(items, function(item)
         AHCCItems:updatePrice(item.itemKey.itemID, item.minPrice)
     end)
+
+    if self.progress == self.total then 
+        self:Done()
+        return
+    end
 
     self:Perform()
 end
@@ -67,7 +78,7 @@ function AHCCPriceScanMixin:Perform()
 
 
     --@do-not-package@
-       -- DevTool:AddData(ItemKeys,  self.progress)
+       --DevTool:AddData(items,  self.progress)
     --@end-do-not-package@
 
     C_AuctionHouse.SearchForItemKeys(ItemKeys, sorts)

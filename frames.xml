@@ -111,8 +111,6 @@
       <Scripts>
 			<OnLoad method="OnLoad"/>
 			<OnShow method="OnShow"/>
-			<OnHide method="OnHide"/>
-			<OnEvent method="OnEvent"/>
 		</Scripts>
    </Frame>
 

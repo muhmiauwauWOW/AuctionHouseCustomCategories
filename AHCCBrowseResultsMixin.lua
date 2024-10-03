@@ -79,7 +79,7 @@ function AHCCBrowseResultsMixin:OnLoad()
 
     
 	local function BrowseListSearchStarted()
-		return self.searchStarted, AUCTION_HOUSE_BROWSE_FAVORITES_TIP;
+		return self.searchStarted, BROWSE_NO_RESULTS;
 	end
 
 	local function BrowseListGetNumEntries()
@@ -127,9 +127,6 @@ function AHCCBrowseResultsMixin:Update(items)
 
     if #self.browseResults == 0 then 
         self.searchStarted = false;
-        -- print(BROWSE_NO_RESULTS)
-        -- self.ItemList.ResultsText:Show();
-        self.ItemList.ResultsText:SetText(BROWSE_NO_RESULTS)
     end
 end
 
@@ -213,13 +210,6 @@ function AHCCBrowseResultsMixin:OnShow()
 	self.ItemList:RefreshScrollFrame();
 end
 
-function AHCCBrowseResultsMixin:OnHide()
-end
-
-function AHCCBrowseResultsMixin:OnEvent(event, ...)
-	
-end
-
 function AHCCBrowseResultsMixin:UpdatePrices(force)
     local updateNeeded = force and true or false
 
@@ -266,10 +256,9 @@ function AHCCBrowseResultsMixin:performSearch(refresh)
 
     local searchResultTable = getResultsObj(AHCC.Nav)
     if not searchResultTable then return end
-    searchResultTable = {}
     if refresh then
         self:Refresh(searchResultTable)
-        return 
+        return
     end
     self:Update(searchResultTable)
 end

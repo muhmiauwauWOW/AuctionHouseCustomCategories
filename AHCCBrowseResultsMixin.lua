@@ -96,6 +96,8 @@ function AHCCBrowseResultsMixin:OnLoad()
 
 	self.ItemList:SetDataProvider(BrowseListSearchStarted, BrowseListGetEntry, BrowseListGetNumEntries, hasFullResultsFun);
 	self:Reset();
+    
+    AHCC:ElvSkin()
 end
 
 function AHCCBrowseResultsMixin:Reset()

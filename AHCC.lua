@@ -40,3 +40,49 @@ end
 function AHCC:performSearch(refresh)
     AHCCBrowseResultsFrame:performSearch(refresh)
 end
+
+
+
+-- support for all the ELVUI fanbois out there
+function AHCC:ElvSkin()
+	if not C_AddOns.IsAddOnLoaded("ElvUI") then return end
+	
+	local E, L, V, P, G = unpack(ElvUI)
+	local S = E:GetModule("Skins")
+
+    S:HandleButton(AHCCQualitySelectFrame.Quality1Button)
+    S:HandleButton(AHCCQualitySelectFrame.Quality2Button)
+    S:HandleButton(AHCCQualitySelectFrame.Quality3Button)
+
+	local function HandleHeaders(frame)
+		local maxHeaders = frame.HeaderContainer:GetNumChildren()
+		for i, header in next, { frame.HeaderContainer:GetChildren() } do
+			if not header.IsSkinned then
+				header:DisableDrawLayer('BACKGROUND')
+
+				if not header.backdrop then
+					header:CreateBackdrop('Transparent')
+				end
+
+				header.IsSkinned = true
+			end
+
+			if header.backdrop then
+				header.backdrop:Point('BOTTOMRIGHT', i < maxHeaders and -5 or 0, -2)
+			end
+		end
+	end
+
+	local function HandleSellList(frame)
+		frame:StripTextures()
+		frame:SetTemplate('Transparent')
+
+		S:HandleTrimScrollBar(frame.ScrollBar)
+		frame.ScrollBar:ClearAllPoints()
+		frame.ScrollBar:Point('TOPRIGHT', frame, -10, -16)
+		frame.ScrollBar:Point('BOTTOMRIGHT', frame, -10, 16)
+
+		hooksecurefunc(frame, 'RefreshScrollFrame', HandleHeaders)
+	end
+	HandleSellList(AHCCBrowseResultsFrame.ItemList)
+end

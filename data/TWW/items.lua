@@ -146,6 +146,11 @@ Data.Items = {
         { ["id"] = { 212308, 212309, 212310 } }, -- Phial of Truesight
         { ["id"] = { 212311, 212312, 212313 } }, -- Phial of Enhanced Ambidextry
         { ["id"] = { 212314, 212315, 212316 } }, -- Phial of Bountiful Seasons
+        { ["id"] = { 212274, 212267, 212268 } }, -- Flask of Tempered Swiftness
+        { ["id"] = { 212269, 212270, 212271 } }, -- Flask of Tempered Aggression
+        { ["id"] = { 212272, 212273, 212274 } }, -- Flask of Tempered Swiftness
+        { ["id"] = { 212278, 212279, 212280 } }, -- Flask of Tempered Mastery
+        { ["id"] = { 212275, 212276, 212277 } }, -- Flask of Tempered Versatility
     }
     ,[getCategoryId("consumables", "Potions")] = {
         { ["id"] = { 211878, 211879, 211880 } }, -- Algari Healing Potion

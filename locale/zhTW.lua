@@ -20,5 +20,3 @@ L["STAMINA"] = "耐力"
 L["TABLE_HEADER_QUALITY"] = "品質"
 L["TABLE_HEADER_STAT1"] = "主屬性"
 L["TABLE_HEADER_STAT2"] = "副屬性"
-
-L["price_too_old"] = "价格数据太旧"

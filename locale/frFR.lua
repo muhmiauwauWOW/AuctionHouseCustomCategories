@@ -21,4 +21,3 @@ L["SOCKETS"] = "châsses"
 
 L["TemporaryEnhancements"] = "Améliorations temporaires"
 
-L["price_too_old"] = "données de prix trop anciennes"

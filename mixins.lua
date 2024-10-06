@@ -72,7 +72,6 @@ function AHCCTableCellMoneyMixin:OnLoad(owner)
     self.MoneyDisplay:ClearAllPoints();
 	self.MoneyDisplay:SetPoint("LEFT");
 
-    self.Text:SetText(L["price_too_old"])
 end
 
 function AHCCTableCellMoneyMixin:Populate(rowData, dataIndex)

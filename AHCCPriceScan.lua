@@ -17,7 +17,6 @@ function AHCCPriceScanMixin:OnShow()
     
     self:Perform()
 
-    self:TickerFn()
 
     C_Timer.After(20, function()
         if self.progress >= self.total then return end
@@ -28,10 +27,6 @@ end
 
 
 
-function AHCCPriceScanMixin:TickerFn()
-    -- if self.progress == self.total then self:Done(); return end
-    --self.Text:SetText(string.format(L["pricescan_inProgress"] .. "  %s / %s",self.progress, self.total))
-end
 
 function AHCCPriceScanMixin:Done()
     self:Hide()
@@ -60,7 +55,6 @@ function AHCCPriceScanMixin:OnEvent(event)
 end
 
 function AHCCPriceScanMixin:Perform()
-    self:TickerFn()
     if self.progress == self.total then return end
     self.progress = self.progress + 1
 

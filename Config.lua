@@ -3,34 +3,67 @@ local L, _ = AHCC:GetLibs()
 
 AHCC.Config = {}
 
-AHCC.Config.TableColums = {
-    ["Stat1"] = {
-        name = L["TABLE_HEADER_STAT1"],
-        width = 1.0,
-        padding = 0,
-        leftCellPadding = 10,
-        rightCellPadding = 10
-    },
-    ["Stat2"] = {
-        name = L["TABLE_HEADER_STAT2"],
-        width = 1.0,
-        padding = 0,
-        leftCellPadding = 10,
-        rightCellPadding = 10
-    },
-    ["Quality"] = {
-        name = "",
-        width = 24,
-        padding = 0,
-        leftCellPadding = 4,
-        rightCellPadding = 0
-    }
-}
+
+
 
 -- add Enum
 Enum.AuctionHouseSortOrder.Stat1 = 92
 Enum.AuctionHouseSortOrder.Stat2 = 95
 Enum.AuctionHouseSortOrder.Quality = 99
+
+
+
+local TableColumnsDefaults = {
+    isFixed = false,
+    width = 1.0,
+    padding = 0,
+    leftCellPadding = 10,
+    rightCellPadding = 10,
+}
+
+AHCC.Config.TableColums = {}
+
+
+AHCC.Config.TableColums["Price"] = {
+    isFixed = true,
+    width = 146,
+    leftCellPadding = 0,
+    sortOrder = Enum.AuctionHouseSortOrder.Price,
+    template = "AHCCTableCellMoneyTemplate"
+}
+
+AHCC.Config.TableColums["Name"] = {
+    name = AUCTION_HOUSE_BROWSE_HEADER_NAME,
+    sortOrder = Enum.AuctionHouseSortOrder.Name,
+    template = "AuctionHouseTableCellItemDisplayTemplate"
+}
+
+AHCC.Config.TableColums["Stat1"] = {
+    name = L["TABLE_HEADER_STAT1"],
+    sortOrder = Enum.AuctionHouseSortOrder.Stat1,
+    template = "AuctionHouseTableCellStat1Template"
+}
+AHCC.Config.TableColums["Stat2"] = {
+    name = L["TABLE_HEADER_STAT2"],
+    sortOrder = Enum.AuctionHouseSortOrder.Stat2,
+    template = "AuctionHouseTableCellStat2Template"
+}
+
+AHCC.Config.TableColums["Quality"] = {
+    isFixed = true,
+    name = "",
+    sortOrder = Enum.AuctionHouseSortOrder.Quality,
+    width = 24,
+    leftCellPadding = 4,
+    rightCellPadding = 0,
+    template = "AuctionHouseTableCellQualityTemplate"
+}
+
+
+AHCC.Config.TableColums = _.map(AHCC.Config.TableColums, function(entry)
+    return Mixin({}, TableColumnsDefaults, entry)
+end)
+
 
 
 AHCC.Config.tableCellStatColors = {

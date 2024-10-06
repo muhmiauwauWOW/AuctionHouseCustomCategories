@@ -22,26 +22,17 @@ function AHCCBrowseResultsMixin:SetupTableBuilder()
             tableBuilder:SetHeaderContainer(itemList:GetHeaderContainer());
     
             _.forEach(self.columns, function(colName)
-                if colName == "Price" then 
-                    tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 10, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate");
-                elseif colName == "Name" then 
-                    local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 10, 10, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
-                    nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
-                else
-                    if _.has(AHCC.Config.TableColums, {colName}) then
-                        local colConfig = AHCC.Config.TableColums[colName]
-                        if colName == "Quality" then
-                            local column = tableBuilder:AddFixedWidthColumn(owner,colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[colName], string.format("AuctionHouseTableCell%sTemplate", colName));
-                            column:GetHeaderFrame():SetText(colConfig.name);
-                        else 
-                            local column = tableBuilder:AddFillColumn(owner,colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[colName], string.format("AuctionHouseTableCell%sTemplate", colName));
-                            column:GetHeaderFrame():SetText(colConfig.name);
-                        end
-                    end
-                end
+                if not _.has(AHCC.Config.TableColums, {colName}) then return end
+
+                local column = {}
+                local config = AHCC.Config.TableColums[colName]
+                local FNName = config.isFixed and "AddFixedWidthColumn" or "AddFillColumn"
+                column = tableBuilder[FNName](tableBuilder, owner,config.padding, config.width, config.leftCellPadding, config.rightCellPadding, config.sortOrder, config.template);
+                if not config.name then return end
+                column:GetHeaderFrame():SetText(config.name);
             end)
         end
-    
+  
         return LayoutBrowseListTableBuilder;
     end
     self.ItemList:SetTableBuilderLayout(GetBrowseListLayout(AHCC, self, self.ItemList));

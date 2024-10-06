@@ -12,18 +12,7 @@ local AuctionHouseSortOrderState = tInvert({
 
 
 
-local function AddFixedWidthColumn(AHCC, owner, tableBuilder, key)
-    if not _.has(AHCC.Config.TableColums, {key}) then return end
-    local colConfig = AHCC.Config.TableColums[key]
-    local column = tableBuilder:AddFixedWidthColumn(owner, colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[key], string.format("AuctionHouseTableCell%sTemplate", key));
-    column:GetHeaderFrame():SetText(colConfig.name);
-end
-
-
-
-
-
-AHCCBrowseResultsMixin  = CreateFromMixins(AuctionHouseSortOrderSystemMixin);
+AHCCBrowseResultsMixin = CreateFromMixins(AuctionHouseSortOrderSystemMixin);
 
 function AHCCBrowseResultsMixin:SetupTableBuilder()
     local function GetBrowseListLayout(AHCC, owner, itemList)
@@ -34,12 +23,21 @@ function AHCCBrowseResultsMixin:SetupTableBuilder()
     
             _.forEach(self.columns, function(colName)
                 if colName == "Price" then 
-                    tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 14, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate");
+                    tableBuilder:AddFixedWidthColumn(owner, PRICE_DISPLAY_PADDING, 146, 0, 10, Enum.AuctionHouseSortOrder.Price , "AHCCTableCellMoneyTemplate");
                 elseif colName == "Name" then 
-                    local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 14, 14, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
+                    local nameColumn = tableBuilder:AddFillColumn(owner, 0, 1.0, 10, 10, Enum.AuctionHouseSortOrder.Name, "AuctionHouseTableCellItemDisplayTemplate");
                     nameColumn:GetHeaderFrame():SetText(AUCTION_HOUSE_BROWSE_HEADER_NAME);
                 else
-                    AddFixedWidthColumn(AHCC, owner, tableBuilder, colName)
+                    if _.has(AHCC.Config.TableColums, {colName}) then
+                        local colConfig = AHCC.Config.TableColums[colName]
+                        if colName == "Quality" then
+                            local column = tableBuilder:AddFixedWidthColumn(owner,colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[colName], string.format("AuctionHouseTableCell%sTemplate", colName));
+                            column:GetHeaderFrame():SetText(colConfig.name);
+                        else 
+                            local column = tableBuilder:AddFillColumn(owner,colConfig.padding, colConfig.width, colConfig.leftCellPadding, colConfig.rightCellPadding, Enum.AuctionHouseSortOrder[colName], string.format("AuctionHouseTableCell%sTemplate", colName));
+                            column:GetHeaderFrame():SetText(colConfig.name);
+                        end
+                    end
                 end
             end)
         end

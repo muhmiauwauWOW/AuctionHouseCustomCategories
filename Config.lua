@@ -6,17 +6,17 @@ AHCC.Config = {}
 AHCC.Config.TableColums = {
     ["Stat1"] = {
         name = L["TABLE_HEADER_STAT1"],
-        width = 120,
+        width = 1.0,
         padding = 0,
-        leftCellPadding = 14,
-        rightCellPadding = 14
+        leftCellPadding = 10,
+        rightCellPadding = 10
     },
     ["Stat2"] = {
         name = L["TABLE_HEADER_STAT2"],
-        width = 120,
+        width = 1.0,
         padding = 0,
-        leftCellPadding = 14,
-        rightCellPadding = 14
+        leftCellPadding = 10,
+        rightCellPadding = 10
     },
     ["Quality"] = {
         name = "",
@@ -29,7 +29,7 @@ AHCC.Config.TableColums = {
 
 -- add Enum
 Enum.AuctionHouseSortOrder.Stat1 = 92
-Enum.AuctionHouseSortOrder.Stat2 = 93
+Enum.AuctionHouseSortOrder.Stat2 = 95
 Enum.AuctionHouseSortOrder.Quality = 99
 
 

@@ -46,8 +46,9 @@ end
 -- support for all the ELVUI fanbois out there
 function AHCC:ElvSkin()
 	if not C_AddOns.IsAddOnLoaded("ElvUI") then return end
-	
 	local E, L, V, P, G = unpack(ElvUI)
+	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.auctionhouse) then return end
+
 	local S = E:GetModule("Skins")
 
     S:HandleButton(AHCCQualitySelectFrame.Quality1Button)

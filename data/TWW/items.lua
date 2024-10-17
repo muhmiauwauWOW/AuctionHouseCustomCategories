@@ -218,5 +218,9 @@ Data.Items = {
         { ["id"] = { 222871, 222872, 222873 } }, -- Duskthread Lining
         -- { ["id"] = { 222389, 221622, 221623 } }, -- Duskthread Lining
         { ["id"] = 228921 }, -- Griftah's Heavy-Duty Embellishing Powder
+        { ["id"] = { 226022, 226023, 226024 } }, -- Darkmoon Sigil: Ascension
+        { ["id"] = { 226025, 226026, 226027 } }, -- Darkmoon Sigil: Radiance
+        { ["id"] = { 226028, 226029, 226030 } }, -- Darkmoon Sigil: Symbiosis
+        { ["id"] = { 226031, 226032, 226033 } }, -- Darkmoon Sigil: Vivacity
     }
 }

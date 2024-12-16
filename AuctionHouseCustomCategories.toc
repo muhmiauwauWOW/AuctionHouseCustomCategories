@@ -1,4 +1,4 @@
-﻿## Interface: 110005
+﻿## Interface: 110007
 ## Title: Auction House - Custom Categories
 ## Notes: Adds custom categories to auction house
 ## Version: @project-version@

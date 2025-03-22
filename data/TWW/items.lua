@@ -131,7 +131,7 @@ Data.Items = {
         { ["Stat1"] = 5, ["Stat2"] = 4, ["id"] = { 213510, 213511, 213512 } }, -- Versatile Amber
     }
     ,[getCategoryId("consumables", "Runes")] = {
-        { ["id"] = { 226034, 226035, 226036 } }, -- Vantus Rune: Nerub-ar Palace
+        { ["id"] = { 232936, 232935, 232937 } }, -- Vantus Rune: Liberation of Undermine
         { ["id"] = { 222502, 222503, 222504 } }, -- Ironclaw Whetstone
         { ["id"] = { 222505, 222506, 222507 } }, -- Ironclaw Razorstone
         { ["id"] = { 222508, 222509, 222510 } }, -- Ironclaw Weightstone

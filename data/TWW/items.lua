@@ -132,6 +132,7 @@ Data.Items = {
     }
     ,[getCategoryId("consumables", "Runes")] = {
         { ["id"] = { 232936, 232935, 232937 } }, -- Vantus Rune: Liberation of Undermine
+        { ["id"] = 224572 }, -- Crystallized Augment Rune
         { ["id"] = { 222502, 222503, 222504 } }, -- Ironclaw Whetstone
         { ["id"] = { 222505, 222506, 222507 } }, -- Ironclaw Razorstone
         { ["id"] = { 222508, 222509, 222510 } }, -- Ironclaw Weightstone
@@ -146,7 +147,6 @@ Data.Items = {
         { ["id"] = { 212308, 212309, 212310 } }, -- Phial of Truesight
         { ["id"] = { 212311, 212312, 212313 } }, -- Phial of Enhanced Ambidextry
         { ["id"] = { 212314, 212315, 212316 } }, -- Phial of Bountiful Seasons
-        { ["id"] = { 212274, 212267, 212268 } }, -- Flask of Tempered Swiftness
         { ["id"] = { 212269, 212270, 212271 } }, -- Flask of Tempered Aggression
         { ["id"] = { 212272, 212273, 212274 } }, -- Flask of Tempered Swiftness
         { ["id"] = { 212278, 212279, 212280 } }, -- Flask of Tempered Mastery

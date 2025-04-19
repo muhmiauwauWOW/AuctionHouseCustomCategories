@@ -31,6 +31,7 @@ Data.Categories = {
         id = "gems",
         columns = {"Stat1", "Stat2", "Quality"},
         categories =  {
+            { name = L["PRISMATIC_GEM"] },
             { name = L["CRITICAL_STRIKE"], columns = {"Stat2", "Quality"} },
             { name = L["HASTE"], columns = {"Stat2", "Quality"} },
             { name = L["MASTERY"], columns = {"Stat2", "Quality"} },

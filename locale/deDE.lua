@@ -6,6 +6,7 @@ L["Enchants"] = "Verzauberungen"
 L["Gems"] = "Edelsteine"
 L["Consumables"] = "Verbrauchbares"
 
+L["PRISMATIC_GEM"] = "Prismatisch"
 
 L["Optional Reagents"] = "Optionale Reagenzien"
 L["Embellishments"] = "Verziert"

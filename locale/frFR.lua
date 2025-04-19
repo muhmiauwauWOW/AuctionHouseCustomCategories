@@ -6,6 +6,7 @@ if not L then return end
 
 
 
+L["PRISMATIC_GEM"] = "Prismatique"
 
 L["Optional Reagents"] = "Composants optionnels"
 L["Draconic Missive"] = "Missive draconique"

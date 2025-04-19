@@ -99,6 +99,12 @@ Data.Items = {
         { ["id"] = { 223702, 223703, 223704 } }, -- Enchant Tool - Algari Perception
         { ["id"] = { 223705, 223706, 223707 } }, -- Enchant Tool - Algari Resourcefulness
     }
+    ,[getCategoryId("gems", "PRISMATIC_GEM")] = {
+        { ["id"] = { 217113, 217114, 217115 } }, -- Cubic Blasphemia
+        { ["id"] = { 213744, 213745, 213746 } }, -- Elusive Blasphemite
+        { ["id"] = { 213738, 213739, 213740 } }, -- Insightful Blasphemite
+        { ["id"] = { 213741, 213742, 213743 } }, -- Culminating Blasphemite
+    }
     ,[getCategoryId("gems", "CRITICAL_STRIKE")] = {
         { ["Stat1"] = 1, ["Stat2"] = 0, ["id"] = { 213462, 213463, 213464 } }, -- Deadly Ruby
         { ["Stat1"] = 1, ["Stat2"] = 2, ["id"] = { 213453, 213454, 213455 } }, -- Quick Ruby

@@ -3,7 +3,7 @@ if not L then return end
 
 
 
-
+L["PRISMATIC_GEM"] = "Бесцветные"
 
 L["Algari Missive"] = "Алгарийское послание"
 L["CELL_STAMINA"] = "Выносливость"

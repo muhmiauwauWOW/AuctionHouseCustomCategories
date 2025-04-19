@@ -6,6 +6,7 @@ if not L then return end
 
 
 
+L["PRISMATIC_GEM"] = "다색"
 
 L["CELL_STAMINA"] = "체력"
 L["Draconic Missive"] = "용언 서신"

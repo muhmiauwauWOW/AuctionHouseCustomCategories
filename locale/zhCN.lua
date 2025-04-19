@@ -2,6 +2,8 @@ local L = LibStub("AceLocale-3.0"):NewLocale("AHCC", "zhCN")
 if not L then return end
 
 
+L["PRISMATIC_GEM"] = "棱彩"
+
 L["CELL_STAMINA"] = "耐力"
 L["Draconic Missive"] = "龙语公函"
 L["Algari Missive"] = "阿加公函"

@@ -21,7 +21,7 @@ Data.Categories = {
             -- { name =  L["WAIST"] },
             { name =  L["LEGS"] },
             { name =  L["FEET"] },
-            { name =  L["FINGER"] },
+            { name =  L["FINGER"] ,  columns = {"Stat1", "Quality"}},
             { name =  L["WEAPON"] },
             { name =  L["TOOL"] }
         }

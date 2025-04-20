@@ -68,18 +68,18 @@ Data.Items = {
         { ["id"] = { 223654, 223655, 223656 } }, -- Enchant Boots - Defender's March
     },
     [getCategoryId("enchants", "FINGER")] = {
-        { ["id"] = { 223657, 223658, 223659 } }, -- Enchant Ring - Glimmering Critical Strike
-        { ["id"] = { 223660, 223661, 223662 } }, -- Enchant Ring - Radiant Critical Strike
-        { ["id"] = { 225652, 223664, 223665 } }, -- Enchant Ring - Glimmering Haste
-        { ["id"] = { 223666, 223667, 223668 } }, -- Enchant Ring - Glimmering Mastery
-        { ["id"] = { 223669, 223670, 223671 } }, -- Enchant Ring - Glimmering Versatility
-        { ["id"] = { 223672, 223673, 223674 } }, -- Enchant Ring - Radiant Haste
-        { ["id"] = { 223675, 223676, 223677 } }, -- Enchant Ring - Radiant Mastery
-        { ["id"] = { 223678, 223679, 223680 } }, -- Enchant Ring - Radiant Versatility
-        { ["id"] = { 223785, 223786, 223787 } }, -- Enchant Ring - Cursed Critical Strike
-        { ["id"] = { 223788, 223789, 223790 } }, -- Enchant Ring - Cursed Haste
-        { ["id"] = { 223791, 223792, 223793 } }, -- Enchant Ring - Cursed Mastery
-        { ["id"] = { 223794, 223795, 223796 } }, -- Enchant Ring - Cursed Versatility
+        { ["Stat1"] = 1, ["id"] = { 223657, 223658, 223659 } }, -- Enchant Ring - Glimmering Critical Strike
+        { ["Stat1"] = 2, ["id"] = { 225652, 223664, 223665 } }, -- Enchant Ring - Glimmering Haste
+        { ["Stat1"] = 3, ["id"] = { 223666, 223667, 223668 } }, -- Enchant Ring - Glimmering Mastery
+        { ["Stat1"] = 4, ["id"] = { 223669, 223670, 223671 } }, -- Enchant Ring - Glimmering Versatility
+        { ["Stat1"] = 1, ["id"] = { 223660, 223661, 223662 } }, -- Enchant Ring - Radiant Critical Strike
+        { ["Stat1"] = 2, ["id"] = { 223672, 223673, 223674 } }, -- Enchant Ring - Radiant Haste
+        { ["Stat1"] = 3, ["id"] = { 223675, 223676, 223677 } }, -- Enchant Ring - Radiant Mastery
+        { ["Stat1"] = 4, ["id"] = { 223678, 223679, 223680 } }, -- Enchant Ring - Radiant Versatility
+        { ["Stat1"] = 1, ["id"] = { 223785, 223786, 223787 } }, -- Enchant Ring - Cursed Critical Strike
+        { ["Stat1"] = 2, ["id"] = { 223788, 223789, 223790 } }, -- Enchant Ring - Cursed Haste
+        { ["Stat1"] = 3, ["id"] = { 223791, 223792, 223793 } }, -- Enchant Ring - Cursed Mastery
+        { ["Stat1"] = 4, ["id"] = { 223794, 223795, 223796 } }, -- Enchant Ring - Cursed Versatility
     },
     [getCategoryId("enchants", "WEAPON")] = {
         { ["id"] = { 223757, 223758, 223759 } }, -- Enchant Weapon - Council's Guile

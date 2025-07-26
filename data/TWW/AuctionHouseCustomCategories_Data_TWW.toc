@@ -1,4 +1,4 @@
-## Interface: 110002
+## Interface: 110200
 ## Title: Auction House - Custom Categories |cd3ff7d0aThe War Within|r
 ## Notes: Datapack for The War Within
 ## Version: @project-version@

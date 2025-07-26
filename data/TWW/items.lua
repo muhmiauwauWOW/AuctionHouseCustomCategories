@@ -137,7 +137,7 @@ Data.Items = {
         { ["Stat1"] = 5, ["Stat2"] = 4, ["id"] = { 213510, 213511, 213512 } }, -- Versatile Amber
     }
     ,[getCategoryId("consumables", "Runes")] = {
-        { ["id"] = { 232936, 232935, 232937 } }, -- Vantus Rune: Liberation of Undermine
+        { ["id"] = { 244147, 244148, 244149 } }, -- Vantus Rune: Manaforge Omega 
         { ["id"] = 224572 }, -- Crystallized Augment Rune
         { ["id"] = { 222502, 222503, 222504 } }, -- Ironclaw Whetstone
         { ["id"] = { 222505, 222506, 222507 } }, -- Ironclaw Razorstone
@@ -159,6 +159,8 @@ Data.Items = {
         { ["id"] = { 212275, 212276, 212277 } }, -- Flask of Tempered Versatility
     }
     ,[getCategoryId("consumables", "Potions")] = {
+        { ["id"] = { 244835, 244836, 244837 } }, -- Invigorating Healing Potion
+        { ["id"] = { 248584, 248585, 248586 } }, -- umbral-essentia
         { ["id"] = { 211878, 211879, 211880 } }, -- Algari Healing Potion
         { ["id"] = { 212239, 212240, 212241 } }, -- Algari Mana Potion
         { ["id"] = { 212242, 212243, 212244 } }, -- Cavedweller's Delight

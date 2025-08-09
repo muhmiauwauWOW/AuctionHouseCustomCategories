@@ -24,9 +24,22 @@
       <Anchors>
          <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
       </Anchors>
+      <Frames>
+         <Button parentKey="ScanButton" inherits="UIPanelButtonTemplate">
+            <Size x="0" y="22"/>
+            <Anchors>
+               <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+            </Anchors>
+            <Scripts>
+               <OnClick>
+                  self:GetParent():startScan()
+               </OnClick>
+            </Scripts>
+         </Button>
+      </Frames>
       <Layers>
 			<Layer level="OVERLAY">
-				<FontString parentKey="Text" inherits="Number14FontWhite" justifyH="CENTER" setAllPoints="true"/>
+				<FontString parentKey="Text" inherits="Number14FontWhite"  justifyH="RIGHT"  hidden="true" />
 			</Layer>
 		</Layers>
       <Scripts>
@@ -95,7 +108,7 @@
    <Frame name="AHCCBrowseResultsFrame" parent="AuctionHouseFrame" mixin="AHCCBrowseResultsMixin" hidden="true">
       <Anchors>
          <Anchor point="TOPLEFT" relativeKey="$parent.CategoriesList" relativePoint="TOPRIGHT" x="0" y="0"/>
-         <Anchor point="BOTTOMLEFT" relativeKey="$parent.CategoriesList" relativePoint="BOTTOMRIGHT" x="8" y="0"/>
+         <Anchor point="BOTTOMLEFT" relativeKey="$parent.CategoriesList" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
          <Anchor point="RIGHT" x="-23" y="0"/>
       </Anchors>
       <Frames>

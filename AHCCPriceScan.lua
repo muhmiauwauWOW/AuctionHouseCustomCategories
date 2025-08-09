@@ -5,17 +5,44 @@ local L, _ = AHCC:GetLibs()
 AHCCPriceScanMixin = {}
 
 function AHCCPriceScanMixin:OnLoad()
-   -- self.items = AHCCItems:getAll()
+
+    local button = self.ScanButton
+    button:SetText(L["start_scan"])
+    button:SetWidth(button.Text:GetStringWidth() + 24) -- 24px Padding wie Blizzard-Standard
+
+    self.Text:SetPoint("RIGHT", button ,"LEFT", -10, 0)
 end
+
+
+function AHCCPriceScanMixin:ShowText()
+    self.Text:Show()
+end
+
+function AHCCPriceScanMixin:SetText(str)
+    self.Text:SetText(str)
+end
+
+function AHCCPriceScanMixin:HideText()
+    self.Text:Hide()
+end
+
+
+function AHCCPriceScanMixin:startScan()
+    print("start scan")
+    self:SetText("lalaal")
+    self:ShowText()
+    self.ScanButton:SetEnabled(false)
+end
+
+
 
 function AHCCPriceScanMixin:OnShow()
     self:RegisterEvent("AUCTION_HOUSE_BROWSE_RESULTS_UPDATED");
-    -- local items = AHCCItems:getAll()
     self.chunks = _.chunk(self.items, 50)
     self.progress = 0
     self.total = #self.chunks
     
-    self:Perform()
+    -- self:Perform()
 
 
     C_Timer.After(20, function()
@@ -27,9 +54,8 @@ end
 
 
 
-
 function AHCCPriceScanMixin:Done()
-    self:Hide()
+    -- self:Hide()
    
     AuctionHouseFrame.BrowseResultsFrame:Reset()
     AuctionHouseFrame.BrowseResultsFrame.ItemList:DirtyScrollFrame();
@@ -41,10 +67,15 @@ function AHCCPriceScanMixin:OnHide()
 end
 
 function AHCCPriceScanMixin:OnEvent(event)
+    print("OnEvent", event)
+     DevTool:AddData(event,  "event")
     local items =  AuctionHouseFrame.BrowseResultsFrame.browseResults
+        DevTool:AddData(items,  self.progress)
     _.forEach(items, function(item)
         AHCCItems:updatePrice(item.itemKey.itemID, item.minPrice)
     end)
+
+    DevTool:AddData(items,  self.progress)
 
     if self.progress == self.total then 
         self:Done()
@@ -60,10 +91,15 @@ function AHCCPriceScanMixin:Perform()
 
     local items = CopyTable(self.chunks[self.progress])
     local ItemKeys = {}
-    _.forEach(items, function(item) 
-        local itemKey = C_AuctionHouse.MakeItemKey(item.itemKey.itemID)
+
+    local itemKey = C_AuctionHouse.MakeItemKey(244838)
         table.insert(ItemKeys, itemKey)
-    end)
+
+
+    -- _.forEach(items, function(item) 
+    --     local itemKey = C_AuctionHouse.MakeItemKey(item.itemKey.itemID)
+    --     table.insert(ItemKeys, itemKey)
+    -- end)
 
     local sorts = {
         {sortOrder = Enum.AuctionHouseSortOrder.Price, reverseSort = false},
@@ -72,8 +108,10 @@ function AHCCPriceScanMixin:Perform()
 
 
     --@do-not-package@
-       --DevTool:AddData(items,  self.progress)
+       DevTool:AddData(ItemKeys,  self.progress .. " pre")
+        DevTool:AddData(sorts,  self.progress .. " pre")
     --@end-do-not-package@
-
+    
+-- C_AuctionHouse.SearchForFavorites(sorts)
     C_AuctionHouse.SearchForItemKeys(ItemKeys, sorts)
 end

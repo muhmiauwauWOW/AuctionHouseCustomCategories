@@ -54,3 +54,7 @@ L["CELL_STAMINA"] = "Stamina"
 L["TABLE_HEADER_QUALITY"] = "Quality"
 L["TABLE_HEADER_STAT1"] = "Main stat"
 L["TABLE_HEADER_STAT2"] = "Secondary stat"
+
+
+
+L["start_scan"] = "Start scan"

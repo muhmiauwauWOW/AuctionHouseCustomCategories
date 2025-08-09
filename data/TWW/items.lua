@@ -159,7 +159,7 @@ Data.Items = {
         { ["id"] = { 212275, 212276, 212277 } }, -- Flask of Tempered Versatility
     }
     ,[getCategoryId("consumables", "Potions")] = {
-        { ["id"] = { 244835, 244836, 244837 } }, -- Invigorating Healing Potion
+        { ["id"] = { 244837, 244838, 244839 } }, -- Invigorating Healing Potion
         { ["id"] = { 248584, 248585, 248586 } }, -- umbral-essentia
         { ["id"] = { 211878, 211879, 211880 } }, -- Algari Healing Potion
         { ["id"] = { 212239, 212240, 212241 } }, -- Algari Mana Potion

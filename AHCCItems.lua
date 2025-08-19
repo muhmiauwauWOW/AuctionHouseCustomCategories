@@ -4,20 +4,30 @@ local L, _ = AHCC:GetLibs()
 
 AHCCItems = {}
 AHCCItems.items = {}
-AHCCItems.prices = {}
 
--- reset prices
-AuctionHouseFrame:HookScript("OnShow" , function()
-    AHCCItems.prices = {}
-end)
+-- AuctionHouseFrame:HookScript("OnShow" , function()
+--     AHCCItems.prices =  AHCC.db.global.prices
+-- end)
+
 
 
 function AHCCItems:Init()
+   
 end
 
 
 function AHCCItems:add(Item)
     tAppendAll(self.items, self:formatToResultLines(Item))
+end
+function AHCCItems:initPrices()
+     if _.size(self.items) == 0 then return end
+    local newItems = {}
+    _.forEach(self.items, function(entry)
+        newItems[entry.itemKey.itemID] =  self:getPrice(entry.itemKey.itemID)
+    end)
+
+    if _.size(newItems) == 0 then return end
+    AHCC.db.global.prices = newItems
 end
 
 function AHCCItems:formatToResultLines(Item)
@@ -94,16 +104,22 @@ function AHCCItems:get(id)
 end
 
 function AHCCItems:setPrice(id, price)
-    self.prices[id] = price
+    AHCC.db.global.prices[id] = price
 end
 
 function AHCCItems:getPrice(id)    
-    return _.get(self.prices, { id }, -1)
+    return _.get(AHCC.db.global.prices, { id }, -1)
 end
 
+function AHCCItems:checkPrice(id)    
+    return _.get(AHCC.db.global.prices, { id }, false)
+end
+
+
 function AHCCItems:updatePrice(id, price)
-    if not self:getPrice(id) then return end
+    if not self:checkPrice(id) then return false end
     self:setPrice(id, price)
+    return true
 end
 
 function AHCCItems:getByNav(nav)

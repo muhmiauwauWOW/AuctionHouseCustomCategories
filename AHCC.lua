@@ -12,7 +12,8 @@ AHCC.gameVersion = select(4, GetBuildInfo())
 
 local DBdefaults = {
     global = {
-        prices = {},
+		prices = {},
+		lastScan = nil,
         sort = {
             { reverseSort = false, sortOrder = 0 },
             { reverseSort = false, sortOrder = 1 },
@@ -33,7 +34,17 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
-    self.PriceScan = CreateFrame("Frame", nil, UIParent, "AHCCPriceScanTemplate")
+
+
+
+    self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")
+
+
+
+	local checktime  = time() - (60 * 6)
+	if not self.db.global.lastScan or (self.db.global.lastScan and self.db.global.lastScan < checktime)  then
+		self.PriceScan:Show()
+	end
 end
 
 

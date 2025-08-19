@@ -99,7 +99,6 @@ function AHCCBrowseResultsMixin:Update(items)
     self.ItemList:SetRefreshCallback(nil)
     self.searchStarted = true;
     self.browseResults = items
-    self:UpdatePrices()
 
     --  run tableBuidler only on difference
     local columns = AHCCCategory.config:getColumns(AHCC.Nav)
@@ -201,24 +200,6 @@ function AHCCBrowseResultsMixin:OnShow()
 	self.ItemList:RefreshScrollFrame();
 end
 
-function AHCCBrowseResultsMixin:UpdatePrices(force)
-    local updateNeeded = force and true or false
-
-    if not force then 
-        _.forEach(self.browseResults, function(item)
-            if updateNeeded then return end
-            if item.minPrice == -1 and not updateNeeded then updateNeeded = true return end
-        end)
-    end
-
-    if not updateNeeded then return end
-
-    -- run that update 
-
-    AHCC.PriceScan.items = CopyTable(self.browseResults)
-    AHCC.PriceScan:Show()
-	
-end
 
 
 

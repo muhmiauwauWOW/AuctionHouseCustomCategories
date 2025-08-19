@@ -58,3 +58,9 @@ L["TABLE_HEADER_STAT2"] = "Secondary stat"
 
 
 L["start_scan"] = "Start scan"
+L["processing_scan"] = "Processing scan data..."
+L["no_data_received"] = "No data received"
+L["cannot_initiate_scan"] = "Cannot initiate scan - already in progress or too soon"
+L["scan_aborted_ah_closed"] = "Scan aborted - auction house closed"
+L["scan_complete"] = "Scan complete - %d prices updated"
+L["processing_items"] = "Processing items: %d%%"

@@ -53,7 +53,7 @@ hooksecurefunc("AuctionFrameFilters_UpdateCategories", function(categoriesList, 
         AuctionHouseFrame.SearchBar.FilterButton:Hide()
         -- prevent double execution
         if not forceSelectionIntoView then 
-            -- AuctionHouseFrame.BrowseResultsFrame:Hide()
+            AuctionHouseFrame.BrowseResultsFrame:Hide()
             AHCCBrowseResultsFrame:Show()
             AHCC:performSearch()
         end

@@ -19,10 +19,10 @@
 
 
 
-   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AuctionHouseFrame" enableMouse="true" hidden="true" mixin="AHCCPriceScanMixin" virtual="true">
+   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AHCCBrowseResultsFrame" enableMouse="true" hidden="true" mixin="AHCCPriceScanMixin" virtual="true">
       <Size x="160" y="26"/>
       <Anchors>
-         <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+         <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" x="3" y="3"/>
       </Anchors>
       <Frames>
          <Button parentKey="ScanButton" inherits="UIPanelButtonTemplate">

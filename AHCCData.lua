@@ -93,6 +93,7 @@ function AHCCData:add(data, mode)
 
     addItemsRecursiv(data.Items, data.id)
 
+    AHCCItems:initPrices()
 end
 
 

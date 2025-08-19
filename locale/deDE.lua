@@ -26,3 +26,10 @@ L["TABLE_HEADER_STAT2"] = "Zweiter Wert"
 
 
 L["TemporaryEnhancements"] = "Temporäre Verzauberungen"
+L["start_scan"] = "Start scan"
+L["processing_scan"] = "Verarbeite Scandaten..."
+L["no_data_received"] = "Keine Daten empfangen"
+L["cannot_initiate_scan"] = "Scan kann nicht gestartet werden - bereits aktiv oder zu früh"
+L["scan_aborted_ah_closed"] = "Scan abgebrochen - Auktionshaus geschlossen"
+L["scan_complete"] = "Scan abgeschlossen - %d Preise aktualisiert"
+L["processing_items"] = "Verarbeite Items: %d%%"

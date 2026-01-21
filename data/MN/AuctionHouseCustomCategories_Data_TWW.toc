@@ -1,0 +1,12 @@
+## Interface: 120000
+## Title: Auction House - Custom Categories |cd3ff7d0aMidnight|r
+## Notes: Datapack for Midnight
+## Version: @project-version@
+## Author: Muhmiauwau
+## DefaultState: Enabled
+## RequiredDeps: AuctionHouseCustomCategories
+## LoadOnDemand: 1
+## LoadWith: AuctionHouseCustomCategories
+
+categories.lua
+items.lua

@@ -85,11 +85,10 @@ AHCC.Config.tableCellStats = {
 }
 
 AHCC.Config.ProfessionsQualityIconTable = {
-    "Professions-Icon-Quality-Tier1-Small",
-    "Professions-Icon-Quality-Tier2-Small",
-    "Professions-Icon-Quality-Tier3-Small"
+    "Professions-ChatIcon-Quality-12-Tier1",
+    "Professions-ChatIcon-Quality-12-Tier2",
 }
 
-AHCC.Config.ProfessionsQualityIconSize = 0.6
+AHCC.Config.ProfessionsQualityIconSize = 0.4
 
 AHCC.Config.ProfessionsQualityActive = {false, false, true}

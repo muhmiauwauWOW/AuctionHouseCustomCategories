@@ -9,7 +9,7 @@ externals:
 
 
 move-folders:
-  AuctionHouseCustomCategories/data/TWW: AuctionHouseCustomCategories_Data_TWW
+  AuctionHouseCustomCategories/data/MN: AuctionHouseCustomCategories_Data_MN
     
 
 ignore:

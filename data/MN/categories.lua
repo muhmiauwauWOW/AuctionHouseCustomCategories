@@ -3,7 +3,7 @@ local L, _ = AHCC:GetLibs()
 
 
 Data.Config = {
-    expansionLevel = 11
+    expansionLevel = 10
 } 
 
 
@@ -15,15 +15,15 @@ Data.Categories = {
         categories =  {
             { name =  L["SOCKETS"] },
             { name =  L["SHOULDER"] },
-            { name =  L["CLOAK"] },
+            -- { name =  L["CLOAK"] },
             { name =  L["CHEST"] },
-            { name =  L["WRIST"] },
+            -- { name =  L["WRIST"] },
             -- { name =  L["WAIST"] },
             { name =  L["LEGS"] },
             { name =  L["FEET"] },
             { name =  L["FINGER"] ,  columns = {"Stat1", "Quality"}},
             { name =  L["WEAPON"] },
-            { name =  L["TOOL"] }
+            -- { name =  L["TOOL"] }
         }
     },
     {

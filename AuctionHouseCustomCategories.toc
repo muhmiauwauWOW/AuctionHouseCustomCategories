@@ -10,13 +10,11 @@
 ## X-Wago-ID: bGoMYk60
 ## X-WoWI-ID: 26837
 
-#@no-lib-strip@
 Libs\LibStub\LibStub.lua
 Libs\AceAddon-3.0\AceAddon-3.0.xml
 Libs\AceDB-3.0\AceDB-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
 Libs\LibLodash\LibLodash.lua
-#@end-no-lib-strip@
 
 
 locale\locale.xml

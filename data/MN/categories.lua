@@ -3,7 +3,7 @@ local L, _ = AHCC:GetLibs()
 
 
 Data.Config = {
-    expansionLevel = 10
+    expansionLevel = 11
 } 
 
 

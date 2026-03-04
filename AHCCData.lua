@@ -156,8 +156,7 @@ function AHCC_DATA__checkModules()
 
             AHCCCategoryList:Init()
             AHCCCategoryList:update()
-
-            DevTool:AddData(data)
+            
             --@do-not-package@
                 if UnitName("player") == "Muhmiauwaudk" then
                     --AHCCTest.checkData()

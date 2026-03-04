@@ -34,12 +34,7 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
-print("loaded")
-
-
     self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")
-
-
 
 	local checktime  = time() - (60 * 6)
 	if not self.db.global.lastScan or (self.db.global.lastScan and self.db.global.lastScan < checktime)  then

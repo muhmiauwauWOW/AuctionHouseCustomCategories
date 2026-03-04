@@ -3,7 +3,8 @@ local L, _ = AHCC:GetLibs()
 
 
 Data.Config = {
-    expansionLevel = 11
+    expansionLevel = 11,
+    mode = "merge"
 } 
 
 
@@ -13,7 +14,7 @@ Data.Categories = {
         name = L["Enchants"],
         id = "enchants",
         categories =  {
-            { name =  L["SOCKETS"] },
+            -- { name =  L["SOCKETS"] },
             { name =  L["SHOULDER"] },
             -- { name =  L["CLOAK"] },
             { name =  L["CHEST"] },

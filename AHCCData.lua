@@ -136,6 +136,8 @@ function AHCC_DATA__checkModules()
     if check then
         AHCC_DATA__ticker = C_Timer.NewTimer(0.01, function()
             AHCC_DATA__ticker:Cancel()
+            
+    
             local insertData =_.filter(DataTable, function(data)
                 return data.data.Config.mode == nil or data.data.Config.mode == "insert"
             end)
@@ -155,6 +157,7 @@ function AHCC_DATA__checkModules()
             AHCCCategoryList:Init()
             AHCCCategoryList:update()
 
+            DevTool:AddData(data)
             --@do-not-package@
                 if UnitName("player") == "Muhmiauwaudk" then
                     --AHCCTest.checkData()

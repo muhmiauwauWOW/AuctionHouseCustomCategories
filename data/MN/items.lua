@@ -2,7 +2,8 @@ local Data = AHCC:NewModule("DATA_MN_Items", AHCC_DATA)
 local L, _ = AHCC:GetLibs()
 
 Data.Config = {
-    expansionLevel = 10
+    expansionLevel = 11,
+    mode = "merge"
 } 
 
 local function getCategoryId(name, ...)

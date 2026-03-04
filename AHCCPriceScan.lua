@@ -46,6 +46,7 @@ function AHCCPriceScanMixin:startScan()
         
         self.inProgress = true
         self:RegisterForEvents()
+        print("repl")
         C_AuctionHouse.ReplicateItems()
     else
         self:SetText(L["cannot_initiate_scan"])

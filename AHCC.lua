@@ -34,7 +34,7 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
-
+print("loaded")
 
 
     self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")

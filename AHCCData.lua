@@ -137,10 +137,11 @@ function AHCC_DATA__checkModules()
         AHCC_DATA__ticker = C_Timer.NewTimer(0.01, function()
             AHCC_DATA__ticker:Cancel()
             
-    
             local insertData =_.filter(DataTable, function(data)
                 return data.data.Config.mode == nil or data.data.Config.mode == "insert"
             end)
+
+                -- DevTool:AddData(insertData)
 
             _.forEach(insertData, function(data)
                 AHCCData:add(data.data, "insert")
@@ -150,12 +151,32 @@ function AHCC_DATA__checkModules()
                 return  data.data.Config.mode == "merge"
             end)
 
+            -- DevTool:AddData(mergeData, "mergeData1")
             _.forEach(mergeData, function(data)
                 AHCCData:add(data.data, "merge")
             end)
 
+            --  DevTool:AddData(mergeData, "mergeData2")
+
             AHCCCategoryList:Init()
             AHCCCategoryList:update()
+
+
+
+            local allItems = AHCCItems:getAll()
+            AHCCItems.itemIDMap = {}
+            for _, item in ipairs(allItems) do
+                AHCCItems.itemIDMap[item.itemKey.itemID] = true
+            end
+
+            AHCCItems.itemIDMapSize = _.size(AHCCItems.itemIDMap)
+
+
+
+
+
+
+                --    DevTool:AddData(mergeData, "mergeData2")
             
             --@do-not-package@
                 if UnitName("player") == "Muhmiauwaudk" then

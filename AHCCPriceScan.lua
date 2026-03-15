@@ -1,94 +1,61 @@
 local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
-AHCCPriceScanMixin = {}
-
-local PRICE_SCAN_EVENTS = {
-    "REPLICATE_ITEM_LIST_UPDATE",
-    "AUCTION_HOUSE_CLOSED"
-}
-
-function AHCCPriceScanMixin:OnLoad()
-    local button = self.ScanButton
-    button:SetText(L["start_scan"])
-    button:SetWidth(button.Text:GetStringWidth() + 24) -- 24px Padding wie Blizzard-Standard
-
-    self.Text:SetPoint("RIGHT", button ,"LEFT", -10, 0)
-    
-    -- Initialize scan state
-    self.inProgress = false
-    self.scanData = {}
-    self.waitingForData = 0
-end
-
-function AHCCPriceScanMixin:ResetData()
-    self.scanData = {}
-    self.waitingForData = 0
-end
-
-function AHCCPriceScanMixin:ShowText()
-    self.Text:Show()
-end
-
-function AHCCPriceScanMixin:SetText(str)
-    self.Text:SetText(str)
-end
-
-function AHCCPriceScanMixin:HideText()
-    self.Text:Hide()
-end
-
-function AHCCPriceScanMixin:startScan()
-    if self:CanInitiate() then
-        self:SetText(L["start_scan"] .. "...")
-        self:ShowText()
-        self.ScanButton:SetEnabled(false)
-        
-        self.inProgress = true
-        self:RegisterForEvents()
-        C_AuctionHouse.ReplicateItems()
-    else
-        self:SetText(L["cannot_initiate_scan"])
-        self:ShowText()
-    end
-end
-
-function AHCCPriceScanMixin:CanInitiate()
-    return not self.inProgress
-end
-
-function AHCCPriceScanMixin:RegisterForEvents()
-    FrameUtil.RegisterFrameForEvents(self, PRICE_SCAN_EVENTS)
-end
-
-function AHCCPriceScanMixin:UnregisterForEvents()
-    FrameUtil.UnregisterFrameForEvents(self, PRICE_SCAN_EVENTS)
-end
-
--- LoadItemData copied from Auctionator Frame.lua
+-- LoadItemData copied from Baganator code
 local pendingItems = {}
-local itemFrame = CreateFrame("Frame")
-itemFrame.elapsed = 0
-itemFrame:SetScript("OnEvent", function(_, _, itemID)
-    if pendingItems[itemID] ~= nil then
-        local forItemID = pendingItems[itemID]
-        pendingItems[itemID] = nil
-        for _, callback in ipairs(forItemID) do
-            callback()
+local AHCCitemFrame = CreateFrame("Frame")
+AHCCitemFrame.inProgress = false;
+
+function AHCCitemFrame:ResetData() AHCCitemFrame.scanData = {} end
+
+function AHCCitemFrame:InitiateScan()
+    if self:CanInitiate() then C_AuctionHouse.ReplicateItems() end
+end
+
+function AHCCitemFrame:CanInitiate() return not self.inProgress end
+
+function AHCCitemFrame:CacheScanData()
+    if not self:CanInitiate() then return end
+    print("CacheScanData", self.inProgress)
+    self.inProgress = true
+    self:ResetData()
+    self.waitingForData = C_AuctionHouse.GetNumReplicateItems()
+
+    self:ProcessBatch(0, 250, self.waitingForData)
+end
+
+AuctionHouseFrame:HookScript("OnHide", function()
+    -- print("OnHide", AHCCitemFrame.inProgress)
+    if AHCCitemFrame.inProgress then
+        AHCCitemFrame.inProgress = false
+        AHCCitemFrame:ResetData()
+    end
+end)
+
+AHCCitemFrame:RegisterEvent("REPLICATE_ITEM_LIST_UPDATE")
+AHCCitemFrame.elapsed = 0
+AHCCitemFrame:SetScript("OnEvent", function(self, event, itemID)
+    if event == "REPLICATE_ITEM_LIST_UPDATE" then
+        if self:CanInitiate() then self:CacheScanData() end
+    else
+        if pendingItems[itemID] ~= nil then
+            local forItemID = pendingItems[itemID]
+            pendingItems[itemID] = nil
+            for _, callback in ipairs(forItemID) do callback() end
         end
     end
 end)
-itemFrame.OnUpdate = function(self, elapsed)
-    itemFrame.elapsed = itemFrame.elapsed + elapsed
-    if itemFrame.elapsed > 0.4 then
+AHCCitemFrame.OnUpdate = function(self, elapsed)
+    AHCCitemFrame.elapsed = AHCCitemFrame.elapsed + elapsed
+    if AHCCitemFrame.elapsed > 0.4 then
         for itemID in pairs(pendingItems) do
             C_Item.RequestLoadItemDataByID(itemID)
         end
-        itemFrame.elapsed = 0
+        AHCCitemFrame.elapsed = 0
     end
 
     if next(pendingItems) == nil then
-        itemFrame.elapsed = 0
+        AHCCitemFrame.elapsed = 0
         self:SetScript("OnUpdate", nil)
         self:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
     end
@@ -97,174 +64,148 @@ end
 local function LoadItemData(itemID, callback)
     pendingItems[itemID] = pendingItems[itemID] or {}
     table.insert(pendingItems[itemID], callback)
-    itemFrame:RegisterEvent("ITEM_DATA_LOAD_RESULT")
-    itemFrame:SetScript("OnUpdate", itemFrame.OnUpdate)
+    AHCCitemFrame:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+    AHCCitemFrame:SetScript("OnUpdate", AHCCitemFrame.OnUpdate)
     C_Item.RequestLoadItemDataByID(itemID)
 end
 
-function AHCCPriceScanMixin:OnShow()
-    -- Initialize but don't start automatically
-    self:ResetData()
-end
-
-function AHCCPriceScanMixin:CacheScanData()
-    self:SetText(L["processing_scan"])
-    self:ResetData()
-    self.waitingForData = C_AuctionHouse.GetNumReplicateItems()
-    
-    if self.waitingForData == 0 then
-        self:SetText(L["no_data_received"])
-        self:EndProcessing()
-        return
-    end
-    
-    self:ProcessBatch(0, 250, self.waitingForData)
-end
-
-function AHCCPriceScanMixin:ProcessBatch(startIndex, stepSize, limit)
+function AHCCitemFrame:ProcessBatch(startIndex, stepSize, limit)
     if startIndex >= limit then
         C_Timer.After(2, function()
-            if self.waitingForData > 0 then
-                self.waitingForData = 0
-                self:EndProcessing()
+            if AHCCitemFrame.waitingForData > 0 then
+                AHCCitemFrame.waitingForData = 0
+                AHCCitemFrame:EndProcessing()
             end
         end)
         return
     end
 
-    -- Update progress
-    local progress = math.floor((startIndex / limit) * 100)
-    self:SetText(string.format(L["processing_items"], progress))
+    local found = _.size(self.scanData)
+    local progress = (found / AHCCItems.itemIDMapSize) * 100
+    AHCC.PriceScan:SetText(string.format("%d / %d (%.1f%%)", found, AHCCItems.itemIDMapSize, progress))
 
-    local i = startIndex
-    while i < startIndex + stepSize and i < limit do
-        local info = { C_AuctionHouse.GetReplicateItemInfo(i) }
-        local link = C_AuctionHouse.GetReplicateItemLink(i)
-        local timeLeft = C_AuctionHouse.GetReplicateItemTimeLeft(i)
-        local index = i
 
-        -- Check if item exists
-        if not C_Item.DoesItemExistByID(info[17]) then
-            self.waitingForData = self.waitingForData - 1
-            if self.waitingForData == 0 then
-                self:EndProcessing()
-            end
-        elseif not info[18] then
-            LoadItemData(info[17], function()
-                local link = C_AuctionHouse.GetReplicateItemLink(index)
-                
-                self.waitingForData = self.waitingForData - 1
-                self.scanData[index + 1] = {
-                    replicateInfo = { C_AuctionHouse.GetReplicateItemInfo(index) },
+    local index = startIndex
+    while index < startIndex + stepSize and index < limit do
+        local info = {C_AuctionHouse.GetReplicateItemInfo(index)}
+
+        local itemID = info[17]
+        if itemID and C_Item.DoesItemExistByID(itemID) and AHCCItems.itemIDMap[itemID] then
+
+            local link = C_AuctionHouse.GetReplicateItemLink(index)
+            local timeLeft = C_AuctionHouse.GetReplicateItemTimeLeft(index)
+
+            local capturedIndex = index
+            if not info[18] then
+                LoadItemData(itemID, function()
+                    AHCCitemFrame.scanData[itemID] = {
+                        replicateInfo = {
+                            C_AuctionHouse.GetReplicateItemInfo(capturedIndex)
+                        },
+                        itemLink = C_AuctionHouse.GetReplicateItemLink(
+                            capturedIndex),
+                        timeLeft = C_AuctionHouse.GetReplicateItemTimeLeft(
+                            capturedIndex)
+                    }
+                    self.waitingForData = self.waitingForData - 1
+                    if self.waitingForData == 0 then self:EndProcessing() end
+                end)
+            else
+                AHCCitemFrame.scanData[itemID] = {
+                    replicateInfo = info,
                     itemLink = link,
-                    timeLeft = C_AuctionHouse.GetReplicateItemTimeLeft(index),
+                    timeLeft = timeLeft
                 }
-
-                if self.waitingForData == 0 then
-                    self:EndProcessing()
-                end
-            end)
+                self.waitingForData = self.waitingForData - 1
+                if self.waitingForData == 0 then self:EndProcessing() end
+            end
         else
             self.waitingForData = self.waitingForData - 1
-            self.scanData[index + 1] = {
-                replicateInfo = info,
-                itemLink = link,
-                timeLeft = timeLeft,
-            }
-
-            if self.waitingForData == 0 then
-                self:EndProcessing()
-            end
+            if self.waitingForData == 0 then self:EndProcessing() end
         end
 
-        i = i + 1
+        index = index + 1
     end
 
     C_Timer.After(0.01, function()
-        self:ProcessBatch(startIndex + stepSize, stepSize, limit)
+        AHCCitemFrame:ProcessBatch(startIndex + stepSize, stepSize, limit)
     end)
 end
 
+function AHCCitemFrame:EndProcessing()
+    local count = 0
+    _.forEach(self.scanData, function(scanItem, itemID)
+        local replicateInfo = scanItem.replicateInfo
+        if scanItem.itemLink and replicateInfo then
+            local stackSize = replicateInfo[3]
+            local buyoutPrice = replicateInfo[10]
+
+            -- Only update price if we have this item in our system
+            if stackSize and buyoutPrice and stackSize > 0 and buyoutPrice > 0 then
+                local effectivePrice = buyoutPrice / stackSize
+                print("updatePrice", itemID)
+                local success = AHCCItems:updatePrice(itemID, effectivePrice)
+                if success then count = count + 1 end
+            end
+        end
+    end)
+
+    AHCC.db.global.lastScan = time()
+
+    AHCC.PriceScan:Done()
+    AHCC.PriceScan:SetText("")
+end
+
+AHCCPriceScanMixin = {}
+
+function AHCCPriceScanMixin:OnLoad()
+    local button = self.ScanButton
+    button:SetText(L["start_scan"])
+    button:SetWidth(button.Text:GetStringWidth() + 24) -- 24px Padding wie Blizzard-Standard
+
+    self.Text:SetPoint("RIGHT", button, "LEFT", -10, 0)
+
+end
+
+function AHCCPriceScanMixin:ShowText() self.Text:Show() end
+
+function AHCCPriceScanMixin:SetText(str) self.Text:SetText(str) end
+
+function AHCCPriceScanMixin:HideText() self.Text:Hide() end
+
+function AHCCPriceScanMixin:startScan()
+    if AHCCitemFrame:CanInitiate() then
+        self:SetText(L["start_scan"] .. "...")
+        self:ShowText()
+        self.ScanButton:SetEnabled(false)
+
+        AHCCitemFrame:InitiateScan()
+    else
+        self:SetText(L["cannot_initiate_scan"])
+        self:ShowText()
+    end
+end
+
+local itemFrame = CreateFrame("Frame")
+itemFrame:RegisterEvent("COMMODITY_SEARCH_RESULTS_UPDATED")
+itemFrame.elapsed = 0
+itemFrame:SetScript("OnEvent", function(self, event, itemID)
+    -- print("itemFrame", event)
+
+    if event == "COMMODITY_SEARCH_RESULTS_UPDATED" then
+        local result = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
+        if not result then return end
+        local success = AHCCItems:updatePrice(itemID, result.unitPrice)
+        if not success then return end
+        C_Timer.After(0.1, function() AHCCPriceScanMixin:Done() end)
+    end
+
+end)
+function AHCCPriceScanMixin:OnShow() end
 function AHCCPriceScanMixin:Done()
     AuctionHouseFrame.BrowseResultsFrame:Reset()
     AuctionHouseFrame.BrowseResultsFrame.ItemList:DirtyScrollFrame();
     AHCC:performSearch(true)
 end
 
-function AHCCPriceScanMixin:OnHide()
-    self:UnregisterForEvents()
-    if self.inProgress then
-        self.inProgress = false
-        self:ResetData()
-    end
-end
-
-function AHCCPriceScanMixin:OnEvent(event, ...)
-    if event == "REPLICATE_ITEM_LIST_UPDATE" then
-        FrameUtil.UnregisterFrameForEvents(self, { "REPLICATE_ITEM_LIST_UPDATE" })
-        self:CacheScanData()
-    elseif event == "AUCTION_HOUSE_CLOSED" then
-        self:UnregisterForEvents()
-        
-        if self.inProgress then
-            self.inProgress = false
-            self:ResetData()
-            self:SetText(L["scan_aborted_ah_closed"])
-            self.ScanButton:SetEnabled(true)
-        end
-    end
-end
-
-function AHCCPriceScanMixin:EndProcessing()
-    local fixedScanData = {}
-
-
-    --  AHCC.PriceScan.items = CopyTable(self.browseResults)
-    
-    -- Remove nil holes for items that have missing item data
-    for i = 1, #self.scanData do
-        if self.scanData[i] ~= nil then
-            table.insert(fixedScanData, self.scanData[i])
-        end
-    end
-    
-    -- Get all items we have in our system
-    local allItems = AHCCItems:getAll()
-    local itemIDMap = {}
-    for _, item in ipairs(allItems) do
-        itemIDMap[item.itemKey.itemID] = true
-    end
-    
-    -- Process the scan data and update prices only for items we have
-    local count = 0
-    for _, scanItem in ipairs(fixedScanData) do
-        local replicateInfo = scanItem.replicateInfo
-        local itemLink = scanItem.itemLink
-        
-        if itemLink and replicateInfo then
-            local itemID = replicateInfo[17]
-            local stackSize = replicateInfo[3]
-            local buyoutPrice = replicateInfo[10]
-            
-            -- Only update price if we have this item in our system
-            if itemID and stackSize and buyoutPrice and stackSize > 0 and buyoutPrice > 0 and itemIDMap[itemID] then
-                local effectivePrice = buyoutPrice / stackSize
-                local success = AHCCItems:updatePrice(itemID, effectivePrice)
-                if success then 
-                    count = count + 1
-                end 
-            end
-        end
-    end
-    
-    AHCC.db.global.lastScan = time()
-    self.inProgress = false
-    self:ResetData()
-    self:UnregisterForEvents()
-    
-    self:SetText(string.format(L["scan_complete"], count))
-    self.ScanButton:SetEnabled(true)
-    
-    -- Refresh the auction house view
-    self:Done()
-end
+function AHCCPriceScanMixin:OnHide() end

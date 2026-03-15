@@ -18,8 +18,15 @@
    </Frame>
 
 
+   <Frame name="AHCCFullScanFrameTemplate" hidden="true" mixin="AHCCFullScanFrameMixin" virtual="true">
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnEvent method="OnEvent" />
+    </Scripts>
+  </Frame>
 
-   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AHCCBrowseResultsFrame" enableMouse="true" hidden="true" mixin="AHCCPriceScanMixin" virtual="true">
+
+   <Frame name="AHCCPriceScanTemplate" frameStrata="MEDIUM" frameLevel="390"  parent="AHCCBrowseResultsFrame" enableMouse="true" mixin="AHCCPriceScanMixin" virtual="true">
       <Size x="160" y="26"/>
       <Anchors>
          <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" x="3" y="3"/>
@@ -46,7 +53,6 @@
          <OnLoad method="OnLoad"/>
          <OnShow method="OnShow"/>
          <OnHide method="OnHide"/>
-         <OnEvent method="OnEvent"/>
       </Scripts>
    </Frame>
 

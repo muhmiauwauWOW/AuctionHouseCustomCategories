@@ -22,7 +22,7 @@ local DBdefaults = {
     profile = {
     },
     char = {
-        QualitySelected = {false, false, true}
+        QualitySelected = {true, true}
     }
 
 }

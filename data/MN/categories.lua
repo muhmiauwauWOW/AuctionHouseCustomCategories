@@ -14,12 +14,9 @@ Data.Categories = {
         name = L["Enchants"],
         id = "enchants",
         categories =  {
-            -- { name =  L["SOCKETS"] },
+             { name =  L["HEAD"] },
             { name =  L["SHOULDER"] },
-            -- { name =  L["CLOAK"] },
             { name =  L["CHEST"] },
-            -- { name =  L["WRIST"] },
-            -- { name =  L["WAIST"] },
             { name =  L["LEGS"] },
             { name =  L["FEET"] },
             { name =  L["FINGER"] ,  columns = {"Stat1", "Quality"}},

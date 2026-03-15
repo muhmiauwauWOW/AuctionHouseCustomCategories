@@ -16,7 +16,6 @@ function AHCCitemFrame:CanInitiate() return not self.inProgress end
 
 function AHCCitemFrame:CacheScanData()
     if not self:CanInitiate() then return end
-    print("CacheScanData", self.inProgress)
     self.inProgress = true
     self:ResetData()
     self.waitingForData = C_AuctionHouse.GetNumReplicateItems()
@@ -25,7 +24,6 @@ function AHCCitemFrame:CacheScanData()
 end
 
 AuctionHouseFrame:HookScript("OnHide", function()
-    -- print("OnHide", AHCCitemFrame.inProgress)
     if AHCCitemFrame.inProgress then
         AHCCitemFrame.inProgress = false
         AHCCitemFrame:ResetData()
@@ -143,7 +141,6 @@ function AHCCitemFrame:EndProcessing()
             -- Only update price if we have this item in our system
             if stackSize and buyoutPrice and stackSize > 0 and buyoutPrice > 0 then
                 local effectivePrice = buyoutPrice / stackSize
-                print("updatePrice", itemID)
                 local success = AHCCItems:updatePrice(itemID, effectivePrice)
                 if success then count = count + 1 end
             end
@@ -190,7 +187,6 @@ local itemFrame = CreateFrame("Frame")
 itemFrame:RegisterEvent("COMMODITY_SEARCH_RESULTS_UPDATED")
 itemFrame.elapsed = 0
 itemFrame:SetScript("OnEvent", function(self, event, itemID)
-    -- print("itemFrame", event)
 
     if event == "COMMODITY_SEARCH_RESULTS_UPDATED" then
         local result = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)

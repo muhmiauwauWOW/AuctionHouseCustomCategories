@@ -209,12 +209,14 @@ function AHCCBrowseResultsMixin:performSearch(refresh)
         local function trim(s)
             return (s:gsub("^%s*(.-)%s*$", "%1"))
         end
-        local searchString = trim(AuctionHouseFrame.SearchBar.SearchBox:GetSearchString())
+        local rawSearch = AuctionHouseFrame.SearchBar.SearchBox:GetSearchString() or ""
+        local searchString = trim(rawSearch)
         local results = AHCCItems:getByNav(nav)
         
         if (searchString ~= "") then 
             results = _.filter(results, function(filterEntry)
-                return string.find(string.lower(filterEntry.Name), string.lower(searchString), 1, true)
+                local name = (filterEntry and filterEntry.Name) or ""
+                return string.find(string.lower(name), string.lower(searchString), 1, true)
             end)
         end
     

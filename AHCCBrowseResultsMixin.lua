@@ -205,6 +205,7 @@ end
 
 
 function AHCCBrowseResultsMixin:performSearch(refresh)
+    if not AHCC.Nav then return end
     local getResultsObj = function(nav)
         local function trim(s)
             return (s:gsub("^%s*(.-)%s*$", "%1"))

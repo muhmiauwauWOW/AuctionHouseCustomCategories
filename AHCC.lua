@@ -59,7 +59,6 @@ function AHCC:ElvSkin()
 
     S:HandleButton(AHCCQualitySelectFrame.Quality1Button)
     S:HandleButton(AHCCQualitySelectFrame.Quality2Button)
-    S:HandleButton(AHCCQualitySelectFrame.Quality3Button)
 
 	local function HandleHeaders(frame)
 		local maxHeaders = frame.HeaderContainer:GetNumChildren()

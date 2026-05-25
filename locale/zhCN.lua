@@ -5,8 +5,7 @@ if not L then return end
 L["PRISMATIC_GEM"] = "棱彩"
 
 L["CELL_STAMINA"] = "耐力"
-L["Draconic Missive"] = "龙语公函"
-L["Algari Missive"] = "阿加公函"
+L["Thalassian Missive"] = "萨拉斯公函"
 L["Embellishments"] = "美化"
 L["Flasks"] = "合剂"
 L["Food"] = "食物"

@@ -42,8 +42,7 @@ L["TemporaryEnhancements"] = "Temporary Enhancements"
 
 
 L["Optional Reagents"] = "Optional Reagents"
-L["Draconic Missive"] = "Draconic Missive"
-L["Algari Missive"] = "Algari Missive"
+L["Thalassian Missive"] = "Thalassian Missive"
 L["Embellishments"] = "Embellishments"
 
 L["Runes"] = "Runes"

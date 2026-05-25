@@ -10,8 +10,7 @@ L["PRISMATIC_GEM"] = "Prismatisch"
 
 L["Optional Reagents"] = "Optionale Reagenzien"
 L["Embellishments"] = "Verziert"
-L["Draconic Missive"] = "Drakonische Schreiben"
-L["Algari Missive"] = "Algarisches Schreiben"
+L["Thalassian Missive"] = "Thalassisches Schreiben"
 
 L["SOCKETS"] = "Sockel"
 L["Runes"] = "Runen"

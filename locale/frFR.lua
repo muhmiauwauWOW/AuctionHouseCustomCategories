@@ -9,8 +9,7 @@ if not L then return end
 L["PRISMATIC_GEM"] = "Prismatique"
 
 L["Optional Reagents"] = "Composants optionnels"
-L["Draconic Missive"] = "Missive draconique"
-L["Algari Missive"] = "Missive algarie"
+L["Thalassian Missive"] = "Missive thalassienne"
 L["CELL_STAMINA"] = "Endurance"
 L["Consumables"] = "Consommables"
 L["Enchants"] = "Enchantements"

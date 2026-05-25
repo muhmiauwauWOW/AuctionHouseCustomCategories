@@ -52,7 +52,7 @@ Data.Categories = {
         id = "optionalReagents",
         categories =  {
             { 
-                name = L["Algari Missive"],
+                name = L["Thalassian Missive"],
                 columns = {"Stat1", "Stat2", "Quality"},
                 categories =  {
                     { name = L["CRITICAL_STRIKE"], columns = {"Stat2", "Quality"} },

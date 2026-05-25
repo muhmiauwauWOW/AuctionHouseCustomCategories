@@ -5,9 +5,8 @@ if not L then return end
 
 L["PRISMATIC_GEM"] = "Бесцветные"
 
-L["Algari Missive"] = "Алгарийское послание"
+L["Thalassian Missive"] = "Талассийское послание"
 L["CELL_STAMINA"] = "Выносливость"
-L["Draconic Missive"] = "Драконье послание"
 L["Embellishments"] = "Украшения"
 L["Flasks"] = "Флаконы"
 L["Food"] = "Еда"

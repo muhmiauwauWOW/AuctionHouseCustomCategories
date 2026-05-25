@@ -168,22 +168,22 @@ Data.Items = {
         {["id"] = 242290}, -- Wise Tails
         {["id"] = 242296} -- Bloodthistle-wrapped Cutlets
     },
-    [getCategoryId("optionalReagents", "Algari Missive", "CRITICAL_STRIKE")] = {
+    [getCategoryId("optionalReagents", "Thalassian Missive", "CRITICAL_STRIKE")] = {
         {["Stat1"] = 1, ["Stat2"] = 2, ["id"] = {245785, 245786}}, -- Thalassian Missive of the Fireflash
         {["Stat1"] = 1, ["Stat2"] = 3, ["id"] = {245789, 245790}}, -- Thalassian Missive of the Peerless
         {["Stat1"] = 1, ["Stat2"] = 4, ["id"] = {245791, 245792}} -- Thalassian Missive of the Quickblade
     },
-    [getCategoryId("optionalReagents", "Algari Missive", "HASTE")] = {
+    [getCategoryId("optionalReagents", "Thalassian Missive", "HASTE")] = {
         {["Stat1"] = 2, ["Stat2"] = 1, ["id"] = {245785, 245786}}, -- Thalassian Missive of the Fireflash
-        {["Stat1"] = 2, ["Stat2"] = 3, ["id"] = {245784, 245783}}, -- Thalassian Missive of the Feverflare
+        {["Stat1"] = 2, ["Stat2"] = 3, ["id"] = {245783, 245784}}, -- Thalassian Missive of the Feverflare
         {["Stat1"] = 2, ["Stat2"] = 4, ["id"] = {245781, 245782}} -- Thalassian Missive of the Aurora                   
     },
-    [getCategoryId("optionalReagents", "Algari Missive", "MASTERY")] = {
+    [getCategoryId("optionalReagents", "Thalassian Missive", "MASTERY")] = {
         {["Stat1"] = 3, ["Stat2"] = 1, ["id"] = {245789, 245790}}, -- Thalassian Missive of the Peerless
-        {["Stat1"] = 3, ["Stat2"] = 2, ["id"] = {245784, 245783}}, -- Thalassian Missive of the Feverflare
+        {["Stat1"] = 3, ["Stat2"] = 2, ["id"] = {245783, 245784}}, -- Thalassian Missive of the Feverflare
         {["Stat1"] = 3, ["Stat2"] = 4, ["id"] = {245787, 245788}} -- Thalassian Missive of the Harmonious
     },
-    [getCategoryId("optionalReagents", "Algari Missive", "VERSATILITY")] = {
+    [getCategoryId("optionalReagents", "Thalassian Missive", "VERSATILITY")] = {
         {["Stat1"] = 4, ["Stat2"] = 1, ["id"] = {245791, 245792}}, -- Thalassian Missive of the Quickblade
         {["Stat1"] = 4, ["Stat2"] = 2, ["id"] = {245781, 245782}}, -- Thalassian Missive of the Aurora
         {["Stat1"] = 4, ["Stat2"] = 3, ["id"] = {245787, 245788}} -- Thalassian Missive of the Harmonious

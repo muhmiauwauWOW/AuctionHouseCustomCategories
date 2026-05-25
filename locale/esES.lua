@@ -35,3 +35,17 @@ L["cannot_initiate_scan"] = "No se puede iniciar el escaneo - ya activo o demasi
 L["scan_aborted_ah_closed"] = "Escaneo abortado - casa de subastas cerrada"
 L["scan_complete"] = "Escaneo completado - %d precios actualizados"
 L["processing_items"] = "Procesando objetos: %d%%"
+
+L["opt_Desc"] = "Haz clic derecho en un objeto para añadirlo o eliminarlo de una categoría personalizada."
+L["opt_dropdown_name"] = "Categoría"
+L["opt_dropdown_desc"] = "Selecciona una categoría para gestionar"
+L["opt_btn_add_rename"] = "Añadir/Renombrar"
+L["opt_new_category_prompt"] = "Nombre de la nueva categoría"
+L["opt_rename_prefix"] = "Renombrar: "
+L["opt_btn_up"] = "Arriba"
+L["opt_btn_down"] = "Abajo"
+L["opt_CharacterDelete_btn_name"] = "Eliminar"
+L["opt_CharacterDelete_confirm_text"] = "¿Estás seguro de que quieres eliminar esta categoría?"
+
+L["ctx_remove_from"] = "Quitar de: "
+L["ctx_add_to"] = "Añadir a: "

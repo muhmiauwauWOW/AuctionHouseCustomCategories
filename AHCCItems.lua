@@ -19,6 +19,16 @@ end
 function AHCCItems:add(Item)
     tAppendAll(self.items, self:formatToResultLines(Item))
 end
+
+function AHCCItems:remove(Item)
+    for index, value in ipairs(self.items) do
+        if value.itemKey.itemID == Item.id and value.nav == Item.nav then
+            table.remove(self.items, index)
+        end
+    end
+end
+
+
 function AHCCItems:initPrices()
      if _.size(self.items) == 0 then return end
     local newItems = {}

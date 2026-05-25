@@ -64,3 +64,17 @@ L["cannot_initiate_scan"] = "Cannot initiate scan - already in progress or too s
 L["scan_aborted_ah_closed"] = "Scan aborted - auction house closed"
 L["scan_complete"] = "Scan complete - %d prices updated"
 L["processing_items"] = "Processing items: %d%%"
+
+L["opt_Desc"] = "Right-click an item to add or remove it from a custom category."
+L["opt_dropdown_name"] = "Category"
+L["opt_dropdown_desc"] = "Select a category to manage"
+L["opt_btn_add_rename"] = "Add/Rename"
+L["opt_new_category_prompt"] = "Name of new Category"
+L["opt_rename_prefix"] = "Rename: "
+L["opt_btn_up"] = "Up"
+L["opt_btn_down"] = "Down"
+L["opt_CharacterDelete_btn_name"] = "Delete"
+L["opt_CharacterDelete_confirm_text"] = "Are you sure you want to delete this category?"
+
+L["ctx_remove_from"] = "Remove from: "
+L["ctx_add_to"] = "Add to: "

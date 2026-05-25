@@ -28,3 +28,17 @@ L["scan_aborted_ah_closed"] = "스캔 취소 - 경매장이 닫혔습니다"
 L["scan_complete"] = "스캔 완료 - %d개 가격 업데이트됨"
 L["processing_items"] = "항목 처리 중: %d%%"
 
+L["opt_Desc"] = "아이템을 오른쪽 클릭하여 사용자 정의 카테고리에 추가하거나 제거하세요."
+L["opt_dropdown_name"] = "카테고리"
+L["opt_dropdown_desc"] = "관리할 카테고리를 선택하세요"
+L["opt_btn_add_rename"] = "추가/이름 바꾸기"
+L["opt_new_category_prompt"] = "새 카테고리 이름"
+L["opt_rename_prefix"] = "이름 바꾸기: "
+L["opt_btn_up"] = "위로"
+L["opt_btn_down"] = "아래로"
+L["opt_CharacterDelete_btn_name"] = "삭제"
+L["opt_CharacterDelete_confirm_text"] = "이 카테고리를 삭제하시겠습니까?"
+
+L["ctx_remove_from"] = "제거: "
+L["ctx_add_to"] = "추가: "
+

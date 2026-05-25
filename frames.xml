@@ -6,6 +6,25 @@
    <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 
 
+<Frame name="AHCCDescTemplate" mixin="AHCCDescTemplateMixin" virtual="true">
+       <Size y="40"/>
+	   <Layers>
+            <Layer level="OVERLAY">
+                <FontString parentKey="Text" inherits="NumberFont_Normal_Med" justifyH="LEFT" justifyV="TOP" wordwrap="true">
+					<Color r="1.0" g="1.0" b="1.0"/>
+					<Shadow x="1" y="-1">
+						<Color r="0" g="0" b="0"/>
+					</Shadow>
+					<Anchors>
+						<Anchor point="TOP" x="0" />
+						<Anchor point="LEFT" x="0" />
+						<Anchor point="RIGHT" x="0" />
+					</Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+	</Frame>
+
    <Frame name="AHCCTableCellMoneyTemplate" mixin="AHCCTableCellMoneyMixin" inherits="AuctionHouseTableMoneyDisplayTemplate" virtual="true" >
       <Layers>
 			<Layer level="BACKGROUND">

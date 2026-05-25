@@ -30,9 +30,11 @@ AHCCBrowseResultsMixin.lua
 frames.xml
 
 
+AHCCCustom.lua
 
 AHCCItems.lua
 AHCCCategory.lua
 AHCCData.lua
 AHCCCategoryList.lua
 
+AHCCOptions.lua

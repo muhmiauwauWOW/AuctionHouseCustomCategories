@@ -29,3 +29,17 @@ L["scan_aborted_ah_closed"] = "Scan annulé - hôtel des ventes fermé"
 L["scan_complete"] = "Scan terminé - %d prix mis à jour"
 L["processing_items"] = "Traitement des objets : %d%%"
 
+L["opt_Desc"] = "Faites un clic droit sur un objet pour l'ajouter ou le retirer d'une catégorie personnalisée."
+L["opt_dropdown_name"] = "Catégorie"
+L["opt_dropdown_desc"] = "Sélectionnez une catégorie à gérer"
+L["opt_btn_add_rename"] = "Ajouter/Renommer"
+L["opt_new_category_prompt"] = "Nom de la nouvelle catégorie"
+L["opt_rename_prefix"] = "Renommer : "
+L["opt_btn_up"] = "Haut"
+L["opt_btn_down"] = "Bas"
+L["opt_CharacterDelete_btn_name"] = "Supprimer"
+L["opt_CharacterDelete_confirm_text"] = "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
+
+L["ctx_remove_from"] = "Retirer de : "
+L["ctx_add_to"] = "Ajouter à : "
+

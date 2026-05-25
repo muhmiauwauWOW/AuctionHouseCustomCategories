@@ -24,3 +24,17 @@ L["cannot_initiate_scan"] = "Невозможно начать скан - уже
 L["scan_aborted_ah_closed"] = "Сканирование прервано - аукционный дом закрыт"
 L["scan_complete"] = "Скан завершен - обновлено %d цен"
 L["processing_items"] = "Обработка предметов: %d%%"
+
+L["opt_Desc"] = "Нажмите правой кнопкой мыши на предмет, чтобы добавить или удалить его из пользовательской категории."
+L["opt_dropdown_name"] = "Категория"
+L["opt_dropdown_desc"] = "Выберите категорию для управления"
+L["opt_btn_add_rename"] = "Добавить/Переименовать"
+L["opt_new_category_prompt"] = "Название новой категории"
+L["opt_rename_prefix"] = "Переименовать: "
+L["opt_btn_up"] = "Вверх"
+L["opt_btn_down"] = "Вниз"
+L["opt_CharacterDelete_btn_name"] = "Удалить"
+L["opt_CharacterDelete_confirm_text"] = "Вы уверены, что хотите удалить эту категорию?"
+
+L["ctx_remove_from"] = "Удалить из: "
+L["ctx_add_to"] = "Добавить в: "

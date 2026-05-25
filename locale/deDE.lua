@@ -32,3 +32,17 @@ L["cannot_initiate_scan"] = "Scan kann nicht gestartet werden - bereits aktiv od
 L["scan_aborted_ah_closed"] = "Scan abgebrochen - Auktionshaus geschlossen"
 L["scan_complete"] = "Scan abgeschlossen - %d Preise aktualisiert"
 L["processing_items"] = "Verarbeite Items: %d%%"
+
+L["opt_Desc"] = "Rechtsklicke auf ein Item, um es einer benutzerdefinierten Kategorie hinzuzufügen oder daraus zu entfernen."
+L["opt_dropdown_name"] = "Kategorie"
+L["opt_dropdown_desc"] = "Wähle eine Kategorie zum Verwalten"
+L["opt_btn_add_rename"] = "Hinzufügen/Umbenennen"
+L["opt_new_category_prompt"] = "Name der neuen Kategorie"
+L["opt_rename_prefix"] = "Umbenennen: "
+L["opt_btn_up"] = "Hoch"
+L["opt_btn_down"] = "Runter"
+L["opt_CharacterDelete_btn_name"] = "Löschen"
+L["opt_CharacterDelete_confirm_text"] = "Bist du sicher, dass du diese Kategorie löschen möchtest?"
+
+L["ctx_remove_from"] = "Entfernen aus: "
+L["ctx_add_to"] = "Hinzufügen zu: "

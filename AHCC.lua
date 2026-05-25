@@ -41,13 +41,7 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
-    -- self.db.global.customCategories = DBdefaults.global.customCategories
-    -- self.db.global.customItems = DBdefaults.global.customItems
-
-
-
-    self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame,
-                                 "AHCCPriceScanTemplate")
+    self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")
 
     local checktime = time() - (60 * 6)
     if not self.db.global.lastScan or

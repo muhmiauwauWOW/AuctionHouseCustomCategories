@@ -41,8 +41,8 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
-    self.db.global.customCategories = DBdefaults.global.customCategories
-    self.db.global.customItems = DBdefaults.global.customItems
+    -- self.db.global.customCategories = DBdefaults.global.customCategories
+    -- self.db.global.customItems = DBdefaults.global.customItems
 
 
 

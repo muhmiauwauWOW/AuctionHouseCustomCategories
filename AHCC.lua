@@ -41,6 +41,13 @@ function AHCC:OnInitialize()
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
 
+    if Auctionator and Auctionator.API and Auctionator.API.v1 and
+        type(Auctionator.API.v1.GetAuctionPriceByItemID) == "function" then
+        AHCCItems:registerPriceProvider("Auctionator", function(itemID)
+            return Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", itemID)
+        end)
+    end
+
     self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")
 
     local checktime = time() - (60 * 6)

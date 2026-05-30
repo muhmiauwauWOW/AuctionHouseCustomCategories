@@ -161,12 +161,19 @@ function AHCCCustom:inject(DataTable)
     table.insert(DataTable, DbData1)
     table.insert(DataTable, DbData2)
 
-    DevTool:AddData(AHCC.db.global.customItems, "customItems")
+    if DevTool and DevTool.AddData then
+        DevTool:AddData(AHCC.db.global.customItems, "customItems")
+    end
+
     return DataTable
 end
 
 function AHCCCustom:addItemToCat(catName, itemId)
-    DevTool:AddData(AHCC.db.global.customItems, catName)
+
+    if DevTool and DevTool.AddData then
+        DevTool:AddData(AHCC.db.global.customItems, catName)
+    end
+
     table.insert(AHCC.db.global.customItems[catName], {["id"] = {itemId}})
 
     AHCCItems:add({nav = catName, id = {itemId}})
@@ -174,7 +181,10 @@ end
 
 function AHCCCustom:addItemFromCat(catName, itemId)
 
-    DevTool:AddData(AHCC.db.global.customItems[catName], catName)
+    if DevTool and DevTool.AddData then
+        DevTool:AddData(AHCC.db.global.customItems[catName], catName)
+    end
+
     if not AHCC.db.global.customItems[catName] then return end
 
     local function removeByValue(arr, value)

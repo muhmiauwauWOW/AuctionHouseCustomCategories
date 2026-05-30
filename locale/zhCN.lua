@@ -39,3 +39,5 @@ L["opt_CharacterDelete_confirm_text"] = "确定要删除此分类吗？"
 L["ctx_remove_from"] = "从以下移除: "
 L["ctx_add_to"] = "添加到: "
 L["TemporaryEnhancements"] = "临时性附魔"
+
+L["My Warband Items"] = "战团收藏"

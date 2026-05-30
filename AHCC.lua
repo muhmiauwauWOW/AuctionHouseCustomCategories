@@ -19,7 +19,7 @@ local DBdefaults = {
         customCategories = {
             {
                 order = 1,
-                name = "My Warband Items",
+                name = "L["My Warband Items"]",
                 id = "myItems",
                 categories = {}
             }

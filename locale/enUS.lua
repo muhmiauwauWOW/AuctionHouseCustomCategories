@@ -78,3 +78,5 @@ L["opt_CharacterDelete_confirm_text"] = "Are you sure you want to delete this ca
 
 L["ctx_remove_from"] = "Remove from: "
 L["ctx_add_to"] = "Add to: "
+
+L["My Warband Items"] = "My Warband Items"

@@ -4,6 +4,7 @@ local L, _ = AHCC:GetLibs()
 
 AHCCItems = {}
 AHCCItems.items = {}
+AHCCItems.priceProviders = {}
 
 -- AuctionHouseFrame:HookScript("OnShow" , function()
 --     AHCCItems.prices =  AHCC.db.global.prices
@@ -117,8 +118,25 @@ function AHCCItems:setPrice(id, price)
     AHCC.db.global.prices[id] = price
 end
 
-function AHCCItems:getPrice(id)    
-    return _.get(AHCC.db.global.prices, { id }, -1)
+function AHCCItems:registerPriceProvider(name, func)
+    if not name or type(func) ~= "function" then return false end
+    table.insert(self.priceProviders, {name = name, func = func})
+    return true
+end
+
+function AHCCItems:getPrice(id)
+    -- Prefer provider prices first, then fall back to stored prices
+    for _, p in ipairs(self.priceProviders or {}) do
+        local ok, pprice = pcall(p.func, id)
+        if ok and pprice and type(pprice) == "number" and pprice > 0 then
+            return pprice
+        end
+    end
+
+    local stored = _.get(AHCC.db.global.prices, { id })
+    if stored and stored ~= -1 then return stored end
+
+    return -1
 end
 
 function AHCCItems:checkPrice(id)    

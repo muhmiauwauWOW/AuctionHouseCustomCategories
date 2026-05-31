@@ -19,7 +19,7 @@ local DBdefaults = {
         customCategories = {
             {
                 order = 1,
-                name = "My Warband Items",
+                name = L["My Warband Items"],
                 id = "myItems",
                 categories = {}
             }
@@ -40,6 +40,13 @@ function AHCC:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("AHCCDB3", DBdefaults, true)
     AHCC.Config.ProfessionsQualityActive = self.db.char.QualitySelected
     AHCCItems:Init()
+
+    if Auctionator and Auctionator.API and Auctionator.API.v1 and
+        type(Auctionator.API.v1.GetAuctionPriceByItemID) == "function" then
+        AHCCItems:registerPriceProvider("Auctionator", function(itemID)
+            return Auctionator.API.v1.GetAuctionPriceByItemID("AHCC", itemID)
+        end)
+    end
 
     self.PriceScan = CreateFrame("Frame", nil, AHCCBrowseResultsFrame, "AHCCPriceScanTemplate")
 

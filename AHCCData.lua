@@ -2,6 +2,9 @@ local AHCC = LibStub("AceAddon-3.0"):GetAddon("AHCC")
 local L, _ = AHCC:GetLibs()
 
 AHCCData = {}
+AHCCItems = AHCCItems or {}
+AHCCItems.add = AHCCItems.add or function() end
+AHCCItems.initPrices = AHCCItems.initPrices or function() end
 
 function AHCCData:checkVersion(obj)
     if obj.versionStart and obj.versionEnd then
@@ -78,6 +81,11 @@ function AHCCData:add(data, mode)
     -- AHCCItems
 
     local function addItemsRecursiv(data, parent)
+        if not AHCCItems or type(AHCCItems.add) ~= "function" then
+            print("AHCCData: AHCCItems is not available, skipping item registration")
+            return
+        end
+
         _.forEach(data, function(entry, key)
             if _.isString(key) then
                 addItemsRecursiv(entry, key)

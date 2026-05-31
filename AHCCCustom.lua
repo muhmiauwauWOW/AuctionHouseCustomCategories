@@ -161,18 +161,10 @@ function AHCCCustom:inject(DataTable)
     table.insert(DataTable, DbData1)
     table.insert(DataTable, DbData2)
 
-    if DevTool and DevTool.AddData then
-        DevTool:AddData(AHCC.db.global.customItems, "customItems")
-    end
-
     return DataTable
 end
 
 function AHCCCustom:addItemToCat(catName, itemId)
-
-    if DevTool and DevTool.AddData then
-        DevTool:AddData(AHCC.db.global.customItems, catName)
-    end
 
     table.insert(AHCC.db.global.customItems[catName], {["id"] = {itemId}})
 
@@ -180,10 +172,6 @@ function AHCCCustom:addItemToCat(catName, itemId)
 end
 
 function AHCCCustom:addItemFromCat(catName, itemId)
-
-    if DevTool and DevTool.AddData then
-        DevTool:AddData(AHCC.db.global.customItems[catName], catName)
-    end
 
     if not AHCC.db.global.customItems[catName] then return end
 

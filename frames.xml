@@ -6,7 +6,7 @@
    <Frame name="AuctionHouseTableCellStat2Template" mixin="AuctionHouseTableCellStat2Mixin" inherits="AuctionHouseTableCellTextTemplate" virtual="true" />
 
 
-<Frame name="AHCCDescTemplate" mixin="AHCCDescTemplateMixin" virtual="true">
+   <Frame name="AHCCDescTemplate" mixin="AHCCDescTemplateMixin" virtual="true">
        <Size y="40"/>
 	   <Layers>
             <Layer level="OVERLAY">

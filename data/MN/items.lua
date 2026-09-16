@@ -59,6 +59,7 @@ Data.Items = {
         {["Stat1"] = 3, ["id"] = {243958, 243959}} -- Enchant Ring - Zul'jin's Mastery
     },
     [getCategoryId("enchants", "WEAPON")] = {
+        {["id"] = {273071, 273072}}, -- Enchant Weapon - Rite of the Hash'ey
         {["id"] = {244028, 244029}}, -- Enchant Weapon - Acuity of the Ren'dorei
         {["id"] = {244030, 244031}}, -- Enchant Weapon - Arcane Mastery
         {["id"] = {243972, 243973}}, -- Enchant Weapon - Berserker's Rage
@@ -136,7 +137,9 @@ Data.Items = {
         {["id"] = {241289, 241288}}, -- Potion of Recklessness
         {["id"] = {241297, 241296}}, -- Potion of Zealotry
         {["id"] = {241307, 241306}}, -- Refreshing Serum
-        {["id"] = {241305, 241304}} -- Silvermoon Health Potion
+        {["id"] = {241305, 241304}}, -- Silvermoon Health Potion
+        {["id"] = {271883, 271884}}, -- Concentrated Silvermoon Health Potion
+        {["id"] = {271886, 271887}}  -- Liquid Luster
     },
     [getCategoryId("consumables", "Food")] = {
         {["id"] = 255846}, -- Harandar Celebration
@@ -205,6 +208,7 @@ Data.Items = {
         {["id"] = {245873, 245874}}, -- Darkmoon Sigil: Void
         {["id"] = {255843, 255844}}, -- HU5H, Nonchalant Pup
         {["id"] = {248132, 248133}}, -- Kinetic Ankle Primers
-        {["id"] = {248136, 248136}} -- M3DDY, Travel-Sized
+        {["id"] = {248136, 248136}}, -- M3DDY, Travel-Sized
+        {["id"] = {273059, 273060}}  -- Hunter's Ritual Stone
     }
 }
